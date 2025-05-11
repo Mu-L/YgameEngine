@@ -9,6 +9,7 @@ func _ready() -> void:
 	#region 按下播放音乐
 	
 	self.button_down.connect(func ():
+		
 		引擎.按钮.按下事件.emit(self)
 		if 点击音效!=null:
 			引擎.音乐.播放音效(点击音效)
