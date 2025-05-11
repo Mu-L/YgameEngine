@@ -74,3 +74,4 @@ func _ready() -> void:
 	调试节点.name="调试"
 	add_child(调试节点)
 	self.调试 = 调试节点
+#endregion
