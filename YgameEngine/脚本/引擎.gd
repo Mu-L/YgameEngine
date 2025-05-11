@@ -33,9 +33,13 @@ var 程序窗口:引擎程序窗口
 
 ##基于json封装的东西
 var Json序列化:引擎Json序列化
-func _ready() -> void:
 	
+##基于UDP封装的东西
+var UDP:引擎UDP
 
+
+func _ready():
+	
 #region 初始化 回调_按钮.gd 接管所有按钮脚本回调。请使用[按钮信号.gd]拖入按钮控件配置相关属性
 	#载入[addons\YgameEngine\脚本\按钮.gd]
 	var 按钮节点 = load("uid://d0xhr42vcl758").new()
@@ -114,4 +118,11 @@ func _ready() -> void:
 	Json序列化节点.name="Json序列化"
 	add_child(Json序列化节点)
 	self.Json序列化 = Json序列化节点
+#endregion
+
+#region 初始化 [addons\YgameEngine\脚本\UDP.gd] 添加UDP系统
+	var UDP节点 = load("uid://cx6o0o5p5i3m4").new()
+	UDP节点.name="UDP"
+	add_child(UDP节点)
+	self.UDP = UDP节点
 #endregion
