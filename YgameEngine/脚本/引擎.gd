@@ -21,6 +21,10 @@ var 节点:引擎节点
 
 ##基于调试封装的东西
 var 调试:引擎调试
+
+##基于资源封装的东西
+var 资源:引擎资源
+
 func _ready() -> void:
 	
 
@@ -74,4 +78,11 @@ func _ready() -> void:
 	调试节点.name="调试"
 	add_child(调试节点)
 	self.调试 = 调试节点
+#endregion
+
+#endregion 初始化 [addons\YgameEngine\脚本\资源.gd] 添加资源系统
+	var 资源节点 = load("uid://dh5hqmlerkso6").new()
+	资源节点.name="资源"
+	add_child(资源节点)
+	self.资源 = 资源节点
 #endregion
