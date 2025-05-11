@@ -1,6 +1,6 @@
 ## 调试工具类
 ## 提供调试模式下的增强打印功能
-extends SceneTree
+extends Node
 class_name 引擎调试
 
 ## 带颜色的调试打印
