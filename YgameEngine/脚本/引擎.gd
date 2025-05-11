@@ -15,6 +15,12 @@ var 文件:引擎文件
 
 ##基于listitem封装的东西
 var 列表:引擎列表
+
+##基于节点的东西
+var 节点:引擎节点
+
+##基于调试封装的东西
+var 调试:引擎调试
 func _ready() -> void:
 	
 
@@ -55,3 +61,16 @@ func _ready() -> void:
 	add_child(列表节点)
 	self.列表 = 列表节点
 #endregion
+
+#region 初始化 [addons\YgameEngine\脚本\节点.gd] 添加节点系统
+	var 节点节点 = load("uid://bsf7wletqiugu").new()
+	节点节点.name="节点"
+	add_child(节点节点)
+	self.节点 = 节点节点
+#endregion
+
+#region 初始化 [addons\YgameEngine\脚本\调试.gd] 添加调试系统
+	var 调试节点 = load("uid://boaf24oyvwawd").new()
+	调试节点.name="调试"
+	add_child(调试节点)
+	self.调试 = 调试节点
