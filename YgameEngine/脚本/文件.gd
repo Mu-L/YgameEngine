@@ -4,11 +4,11 @@ class_name 引擎文件
 
 ##用于扫描文件的东西,返回:["a/a.gd", "b/b.gd", "c.gd"]
 ##[codeblock]
-##var 读取文件数组=扫描文件("res://data/",true,["gd","json"]) #指定找gd + json
-##var 读取文件数组=扫描文件("res://data/",true) #递归扫子目录
-##var 读取文件数组=扫描文件("res://data/") #默认不扫子目录
+##var 读取文件数组=引擎.文件.扫描文件("res://data/",true,["gd","json"]) #指定找gd + json
+##var 读取文件数组=引擎.文件.扫描文件("res://data/",true) #递归扫子目录
+##var 读取文件数组=引擎.文件.扫描文件("res://data/") #默认不扫子目录
 ##[/codeblock]
-func 扫描文件(路径:String, 是否递归:bool = false, 指定格式:Array = []) -> Array:
+func 扫描文件(路径:String, 是否扫描子目录:bool = false, 指定格式:Array = []) -> Array:
 	var 文件列表 = []
 	var 目录 = DirAccess.open(路径)
 	if 目录:
@@ -16,9 +16,9 @@ func 扫描文件(路径:String, 是否递归:bool = false, 指定格式:Array =
 		var 文件名 = 目录.get_next()
 		while 文件名 != "":
 			if 目录.current_is_dir():
-				if 是否递归:
+				if 是否扫描子目录:
 					var 子目录路径 = 路径 + "/" + 文件名
-					var 子文件列表 = 扫描文件(子目录路径, 是否递归, 指定格式)
+					var 子文件列表 = 扫描文件(子目录路径, 是否扫描子目录, 指定格式)
 					for 子文件 in 子文件列表:
 						文件列表.append(文件名 + "/" + 子文件)
 			else:
