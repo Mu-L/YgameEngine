@@ -25,6 +25,9 @@ var 调试:引擎调试
 ##基于资源封装的东西
 var 资源:引擎资源
 
+##基于字符串封装的东西
+var 字符串:引擎字符串
+
 func _ready() -> void:
 	
 
@@ -85,4 +88,11 @@ func _ready() -> void:
 	资源节点.name="资源"
 	add_child(资源节点)
 	self.资源 = 资源节点
+#endregion
+
+#endregion 初始化 [addons\YgameEngine\脚本\字符串.gd] 添加字符串系统
+	var 字符串节点 = load("uid://dt2gymmpyidg5").new()
+	字符串节点.name="字符串"
+	add_child(字符串节点)
+	self.字符串 = 字符串节点
 #endregion

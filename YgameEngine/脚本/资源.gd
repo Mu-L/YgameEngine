@@ -65,6 +65,8 @@ func 保存资源(_Resource, 储存的位置) -> int:
 func 返回属性列表(_Resource: Resource) -> Dictionary:
     var 返回字典 = {}
     for i in _Resource.get_property_list():
-        if i.name not in ["RefCounted", "Resource", "resource_local_to_scene", "resource_path", "resource_name", "resource_scene_unique_id", "script", "道具.gd"]:
+        if i.name not in ["RefCounted", "Built-in script","Resource", "resource_local_to_scene", "resource_path", "resource_name", "resource_scene_unique_id", "script", "道具.gd"]:
+        #if i.name in _Resource:
+       #     print(i.name)
             返回字典[i.name] = _Resource[i.name]
     return 返回字典
