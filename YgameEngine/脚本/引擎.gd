@@ -28,6 +28,11 @@ var 资源:引擎资源
 ##基于字符串封装的东西
 var 字符串:引擎字符串
 
+##基于窗口封装的东西
+var 程序窗口:引擎程序窗口
+
+##基于json封装的东西
+var Json序列化:引擎Json序列化
 func _ready() -> void:
 	
 
@@ -83,16 +88,30 @@ func _ready() -> void:
 	self.调试 = 调试节点
 #endregion
 
-#endregion 初始化 [addons\YgameEngine\脚本\资源.gd] 添加资源系统
+#region 初始化 [addons\YgameEngine\脚本\资源.gd] 添加资源系统
 	var 资源节点 = load("uid://dh5hqmlerkso6").new()
 	资源节点.name="资源"
 	add_child(资源节点)
 	self.资源 = 资源节点
 #endregion
 
-#endregion 初始化 [addons\YgameEngine\脚本\字符串.gd] 添加字符串系统
+#region 初始化 [addons\YgameEngine\脚本\字符串.gd] 添加字符串系统
 	var 字符串节点 = load("uid://dt2gymmpyidg5").new()
 	字符串节点.name="字符串"
 	add_child(字符串节点)
 	self.字符串 = 字符串节点
+#endregion
+
+#region 初始化 [addons\YgameEngine\脚本\程序窗口.gd] 添加程序窗口系统
+	var 程序窗口节点 = load("uid://bou86tafpgqhs").new()
+	程序窗口节点.name="窗口"
+	add_child(程序窗口节点)
+	self.程序窗口 = 程序窗口节点
+#endregion
+
+#region 初始化 [addons\YgameEngine\脚本\Json序列化.gd] 添加Json序列化系统
+	var Json序列化节点 = load("uid://b476u8oavjn4q").new()
+	Json序列化节点.name="Json序列化"
+	add_child(Json序列化节点)
+	self.Json序列化 = Json序列化节点
 #endregion
