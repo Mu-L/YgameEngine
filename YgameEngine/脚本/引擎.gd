@@ -12,6 +12,9 @@ var 按钮:引擎按钮
 
 ##统一管理文件的东西
 var 文件:引擎文件
+
+##基于listitem封装的东西
+var 列表:引擎列表
 func _ready() -> void:
 	
 
@@ -44,4 +47,11 @@ func _ready() -> void:
 	文件节点.name="文件"
 	add_child(文件节点)
 	self.文件 = 文件节点
+#endregion
+
+#region 初始化 [addons\YgameEngine\脚本\列表.gd] 添加列表系统
+	var 列表节点 = load("uid://ddvmv08fc64oj").new()
+	列表节点.name="列表"
+	add_child(列表节点)
+	self.列表 = 列表节点
 #endregion
