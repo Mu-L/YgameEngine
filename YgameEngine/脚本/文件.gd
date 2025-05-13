@@ -128,11 +128,11 @@ var 配置 = {}
 ## var 配置 = 引擎.配置文件.ini_读取配置文件("res://settings.ini")
 ##[/codeblock]
 func ini_读取配置文件(_文件路径: String = "res://配置项.ini") -> ConfigFile:
-    if not (_文件路径 in 配置):
-        配置[_文件路径] = ConfigFile.new()
-    
-    var 读取配置 = 配置[_文件路径].load(_文件路径)
-    return 配置[_文件路径]
+	if not (_文件路径 in 配置):
+		配置[_文件路径] = ConfigFile.new()
+	
+	var 读取配置 = 配置[_文件路径].load(_文件路径)
+	return 配置[_文件路径]
 
 ## 从配置文件中读取指定节和键的值
 ## [br]参数:[br]
@@ -145,7 +145,7 @@ func ini_读取配置文件(_文件路径: String = "res://配置项.ini") -> Co
 ## var 值 = 引擎.配置文件.ini_读取(配置, "General", "Volume")
 ##[/codeblock]
 func ini_读取(_文件: ConfigFile, _节, _键) -> Variant:
-    return _文件.get_value(_节, _键)
+	return _文件.get_value(_节, _键)
 
 ## 设置配置文件中指定节和键的值
 ## [br]参数:[br]
@@ -159,8 +159,8 @@ func ini_读取(_文件: ConfigFile, _节, _键) -> Variant:
 ## 引擎.配置文件.ini_设置(配置, "General", "Fullscreen", true)
 ##[/codeblock]
 func ini_设置(_文件: ConfigFile, _节, _键, _内容) -> bool:
-    _文件.set_value(_节, _键, _内容)
-    return true
+	_文件.set_value(_节, _键, _内容)
+	return true
 
 ## 保存配置文件到指定路径
 ## [br]参数:[br]
@@ -172,6 +172,6 @@ func ini_设置(_文件: ConfigFile, _节, _键, _内容) -> bool:
 ## 引擎.配置文件.ini_保存配置文件(配置, "user://saved_settings.ini")
 ##[/codeblock]
 func ini_保存配置文件(_文件: ConfigFile, 保存到哪里: String = "res://配置项.ini") -> Error:
-    var _状态 = _文件.save(保存到哪里)
-    print("状态:%s 保存成功,路径:%s" % [_状态, 保存到哪里])
-    return _状态
+	var _状态 = _文件.save(保存到哪里)
+	print("状态:%s 保存成功,路径:%s" % [_状态, 保存到哪里])
+	return _状态
