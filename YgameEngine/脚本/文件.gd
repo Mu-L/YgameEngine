@@ -101,3 +101,14 @@ func 读取文件到文本(文件地址:String = "user://save_game.dat") -> Stri
 	else:
 		push_error("无法打开文件进行读取: " + 文件地址)
 		return ""
+
+## 加载外部PCK或ZIP资源包
+## [br]参数:[br]
+##   - 路径资源: 要加载的资源包路径，默认为"user://update.zip"
+## [br]返回:[br]
+##   - 加载成功返回true，失败返回false
+##[codeblock]
+## 引擎.文件.加载PCK("user://custom_content.pck")
+##[/codeblock]
+func 加载PCK(路径资源:String = "user://update.zip") -> bool:
+	return ProjectSettings.load_resource_pack(路径资源)

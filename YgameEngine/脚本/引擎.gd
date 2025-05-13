@@ -43,6 +43,11 @@ var 缓动:引擎缓动
 ##基于场景封装的东西
 var 场景:引擎场景
 
+##基于随机封装的东西
+var 随机:引擎随机
+
+##基于字节数据封装的东西
+var 字节数据:引擎字节数据
 func _ready():
 	
 #region 初始化 回调_按钮.gd 接管所有按钮脚本回调。请使用[按钮信号.gd]拖入按钮控件配置相关属性
@@ -143,4 +148,18 @@ func _ready():
 	场景节点.name="场景"
 	add_child(场景节点)
 	self.场景 = 场景节点
+#endregion
+
+##region 初始化 [addons\YgameEngine\脚本\字节数据.gd] 添加字节数据系统
+	var 字节数据节点 = load("uid://w0jiirwvkqsr").new()
+	字节数据节点.name="字节数据"
+	add_child(字节数据节点)
+	self.字节数据 = 字节数据节点
+#endregion
+
+##region 初始化 [addons\YgameEngine\脚本\随机.gd] 添加随机系统
+	var 随机节点 = load("uid://bgpwgbmomhiew").new()
+	随机节点.name="随机"
+	add_child(随机节点)
+	self.随机 = 随机节点
 #endregion
