@@ -112,3 +112,66 @@ func 读取文件到文本(文件地址:String = "user://save_game.dat") -> Stri
 ##[/codeblock]
 func 加载PCK(路径资源:String = "user://update.zip") -> bool:
 	return ProjectSettings.load_resource_pack(路径资源)
+
+
+#追加ini
+
+## 配置文件缓存字典，键为文件路径，值为ConfigFile实例
+var 配置 = {}
+
+## 加载指定路径的配置文件（或从缓存中获取）
+## [br]参数:[br]
+##   - _文件路径: 配置文件路径，默认为"res://配置项.ini"
+## [br]返回:[br]
+##   - ConfigFile对象，可用于读取和修改配置
+##[codeblock]
+## var 配置 = 引擎.配置文件.ini_读取配置文件("res://settings.ini")
+##[/codeblock]
+func ini_读取配置文件(_文件路径: String = "res://配置项.ini") -> ConfigFile:
+    if not (_文件路径 in 配置):
+        配置[_文件路径] = ConfigFile.new()
+    
+    var 读取配置 = 配置[_文件路径].load(_文件路径)
+    return 配置[_文件路径]
+
+## 从配置文件中读取指定节和键的值
+## [br]参数:[br]
+##   - _文件: ConfigFile对象[br]
+##   - _节: 配置节名称[br]
+##   - _键: 配置键名称
+## [br]返回:[br]
+##   - 配置值，如果不存在则返回null
+##[codeblock]
+## var 值 = 引擎.配置文件.ini_读取(配置, "General", "Volume")
+##[/codeblock]
+func ini_读取(_文件: ConfigFile, _节, _键) -> Variant:
+    return _文件.get_value(_节, _键)
+
+## 设置配置文件中指定节和键的值
+## [br]参数:[br]
+##   - _文件: ConfigFile对象[br]
+##   - _节: 配置节名称[br]
+##   - _键: 配置键名称[br]
+##   - _内容: 要设置的值
+## [br]返回:[br]
+##   - 操作是否成功（始终返回true）
+##[codeblock]
+## 引擎.配置文件.ini_设置(配置, "General", "Fullscreen", true)
+##[/codeblock]
+func ini_设置(_文件: ConfigFile, _节, _键, _内容) -> bool:
+    _文件.set_value(_节, _键, _内容)
+    return true
+
+## 保存配置文件到指定路径
+## [br]参数:[br]
+##   - _文件: ConfigFile对象[br]
+##   - 保存到哪里: 保存路径，默认为"res://配置项.ini"
+## [br]返回:[br]
+##   - 错误码（OK表示成功，其他值表示失败）
+##[codeblock]
+## 引擎.配置文件.ini_保存配置文件(配置, "user://saved_settings.ini")
+##[/codeblock]
+func ini_保存配置文件(_文件: ConfigFile, 保存到哪里: String = "res://配置项.ini") -> Error:
+    var _状态 = _文件.save(保存到哪里)
+    print("状态:%s 保存成功,路径:%s" % [_状态, 保存到哪里])
+    return _状态
