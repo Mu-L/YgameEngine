@@ -37,6 +37,11 @@ var Json序列化:引擎Json序列化
 ##基于UDP封装的东西
 var UDP:引擎UDP
 
+##基于缓动封装的东西
+var 缓动:引擎缓动
+
+##基于场景封装的东西
+var 场景:引擎场景
 
 func _ready():
 	
@@ -125,4 +130,17 @@ func _ready():
 	UDP节点.name="UDP"
 	add_child(UDP节点)
 	self.UDP = UDP节点
+#endregion
+
+##region 初始化 [addons\YgameEngine\脚本\缓动.gd] 添加缓动系统
+	var 缓动节点 = load("uid://ccoc56d5ll7gu").new()
+	缓动节点.name="缓动"
+	add_child(缓动节点)
+	self.缓动 = 缓动节点
+#endregion
+##region 初始化 [addons\YgameEngine\脚本\场景.gd] 添加场景系统
+	var 场景节点 = load("uid://cmmdxughbtv03").new()
+	场景节点.name="场景"
+	add_child(场景节点)
+	self.场景 = 场景节点
 #endregion
