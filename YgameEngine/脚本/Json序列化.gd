@@ -13,18 +13,18 @@ class_name 引擎Json序列化
 ## print(json数据)
 ##[/codeblock]
 func 读取json文件夹_到字典(目录) -> Dictionary:
-    var 变量 = {}  # 用于存储解析后JSON数据的字典
-    var XML文件夹目录 = 目录
-    var 读取XML文件 = 引擎.文件.扫描文件(XML文件夹目录) 
-    
-    for i in 读取XML文件.size():
-        var 子文件 = 读取XML文件[i]
-        var file = FileAccess.open(子文件, FileAccess.READ)
-        var npc文本 = file.get_as_text()
-        var 解析的npcjson = JSON.parse_string(npc文本)
-        变量[读取XML文件[i]] = 解析的npcjson
-    
-    return 变量
+	var 变量 = {}  # 用于存储解析后JSON数据的字典
+	var XML文件夹目录 = 目录
+	var 读取XML文件 = 引擎.文件.扫描文件(XML文件夹目录) 
+	
+	for i in 读取XML文件.size():
+		var 子文件 = 读取XML文件[i]
+		var file = FileAccess.open(子文件, FileAccess.READ)
+		var npc文本 = file.get_as_text()
+		var 解析的npcjson = JSON.parse_string(npc文本)
+		变量[读取XML文件[i]] = 解析的npcjson
+	
+	return 变量
 
 ## 将GDScript数据类型转换为JSON格式字符串
 ## [br]参数:[br]
@@ -36,7 +36,7 @@ func 读取json文件夹_到字典(目录) -> Dictionary:
 ## print(json文本)  # 输出: {"name": "player", "level": 10}
 ##[/codeblock]
 func 数据转json文本(_数据: Variant) -> String:
-    return JSON.stringify(_数据)
+	return JSON.stringify(_数据)
 
 ## 将JSON格式字符串解析为GDScript数据类型
 ## [br]参数:[br]
@@ -48,4 +48,4 @@ func 数据转json文本(_数据: Variant) -> String:
 ## print(数据.name)  # 输出: player
 ##[/codeblock]
 func 解析到数据(_json文本: String) -> Variant:
-    return JSON.parse_string(_json文本)
+	return JSON.parse_string(_json文本)

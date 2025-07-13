@@ -8,7 +8,7 @@ class_name 引擎随机
 ## 引擎.随机.打乱()  # 初始化随机种子
 ##[/codeblock]
 func 打乱() -> void:
-    randomize()
+	randomize()
 
 ## 生成指定范围内的随机浮点数
 ## [br]参数:[br]
@@ -20,7 +20,7 @@ func 打乱() -> void:
 ## var 随机值 = 引擎.随机.取范围浮点数(1.5, 3.5)
 ##[/codeblock]
 func 取范围浮点数(最小浮点数: float, 最大浮点数: float) -> float:
-    return randf_range(最小浮点数, 最大浮点数)
+	return randf_range(最小浮点数, 最大浮点数)
 
 ## 生成0到1之间的随机浮点数（包含0和1）
 ## [br]返回:[br]
@@ -29,7 +29,7 @@ func 取范围浮点数(最小浮点数: float, 最大浮点数: float) -> float
 ## var 随机值 = 引擎.随机.取0到1的浮点数()
 ##[/codeblock]
 func 取0到1的浮点数() -> float:
-    return randf()
+	return randf()
 
 ## 生成0到指定值之间的随机整数（包含0和指定值）
 ## [br]参数:[br]
@@ -40,7 +40,7 @@ func 取0到1的浮点数() -> float:
 ## var 随机数 = 引擎.随机.取整数(10)  # 生成0-10之间的随机整数
 ##[/codeblock]
 func 取整数(最大整数: int) -> int:
-    return randi_range(0, 最大整数)
+	return randi_range(0, 最大整数)
 
 ## 生成指定范围内的随机整数（包含最小值和最大值）
 ## [br]参数:[br]
@@ -52,7 +52,7 @@ func 取整数(最大整数: int) -> int:
 ## var 随机数 = 引擎.随机.取范围整数(5, 15)
 ##[/codeblock]
 func 取范围整数(最小整数: int, 最大整数: int) -> int:
-    return randi_range(最小整数, 最大整数)
+	return randi_range(最小整数, 最大整数)
 
 ## 生成0到360之间的随机整数角度（包含0和360）
 ## [br]返回:[br]
@@ -61,7 +61,7 @@ func 取范围整数(最小整数: int, 最大整数: int) -> int:
 ## var 角度 = 引擎.随机.取角度整数()
 ##[/codeblock]
 func 取角度整数() -> int:
-    return randi_range(0, 360)
+	return randi_range(0, 360)
 
 ## 生成0到360之间的随机浮点角度（包含0和360）
 ## [br]返回:[br]
@@ -70,7 +70,7 @@ func 取角度整数() -> int:
 ## var 角度 = 引擎.随机.取角度浮点数()
 ##[/codeblock]
 func 取角度浮点数() -> float:
-    return randf_range(0.0, 360.0)
+	return randf_range(0.0, 360.0)
 
 ## 从字符串数组中随机选择一个字符串
 ## [br]参数:[br]
@@ -81,7 +81,7 @@ func 取角度浮点数() -> float:
 ## var 颜色 = 引擎.随机.取字符串(["红", "绿", "蓝"])
 ##[/codeblock]
 func 取字符串(字符串数组: Array) -> String:
-    if 字符串数组.size() == 0:
-        return ""
-    else:
-        return 字符串数组[取范围整数(0, 字符串数组.size() - 1)]
+	if 字符串数组.size() == 0:
+		return ""
+	else:
+		return 字符串数组[取范围整数(0, 字符串数组.size() - 1)]
