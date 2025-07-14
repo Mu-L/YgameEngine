@@ -11,8 +11,8 @@ class_name 引擎调试
 ## 引擎.调试.打印("重要信息", "red")
 ##[/codeblock]
 func 打印(打印的内容, 颜色:String = "green") -> void:
-    if 取调试模式():
-        print_rich("[color=%s]%s[/color]" % [颜色, 打印的内容])
+	if 取调试模式():
+		print_rich("[color=%s]%s[/color]" % [颜色, 打印的内容])
 
 ## 带注释的调试打印（仅在调试模式下输出）
 ## [br]参数:[br]
@@ -22,8 +22,8 @@ func 打印(打印的内容, 颜色:String = "green") -> void:
 ## 引擎.调试.注释打印("玩家位置", player.position)
 ##[/codeblock]
 func 注释打印(注释:String, 打印的内容) -> void:
-    if 取调试模式():
-        print("[%s] %s" % [注释, 打印的内容])
+	if 取调试模式():
+		print("[%s] %s" % [注释, 打印的内容])
 
 ## 格式化打印字典内容
 ## [br]参数:[br]
@@ -33,13 +33,13 @@ func 注释打印(注释:String, 打印的内容) -> void:
 ## 引擎.调试.打印字典(player.stats, "玩家属性")
 ##[/codeblock]
 func 打印字典(字典:Dictionary, 注释:String = "无"):
-    if 取调试模式():
-        print_rich("[color=yellow]%s-----------------------------------字典打印开始---------------------------------[/color]" % [注释])
-        print("{")
-        for i in 字典:
-            print("  %s = %s" % [i, 字典[i]])
-        print("}")
-        print_rich("[color=yellow]%s-----------------------------------字典打印结束---------------------------------[/color]\n\n" % [注释])
+	if 取调试模式():
+		print_rich("[color=yellow]%s-----------------------------------字典打印开始---------------------------------[/color]" % [注释])
+		print("{")
+		for i in 字典:
+			print("  %s = %s" % [i, 字典[i]])
+		print("}")
+		print_rich("[color=yellow]%s-----------------------------------字典打印结束---------------------------------[/color]\n\n" % [注释])
 
 ## 格式化打印数组中的字典
 ## [br]参数:[br]
@@ -49,13 +49,13 @@ func 打印字典(字典:Dictionary, 注释:String = "无"):
 ## 引擎.调试.打印数组字典(items_list, "物品列表")
 ##[/codeblock]
 func 打印数组字典(数组字典:Array, 注释:String = "无"):
-    if 取调试模式():
-        print_rich("[color=cyan]%s-----------------------------------数组字典打印开始---------------------------------[/color]" % [注释])
-        print("[")
-        for i in range(数组字典.size()):
-            print("  [%d] = %s" % [i, 数组字典[i]])
-        print("]")
-        print_rich("[color=cyan]%s-----------------------------------数组字典打印结束---------------------------------[/color]\n\n" % [注释])
+	if 取调试模式():
+		print_rich("[color=cyan]%s-----------------------------------数组字典打印开始---------------------------------[/color]" % [注释])
+		print("[")
+		for i in range(数组字典.size()):
+			print("  [%d] = %s" % [i, 数组字典[i]])
+		print("]")
+		print_rich("[color=cyan]%s-----------------------------------数组字典打印结束---------------------------------[/color]\n\n" % [注释])
 
 ## 检查当前是否处于调试模式
 ## [br]返回:[br]
@@ -65,4 +65,4 @@ func 打印数组字典(数组字典:Array, 注释:String = "无"):
 ##     print("当前处于调试模式")
 ##[/codeblock]
 func 取调试模式() -> bool:
-    return OS.is_debug_build()
+	return OS.is_debug_build()

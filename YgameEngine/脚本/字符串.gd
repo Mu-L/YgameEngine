@@ -15,7 +15,7 @@ class_name 引擎字符串
 ## print(结果) # 输出: Hello Godot
 ##[/codeblock]
 func 替换文本(原字符串:String, 哪个要换:String, 要换成什么:String) -> String:
-    return 原字符串.replacen(哪个要换, 要换成什么)
+	return 原字符串.replacen(哪个要换, 要换成什么)
 
 ## 从指定位置截取字符串
 ## [br]参数:[br]
@@ -29,7 +29,7 @@ func 替换文本(原字符串:String, 哪个要换:String, 要换成什么:Stri
 ## print(子串) # 输出: ell
 ##[/codeblock]
 func 从指定位置获取字符串(原字符串:String, 开始位置:int, 长度:int) -> String:
-    return 原字符串.substr(开始位置, 长度)
+	return 原字符串.substr(开始位置, 长度)
 
 ## 使用分隔符分割字符串为数组
 ## [br]参数:[br]
@@ -42,7 +42,7 @@ func 从指定位置获取字符串(原字符串:String, 开始位置:int, 长�
 ## print(数组) # 输出: [a, b, c]
 ##[/codeblock]
 func 分割(_字符串:String, _分割符:String) -> Array:
-    return _字符串.split(_分割符)
+	return _字符串.split(_分割符)
 
 ## 获取分割后的特定索引位置的子字符串
 ## [br]参数:[br]
@@ -56,7 +56,7 @@ func 分割(_字符串:String, _分割符:String) -> Array:
 ## print(切片) # 输出: b
 ##[/codeblock]
 func 获取切片(_字符串:String, _分割符:String, _索引位置:int) -> String:
-    return _字符串.get_slice(_分割符, _索引位置)
+	return _字符串.get_slice(_分割符, _索引位置)
 
 ## 在字符串左侧填充指定字符到目标长度
 ## [br]参数:[br]
@@ -70,7 +70,7 @@ func 获取切片(_字符串:String, _分割符:String, _索引位置:int) -> St
 ## print(填充后) # 输出: 00042
 ##[/codeblock]
 func 左侧填充(_字符串:String, _填充后的长度:int, _填充占位字符串:String) -> String:
-    return _字符串.lpad(_填充后的长度, _填充占位字符串)
+	return _字符串.lpad(_填充后的长度, _填充占位字符串)
 
 ## 将字符串转换为UTF-8字节数组
 ## [br]参数:[br]
@@ -82,4 +82,29 @@ func 左侧填充(_字符串:String, _填充后的长度:int, _填充占位字�
 ## print(字节数组) # 输出: [228, 189, 160, 229, 165, 189]
 ##[/codeblock]
 func 到uft8字节数据(_字符串:String) -> PackedByteArray:
-    return _字符串.to_utf8_buffer()
+	return _字符串.to_utf8_buffer()
+
+
+## 从路径中取出文件名 
+## 路径_取文件名("www.baidu.com/a/z.zip")
+func 路径_取文件名(文件路径:String):
+	var 取最后出现的字符串位置=文件路径.rfind("/")
+	var 提取的文件名=文件路径.substr(取最后出现的字符串位置+1,文件路径.length()-取最后出现的字符串位置)
+	return 提取的文件名
+
+## "c:/b/a.txt" >>> c:/b/a  从路口取不含扩展名
+func 路径_取文件名不含扩展名(文件路径:String):
+	return 文件路径.get_basename()
+
+## c:/b/a.txt >>> txt  从路径取文件的扩展
+func 路径_取文件扩展名(文件路径:String):
+	return 文件路径.get_extension()
+
+## c:/b/a.txt >>> c:/b  从路径取目录
+func 路径_取目录(文件路径:String):
+	return 文件路径.get_base_dir()
+	
+## c:/b/a.txt >>> a.txt  从路径取文件名(含扩展)
+func 路径_取文件名含扩展名(文件路径:String):
+	return	文件路径.get_file()
+	

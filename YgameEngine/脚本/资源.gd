@@ -15,7 +15,7 @@ var _资源缓存 = {}
 ## var 新资源 = 引擎.资源.新建资源()
 ##[/codeblock]
 func 新建资源() -> Resource:
-    return Resource.new()
+	return Resource.new()
 
 ## 加载指定路径的资源
 ## [br]参数:[br]
@@ -26,7 +26,7 @@ func 新建资源() -> Resource:
 ## var 纹理 = 引擎.资源.加载资源("res://textures/icon.png")
 ##[/codeblock]
 func 加载资源(tres资源路径) -> Resource:
-    return load(tres资源路径)
+	return load(tres资源路径)
 
 ## 从缓存加载资源，不存在则加载并缓存
 ## [br]参数:[br]
@@ -37,9 +37,9 @@ func 加载资源(tres资源路径) -> Resource:
 ## var 共享资源 = 引擎.资源.使用缓存加载资源("res://shared.tres")
 ##[/codeblock]
 func 使用缓存加载资源(资源路径) -> Resource:
-    if not (资源路径 in _资源缓存):
-        _资源缓存[资源路径] = load(资源路径)
-    return _资源缓存[资源路径]
+	if not (资源路径 in _资源缓存):
+		_资源缓存[资源路径] = load(资源路径)
+	return _资源缓存[资源路径]
 
 ## 保存资源到指定位置
 ## [br]参数:[br]
@@ -51,7 +51,7 @@ func 使用缓存加载资源(资源路径) -> Resource:
 ## 引擎.资源.保存资源(my_resource, "user://savegame.tres")
 ##[/codeblock]
 func 保存资源(_Resource, 储存的位置) -> int:
-    return ResourceSaver.save(_Resource, 储存的位置)
+	return ResourceSaver.save(_Resource, 储存的位置)
 
 ## 获取资源的属性列表（过滤掉内置属性）
 ## [br]参数:[br]
@@ -63,10 +63,10 @@ func 保存资源(_Resource, 储存的位置) -> int:
 ## print(属性)
 ##[/codeblock]
 func 返回属性列表(_Resource: Resource) -> Dictionary:
-    var 返回字典 = {}
-    for i in _Resource.get_property_list():
-        if i.name not in ["RefCounted", "Built-in script","Resource", "resource_local_to_scene", "resource_path", "resource_name", "resource_scene_unique_id", "script", "道具.gd"]:
-        #if i.name in _Resource:
-       #     print(i.name)
-            返回字典[i.name] = _Resource[i.name]
-    return 返回字典
+	var 返回字典 = {}
+	for i in _Resource.get_property_list():
+		if i.name not in ["RefCounted", "Built-in script","Resource", "resource_local_to_scene", "resource_path", "resource_name", "resource_scene_unique_id", "script", "道具.gd"]:
+		#if i.name in _Resource:
+	   #     print(i.name)
+			返回字典[i.name] = _Resource[i.name]
+	return 返回字典

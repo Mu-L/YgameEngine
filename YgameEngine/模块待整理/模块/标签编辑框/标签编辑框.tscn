@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://0chgdduri8i"]
+
+[node name="标签编辑框" type="Control"]
+custom_minimum_size = Vector2(225, 40)
+layout_mode = 3
+anchor_right = 0.207
+anchor_bottom = 0.066
+offset_right = 0.53598
+offset_bottom = 0.231998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="标签" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 66.0
+grow_vertical = 2
+text = "标注:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="编辑框" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -171.0
+grow_horizontal = 0
+grow_vertical = 2

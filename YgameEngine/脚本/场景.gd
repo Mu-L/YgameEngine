@@ -10,7 +10,7 @@ class_name 引擎场景
 ## 引擎.场景.切换场景("res://scenes/gameplay.tscn")
 ##[/codeblock]
 func 切换场景(场景地址:String) -> void:
-    取场景树().change_scene_to_file(场景地址)
+	取场景树().change_scene_to_file(场景地址)
 
 ## 获取当前运行的场景节点
 ## [br]返回:[br]
@@ -20,7 +20,7 @@ func 切换场景(场景地址:String) -> void:
 ## 当前场景.add_child($NewNode)
 ##[/codeblock]
 func 取当前场景() -> Node:
-    return 取场景树().current_scene
+	return 取场景树().current_scene
 
 ## 获取主循环的场景树实例
 ## [br]返回:[br]
@@ -30,7 +30,7 @@ func 取当前场景() -> Node:
 ## 场景树.set_pause(true)
 ##[/codeblock]
 func 取场景树() -> MainLoop:
-    return Engine.get_main_loop()
+	return Engine.get_main_loop()
 
 ## 暂停执行指定时间（协程阻塞）
 ## [br]参数:[br]
@@ -40,11 +40,11 @@ func 取场景树() -> MainLoop:
 ## print("等待结束")
 ##[/codeblock]
 func 等待(秒数:float) -> void:
-    await 取场景树().create_timer(秒数).timeout
+	await 取场景树().create_timer(秒数).timeout
 
 ## 销毁当前活动场景
 ##[codeblock]
 ## 引擎.场景.销毁当前场景()
 ##[/codeblock]
 func 销毁当前场景() -> void:
-    Engine.get_main_loop().current_scene.queue_free()
+	Engine.get_main_loop().current_scene.queue_free()

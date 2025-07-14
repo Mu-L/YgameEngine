@@ -10,7 +10,7 @@ class_name 引擎列表
 ## 引擎.列表.选择索引($ItemList, 2)  # 选中第3项
 ##[/codeblock]
 func 选择索引(_列表节点:ItemList, _索引):
-    _列表节点.select(_索引)
+	_列表节点.select(_索引)
 
 ## 获取列表中指定索引项的文本内容
 ## [br]参数:[br]
@@ -22,7 +22,7 @@ func 选择索引(_列表节点:ItemList, _索引):
 ## var 文本 = 引擎.列表.取项目文本($ItemList, 0)
 ##[/codeblock]
 func 取项目文本(_列表节点:ItemList, _索引):
-    return _列表节点.get_item_text(_索引)
+	return _列表节点.get_item_text(_索引)
 
 ## 向列表中添加新项
 ## [br]参数:[br]
@@ -34,7 +34,7 @@ func 取项目文本(_列表节点:ItemList, _索引):
 ## 引擎.列表.增加项目($ItemList, "新选项", preload("icon.png"))
 ##[/codeblock]
 func 增加项目(_列表节点:ItemList, _文本:String="", _图片:Texture2D=null, _可选:bool=true):
-    _列表节点.add_item(_文本, _图片, _可选)
+	_列表节点.add_item(_文本, _图片, _可选)
 
 ## 清空列表中的所有项目
 ## [br]参数:[br]
@@ -43,7 +43,7 @@ func 增加项目(_列表节点:ItemList, _文本:String="", _图片:Texture2D=n
 ## 引擎.列表.清空所有项目($ItemList)
 ##[/codeblock]
 func 清空所有项目(_列表节点:ItemList):
-    _列表节点.clear()
+	_列表节点.clear()
 
 ## 获取列表中的项目数量
 ## [br]参数:[br]
@@ -54,4 +54,4 @@ func 清空所有项目(_列表节点:ItemList):
 ## var 数量 = 引擎.列表.获取数量($ItemList)
 ##[/codeblock]
 func 获取数量(_列表节点:ItemList) -> int:
-    return _列表节点.item_count
+	return _列表节点.item_count

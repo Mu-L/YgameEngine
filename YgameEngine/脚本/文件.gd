@@ -175,3 +175,13 @@ func ini_保存配置文件(_文件: ConfigFile, 保存到哪里: String = "res:
 	var _状态 = _文件.save(保存到哪里)
 	print("状态:%s 保存成功,路径:%s" % [_状态, 保存到哪里])
 	return _状态
+
+
+##保存到自带配置
+func 保存自带配置的变量(配置项名称:String,配置值:Variant):
+	ProjectSettings.set_setting(配置项名称,配置值)
+	ProjectSettings.save_custom("override.cfg")
+	pass
+##从自带配置读取
+func 读取自带配置的变量(配置项名称:String):
+	return ProjectSettings.get_setting(配置项名称)

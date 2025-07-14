@@ -71,3 +71,30 @@ func 询问(文本:String,对话包:Dictionary={},标题:String="系统"):
 		if 对话包.has("取消"):
 			对话包["取消"].call()
 	)
+
+var 颜色_绿色:="#00FF00"
+var 颜色_红色:="#FF0000"
+var 颜色_白色:="#FFFFFF"
+var 颜色_黑色:="#000000"
+var 颜色_蓝色:="#0000FF"
+var 颜色_黄色:="#FFFF00"
+var 颜色_紫色:="#FF00FF"
+var 颜色_橙色:="#FFA500"
+var 颜色_青色:="#00FFFF"
+var 颜色_灰色:="#808080"
+#
+ #func 插入链接(_链接="url",_标签=_链接):
+	#return "[url="+_链接+"]"+_标签+"[/url]"
+	#
+	#static func 插入换行():
+	#return "\n"
+#
+#static func 插入简单上色文本(_文本:String,_颜色=对话.颜色_白色):
+	#return "[color="+_颜色+"]"+_文本+"[/color]"
+	#
+	#static func 插入图片(_图片地址:="res://物品.png"):
+	#return "[img]"+_图片地址+"[/img]"
+#
+###插入带字典的链接
+#static func 插入字典链接(_字典:={"物品":"蘑菇","价格": "300"},_标签:="购买"):
+	#return "[url="+json.数据转json文本(_字典)+"]"+_标签+"[/url]"
