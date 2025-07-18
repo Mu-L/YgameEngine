@@ -1,14 +1,16 @@
 extends Node
 ##引擎的窗口管理
-class_name 引擎窗口
+class_name 引擎对话
 ##用于存放面板的变量
 var 对话面板=null
 ##用于存放询问面板的变量
 var 询问面板=null
 
+
+
 ##用于游戏的的对话。[对话关闭]自带
 ##[codeblock]
-##引擎.窗口.对话(
+##引擎.对话.打开(
 ##        "[url=链接1]点击这里[/url]\n"+
 ##        "[url=链接2]点击这里2[/url]\n"+
 ##        "[url=对话关闭]关闭窗口[/url]"
@@ -21,7 +23,7 @@ var 询问面板=null
 ##            ,
 ##    })
 ##[/codeblock]
-func 对话(文本:String,对话包:Dictionary={},标题:String="系统"):
+func 打开(文本:String,对话包:Dictionary={},标题:String="系统"):
 	
 	if 对话面板!=null:
 		对话面板.queue_free()
@@ -44,7 +46,7 @@ func 对话(文本:String,对话包:Dictionary={},标题:String="系统"):
 
 ##用于简单的询问（是/否等）的对话。
 ##[codeblock]
-##引擎.窗口.询问("你想要做???",{
+##引擎.对话.询问("你想要做???",{
 ##        "确定":func():
 ##            print("点击确定")
 ##            ,
@@ -69,8 +71,13 @@ func 询问(文本:String,对话包:Dictionary={},标题:String="系统"):
 	)
 	面板.取消.button_down.connect(func():
 		if 对话包.has("取消"):
+
 			对话包["取消"].call()
 	)
+
+
+
+
 
 var 颜色_绿色:="#00FF00"
 var 颜色_红色:="#FF0000"
@@ -82,6 +89,7 @@ var 颜色_紫色:="#FF00FF"
 var 颜色_橙色:="#FFA500"
 var 颜色_青色:="#00FFFF"
 var 颜色_灰色:="#808080"
+
 #
  #func 插入链接(_链接="url",_标签=_链接):
 	#return "[url="+_链接+"]"+_标签+"[/url]"

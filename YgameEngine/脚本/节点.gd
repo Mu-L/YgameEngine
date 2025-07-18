@@ -95,7 +95,7 @@ func 销毁指定节点(_节点):
 ##     print("节点有效")
 ##[/codeblock]
 func 取有效节点(_节点) -> bool:
-	return is_instance_valid(_节点)
+	return (_节点)
 
 ## 将节点移动到新的父节点下
 ## [br]参数:[br]
