@@ -1,14 +1,27 @@
 @tool
 ##Dream Mod 10.0
 extends Node
-
-##统一管理音乐的东西
-var 音乐:引擎音乐 
-##统一管理对话的的东西
-var 对话:引擎对话
+##基于调试封装的东西
+var 调试:引擎调试
 
 ##统一管理按钮的东西
 var 按钮:引擎按钮
+
+##基于场景封装的东西
+var 场景:引擎场景
+
+##统一管理对话的的东西
+var 对话:引擎对话
+
+##统一窗口的的东西
+var 窗口:引擎窗口
+
+##统一加解密的的东西
+var 加解密:引擎加解密
+
+
+
+
 
 ##统一管理文件的东西
 var 文件:引擎文件
@@ -19,8 +32,7 @@ var 列表:引擎列表
 ##基于节点的东西
 var 节点:引擎节点
 
-##基于调试封装的东西
-var 调试:引擎调试
+
 
 ##基于资源封装的东西
 var 资源:引擎资源
@@ -40,8 +52,7 @@ var UDP:引擎UDP
 ##基于缓动封装的东西
 var 缓动:引擎缓动
 
-##基于场景封装的东西
-var 场景:引擎场景
+
 
 ##基于随机封装的东西
 var 随机:引擎随机
@@ -55,11 +66,7 @@ var 对象:引擎对象
 ##基于自己时间的东西
 var 时间:引擎时间
 
-##统一窗口的的东西
-var 窗口:引擎窗口
 
-##统一加解密的的东西
-var 加解密:引擎加解密
 
 func _init() -> void:
 #region 初始化 回调_按钮.gd 接管所有按钮脚本回调。请使用[按钮信号.gd]拖入按钮控件配置相关属性
@@ -77,13 +84,27 @@ func _ready():
 	self.场景 = 场景节点
 #endregion
 
-
 #region 初始化 [addons\YgameEngine\场景\对话\对话.gd],窗口的东西。
 	var 对话节点 = load("uid://bnyxil46lij8e").new()
 	对话节点.name="对话"
 	add_child(对话节点)
 	self.对话 = 对话节点
 #endregion
+	
+#region 初始化 [addons\YgameEngine\脚本\窗口.gd],窗口的东西。
+	var 窗口节点 = load("uid://cy1l67aptkolr").new()
+	窗口节点.name="窗口"
+	add_child(窗口节点)
+	self.窗口 = 窗口节点
+#endregion
+
+#region 初始化 [addons\YgameEngine\脚本\加解密.gd],窗口的东西。
+	var 加解密节点 = load("uid://chwg4gxgysd33").new()
+	加解密节点.name="加解密节点"
+	add_child(加解密节点)
+	self.加解密 = 加解密节点
+#endregion
+	
 	
 #region 初始化 [addons\YgameEngine\脚本\文件.gd] 添加文件系统
 	var 文件节点 = load("uid://c1v6dd331585h").new()
@@ -183,18 +204,4 @@ func _ready():
 	时间节点.name="时间"
 	add_child(时间节点)
 	self.时间 = 时间节点
-#endregion
-
-#region 初始化 [addons\YgameEngine\脚本\窗口.gd],窗口的东西。
-	var 窗口节点 = load("uid://cy1l67aptkolr").new()
-	窗口节点.name="窗口"
-	add_child(窗口节点)
-	self.窗口 = 窗口节点
-#endregion
-
-#region 初始化 [addons\YgameEngine\脚本\加解密.gd],窗口的东西。
-	var 加解密节点 = load("uid://chwg4gxgysd33").new()
-	加解密节点.name="加解密节点"
-	add_child(加解密节点)
-	self.加解密 = 加解密节点
 #endregion
