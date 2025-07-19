@@ -60,22 +60,21 @@ var 窗口:引擎窗口
 
 ##统一加解密的的东西
 var 加解密:引擎加解密
-func _ready():
-	
+
+func _init() -> void:
 #region 初始化 回调_按钮.gd 接管所有按钮脚本回调。请使用[按钮信号.gd]拖入按钮控件配置相关属性
 	#载入[addons\YgameEngine\脚本\按钮.gd]
 	var 按钮节点 = load("uid://d0xhr42vcl758").new()
 	按钮节点.name="按钮"
 	add_child(按钮节点)
 	self.按钮 = 按钮节点
-
-#endregion
-
-#region 初始化[addons\YgameEngine\脚本\音乐.gd] 添加音乐系统
-	var 音乐节点 = load("uid://cigc82l4kfasw").new()
-	音乐节点.name="音乐"
-	add_child(音乐节点)
-	self.音乐 = 音乐节点
+	#endregion
+func _ready():
+#region 初始化 [addons\YgameEngine\脚本\场景.gd] 添加场景系统
+	var 场景节点 = load("uid://cmmdxughbtv03").new()
+	场景节点.name="场景"
+	add_child(场景节点)
+	self.场景 = 场景节点
 #endregion
 
 
@@ -155,12 +154,7 @@ func _ready():
 	add_child(缓动节点)
 	self.缓动 = 缓动节点
 #endregion
-##region 初始化 [addons\YgameEngine\脚本\场景.gd] 添加场景系统
-	var 场景节点 = load("uid://cmmdxughbtv03").new()
-	场景节点.name="场景"
-	add_child(场景节点)
-	self.场景 = 场景节点
-#endregion
+
 
 ##region 初始化 [addons\YgameEngine\脚本\字节数据.gd] 添加字节数据系统
 	var 字节数据节点 = load("uid://w0jiirwvkqsr").new()

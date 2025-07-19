@@ -2,7 +2,7 @@
 @tool
 extends Node
 class_name 引擎按钮
-
+var ID=0
 ##用法
 ##[codeblock]
 ##引擎.按钮.按下事件.connect(func(按钮控件):
