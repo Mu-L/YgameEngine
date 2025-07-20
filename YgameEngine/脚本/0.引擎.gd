@@ -19,12 +19,12 @@ var 屏幕:引擎屏幕
 ##统一加解密的的东西
 var 加解密:引擎加解密
 
-
-
-
-
 ##统一管理文件的东西
 var 文件:引擎文件
+
+
+
+
 
 ##基于listitem封装的东西
 var 列表:引擎列表
@@ -105,13 +105,13 @@ func _ready():
 	self.加解密 = 加解密节点
 #endregion
 	
-	
 #region 初始化 [addons\YgameEngine\脚本\文件.gd] 添加文件系统
 	var 文件节点 = load("uid://c1v6dd331585h").new()
 	文件节点.name="文件"
 	add_child(文件节点)
 	self.文件 = 文件节点
 #endregion
+
 
 #region 初始化 [addons\YgameEngine\脚本\列表.gd] 添加列表系统
 	var 列表节点 = load("uid://ddvmv08fc64oj").new()

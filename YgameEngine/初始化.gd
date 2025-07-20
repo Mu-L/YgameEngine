@@ -5,7 +5,7 @@ extends EditorPlugin
 #插件启动函数
 func _enable_plugin() -> void:
 	# Add autoloads here.
-	add_autoload_singleton("引擎", "res://addons/YgameEngine/脚本/引擎.gd")
+	add_autoload_singleton("引擎", "res://addons/YgameEngine/脚本/0.引擎.gd")
 	print("引擎插件已启动，全局'引擎.xxx'可使用")
 
 

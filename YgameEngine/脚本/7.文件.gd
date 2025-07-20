@@ -75,7 +75,7 @@ func 是否存在(文件路径:String) -> bool:
 ##引擎.文件.保存文本到文件("游戏进度数据", "user://save_game.dat")
 ##引擎.文件.保存文本到文件("配置信息", "user://config.txt")
 ##[/codeblock]
-func 保存文本到文件(文本, 文件地址:String = "user://save_game.dat"):
+func 保存文本到文件(文本:String, 文件地址:String = "user://save_game.dat"):
 	var _文件 = FileAccess.open(文件地址, FileAccess.WRITE)
 	if _文件:
 		_文件.store_string(文本)
