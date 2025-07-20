@@ -75,13 +75,17 @@ func 是否存在(文件路径:String) -> bool:
 ##引擎.文件.保存文本到文件("游戏进度数据", "user://save_game.dat")
 ##引擎.文件.保存文本到文件("配置信息", "user://config.txt")
 ##[/codeblock]
-func 保存文本到文件(文本:String, 文件地址:String = "user://save_game.dat"):
+func 保存文本到文件(文本:String, 文件地址:String = "user://save_game.dat") -> bool:
 	var _文件 = FileAccess.open(文件地址, FileAccess.WRITE)
 	if _文件:
 		_文件.store_string(文本)
 		_文件.close() # 确保关闭文件
+		return true
 	else:
 		push_error("无法打开文件进行写入: " + 文件地址)
+		return false
+
+	
 
 ## 从指定文件读取文本内容
 ## [br]参数:[br]
@@ -102,6 +106,82 @@ func 读取文件到文本(文件地址:String = "user://save_game.dat") -> Stri
 		push_error("无法打开文件进行读取: " + 文件地址)
 		return ""
 
+## 将变量序列化并保存到指定文件，支持加密
+## [br]参数:[br]
+##   - 数据: 要保存的变量[br]
+##   - 文件地址: 保存路径，默认为"user://save_game.dat"[br]
+##   - 密码: 加密密码，为空则不加密，默认为空
+## [br]返回:[br]
+##   - 成功返回true，失败返回false
+## [br]异常:[br]
+##   - 如果JSON序列化失败，会抛出错误
+##   - 如果文件无法打开，会抛出错误
+##[codeblock]
+##var 游戏数据 = {"分数": 100, "关卡": 5}
+##引擎.文件.保存变量到文件(游戏数据, "user://game_data.dat")  # 不加密
+##引擎.文件.保存变量到文件(游戏数据, "user://game_data.dat", "123456")  # 加密保存
+##[/codeblock]
+func 保存变量到文件(数据:Variant,文件地址:String = "user://save_game.dat",密码: String = ""):
+	var json_string=JSON.stringify(数据)
+	if json_string == "":  # 序列化失败时返回空字符串
+		push_error("JSON序列化失败，数据可能包含无法序列化的类型")
+		return false
+	# 根据密码是否存在选择普通保存或加密保存
+	if 密码 == "":
+		return 保存文本到文件(json_string, 文件地址)
+	else:
+		var file = FileAccess.open_encrypted_with_pass(文件地址, FileAccess.WRITE, 密码)
+		if file:
+			file.store_string(json_string)
+			file.close()
+			return true
+		else:
+			push_error("无法创建加密文件: " + 文件地址)
+			return false
+			
+## 从指定文件读取数据并反序列化为变量，支持加密
+## [br]参数:[br]
+##   - 文件地址: 读取路径，默认为"user://save_game.dat"[br]
+##   - 密码: 解密密码，需与保存时一致，默认为空
+## [br]返回:[br]
+##   - 成功返回变量内容，失败返回null
+## [br]异常:[br]
+##   - 如果文件不存在或无法打开，会抛出错误
+##   - 如果JSON解析失败，会抛出错误
+##   - 如果密码错误，会抛出错误
+##[codeblock]
+##var 读取的数据 = 引擎.文件.读取文件到变量("user://game_data.dat")  # 读取未加密数据
+##var 加密数据 = 引擎.文件.读取文件到变量("user://game_data.dat", "123456")  # 读取加密数据
+##if 读取的数据:
+##    print("读取成功:", 读取的数据)
+##[/codeblock]
+func 读取文件到变量(文件地址: String = "user://save_game.dat", 密码: String = "") -> Variant:
+	var json_string = ""
+	
+	# 根据密码是否存在选择普通读取或加密读取
+	if 密码 == "":
+		var file = FileAccess.open(文件地址, FileAccess.READ)
+		if not file:
+			push_error("无法打开文件: " + 文件地址)
+			return null
+		json_string = file.get_as_text()
+		file.close()
+	else:
+		var file = FileAccess.open_encrypted_with_pass(文件地址, FileAccess.READ, 密码)
+		if not file:
+			push_error("无法打开加密文件（可能密码错误）: " + 文件地址)
+			return null
+		json_string = file.get_as_text()
+		file.close()
+	
+	# 解析JSON数据
+	var parse_result = JSON.parse_string(json_string)
+	if parse_result == null:
+		push_error("JSON解析失败: ")
+		return null
+	
+	return parse_result#.result
+	
 ## 加载外部PCK或ZIP资源包
 ## [br]参数:[br]
 ##   - 路径资源: 要加载的资源包路径，默认为"user://update.zip"
