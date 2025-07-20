@@ -22,7 +22,11 @@ var 加解密:引擎加解密
 ##统一管理文件的东西
 var 文件:引擎文件
 
+##统一数学的东西
+var 数学:引擎数学
 
+
+##############以下，待融入参考，
 
 
 
@@ -31,8 +35,6 @@ var 列表:引擎列表
 
 ##基于节点的东西
 var 节点:引擎节点
-
-
 
 ##基于资源封装的东西
 var 资源:引擎资源
@@ -54,8 +56,7 @@ var 缓动:引擎缓动
 
 
 
-##基于随机封装的东西
-var 随机:引擎随机
+
 
 ##基于字节数据封装的东西
 var 字节数据:引擎字节数据
@@ -70,48 +71,69 @@ var 时间:引擎时间
 
 func _init() -> void:
 #region 初始化 回调_按钮.gd 接管所有按钮脚本回调。请使用[按钮信号.gd]拖入按钮控件配置相关属性
-	#载入[addons\YgameEngine\脚本\按钮.gd]
+	#载入[addons\YgameEngine\脚本\2.按钮.gd]
 	var 按钮节点 = load("uid://d0xhr42vcl758").new()
 	按钮节点.name="按钮"
 	add_child(按钮节点)
 	self.按钮 = 按钮节点
 	#endregion
 func _ready():
-#region 初始化 [addons\YgameEngine\脚本\场景.gd] 添加场景系统
+	
+#region 初始化 [addons\YgameEngine\脚本\1.调试.gd] 添加调试系统
+	var 调试节点 = load("uid://boaf24oyvwawd").new()
+	调试节点.name="调试"
+	add_child(调试节点)
+	self.调试 = 调试节点
+#endregion
+
+#region 初始化 [addons\YgameEngine\脚本\3.场景.gd] 添加场景系统
 	var 场景节点 = load("uid://cmmdxughbtv03").new()
 	场景节点.name="场景"
 	add_child(场景节点)
 	self.场景 = 场景节点
 #endregion
 
-#region 初始化 [addons\YgameEngine\场景\对话\对话.gd],对话的东西。
+#region 初始化 [addons\YgameEngine\场景\对话\4.对话.gd],对话的东西。
 	var 对话节点 = load("uid://bnyxil46lij8e").new()
 	对话节点.name="对话"
 	add_child(对话节点)
 	self.对话 = 对话节点
 #endregion
 	
-#region 初始化 [addons\YgameEngine\脚本\屏幕.gd],屏幕的东西。
+#region 初始化 [addons\YgameEngine\脚本\5.屏幕.gd],屏幕的东西。
 	var 屏幕节点 = load("uid://cy1l67aptkolr").new()
 	屏幕节点.name="屏幕"
 	add_child(屏幕节点)
 	self.屏幕 = 屏幕节点
 #endregion
 
-#region 初始化 [addons\YgameEngine\脚本\加解密.gd],的东西。
+#region 初始化 [addons\YgameEngine\脚本\6.加解密.gd],的东西。
 	var 加解密节点 = load("uid://chwg4gxgysd33").new()
 	加解密节点.name="加解密节点"
 	add_child(加解密节点)
 	self.加解密 = 加解密节点
 #endregion
 	
-#region 初始化 [addons\YgameEngine\脚本\文件.gd] 添加文件系统
+#region 初始化 [addons\YgameEngine\脚本\7.文件.gd] 添加文件系统
 	var 文件节点 = load("uid://c1v6dd331585h").new()
 	文件节点.name="文件"
 	add_child(文件节点)
 	self.文件 = 文件节点
 #endregion
 
+#region 初始化 [addons\YgameEngine\脚本\8.数学.gd] 添加随机系统
+	var 数学节点 = load("uid://be3m8f3yuqecj").new()
+	数学节点.name="数学"
+	add_child(数学节点)
+	self.数学 = 数学节点
+#endregion
+
+
+
+
+
+
+##以下待修复，融入
 
 #region 初始化 [addons\YgameEngine\脚本\列表.gd] 添加列表系统
 	var 列表节点 = load("uid://ddvmv08fc64oj").new()
@@ -127,12 +149,7 @@ func _ready():
 	self.节点 = 节点节点
 #endregion
 
-#region 初始化 [addons\YgameEngine\脚本\调试.gd] 添加调试系统
-	var 调试节点 = load("uid://boaf24oyvwawd").new()
-	调试节点.name="调试"
-	add_child(调试节点)
-	self.调试 = 调试节点
-#endregion
+
 
 #region 初始化 [addons\YgameEngine\脚本\资源.gd] 添加资源系统
 	var 资源节点 = load("uid://dh5hqmlerkso6").new()
@@ -184,12 +201,7 @@ func _ready():
 	self.字节数据 = 字节数据节点
 #endregion
 
-##region 初始化 [addons\YgameEngine\脚本\随机.gd] 添加随机系统
-	var 随机节点 = load("uid://bgpwgbmomhiew").new()
-	随机节点.name="随机"
-	add_child(随机节点)
-	self.随机 = 随机节点
-#endregion
+
 
 
 ##region 初始化 [addons\YgameEngine\脚本\对象.gd] 添加对象系统
