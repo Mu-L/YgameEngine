@@ -6,6 +6,6 @@ YgameEngine
 1.1 请使用引擎.xxx 加速游戏制作流程 <br>
 1.2 回调_按钮。是所有按钮的回调接口，可使用 <br>
 
-Q群:437808640
+Q群:696526224
 【合集文档】 YgameEngine
 https://kdocs.cn/l/camhGQG66ttP
