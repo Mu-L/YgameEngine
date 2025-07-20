@@ -13,8 +13,8 @@ var 场景:引擎场景
 ##统一管理对话的的东西
 var 对话:引擎对话
 
-##统一窗口的的东西
-var 窗口:引擎窗口
+##统一屏幕的的东西
+var 屏幕:引擎屏幕
 
 ##统一加解密的的东西
 var 加解密:引擎加解密
@@ -84,21 +84,21 @@ func _ready():
 	self.场景 = 场景节点
 #endregion
 
-#region 初始化 [addons\YgameEngine\场景\对话\对话.gd],窗口的东西。
+#region 初始化 [addons\YgameEngine\场景\对话\对话.gd],对话的东西。
 	var 对话节点 = load("uid://bnyxil46lij8e").new()
 	对话节点.name="对话"
 	add_child(对话节点)
 	self.对话 = 对话节点
 #endregion
 	
-#region 初始化 [addons\YgameEngine\脚本\窗口.gd],窗口的东西。
-	var 窗口节点 = load("uid://cy1l67aptkolr").new()
-	窗口节点.name="窗口"
-	add_child(窗口节点)
-	self.窗口 = 窗口节点
+#region 初始化 [addons\YgameEngine\脚本\屏幕.gd],屏幕的东西。
+	var 屏幕节点 = load("uid://cy1l67aptkolr").new()
+	屏幕节点.name="屏幕"
+	add_child(屏幕节点)
+	self.屏幕 = 屏幕节点
 #endregion
 
-#region 初始化 [addons\YgameEngine\脚本\加解密.gd],窗口的东西。
+#region 初始化 [addons\YgameEngine\脚本\加解密.gd],的东西。
 	var 加解密节点 = load("uid://chwg4gxgysd33").new()
 	加解密节点.name="加解密节点"
 	add_child(加解密节点)
