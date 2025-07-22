@@ -28,6 +28,9 @@ var 数学:引擎数学
 ##基于自己时间的东西
 var 时间:引擎时间
 
+##基于字符串封装的东西
+var 字符串:引擎字符串
+
 ##############以下，待融入参考，
 
 
@@ -41,23 +44,17 @@ var 节点:引擎节点
 ##基于资源封装的东西
 var 资源:引擎资源
 
-##基于字符串封装的东西
-var 字符串:引擎字符串
+
 
 ##基于窗口封装的东西
 var 程序窗口:引擎程序窗口
 
-##基于json封装的东西
-var Json序列化:引擎Json序列化
 	
 ##基于UDP封装的东西
 var UDP:引擎UDP
 
 ##基于缓动封装的东西
 var 缓动:引擎缓动
-
-
-
 
 
 ##基于字节数据封装的东西
@@ -129,14 +126,19 @@ func _ready():
 	self.数学 = 数学节点
 #endregion
 
-#region 初始化 [addons\YgameEngine\脚本\时间.gd] 添加对象系统
+#region 初始化 [addons\YgameEngine\脚本\9.时间.gd] 添加对象系统
 	var 时间节点 = load("uid://7ufr514c01sm").new()
 	时间节点.name="时间"
 	add_child(时间节点)
 	self.时间 = 时间节点
 #endregion
 
-
+#region 初始化 [addons\YgameEngine\脚本\10.字符串.gd] 添加字符串系统
+	var 字符串节点 = load("uid://dt2gymmpyidg5").new()
+	字符串节点.name="字符串"
+	add_child(字符串节点)
+	self.字符串 = 字符串节点
+#endregion
 
 
 ##以下待修复，融入
@@ -164,12 +166,7 @@ func _ready():
 	self.资源 = 资源节点
 #endregion
 
-#region 初始化 [addons\YgameEngine\脚本\字符串.gd] 添加字符串系统
-	var 字符串节点 = load("uid://dt2gymmpyidg5").new()
-	字符串节点.name="字符串"
-	add_child(字符串节点)
-	self.字符串 = 字符串节点
-#endregion
+
 
 #region 初始化 [addons\YgameEngine\脚本\程序窗口.gd] 添加程序窗口系统
 	var 程序窗口节点 = load("uid://bou86tafpgqhs").new()

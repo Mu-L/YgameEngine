@@ -86,7 +86,7 @@ func 到uft8字节数据(_字符串:String) -> PackedByteArray:
 
 
 ## 从路径中取出文件名 
-## 路径_取文件名("www.baidu.com/a/z.zip")
+## 路径_取文件名("www.baidu.com/a/z.zip") >z.zip
 func 路径_取文件名(文件路径:String):
 	var 取最后出现的字符串位置=文件路径.rfind("/")
 	var 提取的文件名=文件路径.substr(取最后出现的字符串位置+1,文件路径.length()-取最后出现的字符串位置)
@@ -108,3 +108,33 @@ func 路径_取目录(文件路径:String):
 func 路径_取文件名含扩展名(文件路径:String):
 	return	文件路径.get_file()
 	
+
+## 将数据通过JSON格式转换为字符串
+## 参数:
+##   数据: 可序列化的Variant类型（字典、数组等）
+## 返回:
+##   成功返回JSON字符串，失败返回空字符串
+## [codeblock]
+## var 数据 = {"a": 1, "b": [2, 3]}
+## var str = 引擎.字符串.JSON_到字符串(数据)  # 结果: '{"a":1,"b":[2,3]}'
+## [/codeblock]
+func JSON_到字符串(数据: Variant) -> String:
+	var json_str = JSON.stringify(数据)
+	if json_str == "":
+		push_error("JSON序列化失败")
+	return json_str
+
+## 从JSON格式的字符串解析为数据
+## 参数:
+##   json字符串: 符合JSON格式的字符串
+## 返回:
+##   成功返回解析后的数据（字典/数组等），失败返回null
+## [codeblock]
+## var str = '{"a":1,"b":[2,3]}'
+## var 数据 = 引擎.字符串.JSON_到数据(str)  # 结果: {"a": 1, "b": [2, 3]}
+## [/codeblock]
+func JSON_到数据(json字符串: String) -> Variant:
+	var 数据 = JSON.parse_string(json字符串)
+	if 数据 == null:
+		push_error("JSON解析失败")
+	return 数据

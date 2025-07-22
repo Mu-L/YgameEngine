@@ -19,6 +19,7 @@ func _ready() -> void:
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
 
+
 # Called when the HTTP request is completed.
 func _http_request_completed(result, response_code, headers, body):
 	#json转换
