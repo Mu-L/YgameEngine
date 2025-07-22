@@ -30,6 +30,41 @@ func 扫描文件(路径:String, 是否扫描子目录:bool = false, 指定格�
 	else:
 		print("尝试访问路径时出错。")
 	return 文件列表
+	
+## 读取指定目录下所有文件的JSON内容，存储到字典
+## 功能：扫描目录下的文件，解析JSON内容并以 {文件名: JSON数据} 格式返回
+## [codeblock]
+## # 读取res://json目录下的所有JSON文件（不递归子目录）
+## var json数据 = 引擎.文件.读取目录下所有JSON到字典("res://json/")
+## 
+## [/codeblock]
+func 读取目录下所有JSON到字典(目录: String) -> Dictionary:
+	var json数据字典 = {}
+	var 文件列表 = 引擎.文件.扫描文件(目录)
+	
+	if 文件列表.is_empty():
+		print("目录为空或无文件: ", 目录)
+		return json数据字典
+	for 文件名 in 文件列表:
+		# 尝试打开文件
+		var file = FileAccess.open(目录+文件名, FileAccess.READ)
+		if not file:
+			push_error("无法打开文件: ", 目录+文件名)
+			continue
+		# 读取文件内容
+		var 文件内容 = file.get_as_text()
+		file.close()
+		
+		# 解析JSON
+		var 解析结果 = JSON.parse_string(文件内容)
+		if 解析结果 == null:
+			push_error("JSON解析失败: ", 目录+文件名)
+			continue
+		
+		# 存储到字典
+		json数据字典[文件名] = 解析结果
+	
+	return json数据字典
 
 ##获取文件的MD5哈希值(用于文件校验)
 ##[codeblock]

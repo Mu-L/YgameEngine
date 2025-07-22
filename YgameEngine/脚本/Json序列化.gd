@@ -3,28 +3,7 @@
 extends Node
 class_name 引擎Json序列化
 
-## 读取指定目录下所有JSON文件并转换为字典
-## [br]参数:[br]
-##   - 目录: 要读取的JSON文件所在目录路径
-## [br]返回:[br]
-##   - 包含所有JSON文件内容的字典，键为文件名，值为解析后的JSON数据
-##[codeblock]
-## var json数据 = 引擎.Json序列化.读取json文件夹_到字典("res://data/json/")
-## print(json数据)
-##[/codeblock]
-func 读取json文件夹_到字典(目录) -> Dictionary:
-	var 变量 = {}  # 用于存储解析后JSON数据的字典
-	var XML文件夹目录 = 目录
-	var 读取XML文件 = 引擎.文件.扫描文件(XML文件夹目录) 
-	
-	for i in 读取XML文件.size():
-		var 子文件 = 读取XML文件[i]
-		var file = FileAccess.open(子文件, FileAccess.READ)
-		var npc文本 = file.get_as_text()
-		var 解析的npcjson = JSON.parse_string(npc文本)
-		变量[读取XML文件[i]] = 解析的npcjson
-	
-	return 变量
+
 
 ## 将GDScript数据类型转换为JSON格式字符串
 ## [br]参数:[br]
