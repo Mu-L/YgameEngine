@@ -128,7 +128,12 @@ func _ready():
 	self.数学 = 数学节点
 #endregion
 
-
+#region 初始化 [addons\YgameEngine\脚本\时间.gd] 添加对象系统
+	var 时间节点 = load("uid://7ufr514c01sm").new()
+	时间节点.name="时间"
+	add_child(时间节点)
+	self.时间 = 时间节点
+#endregion
 
 
 
@@ -209,11 +214,4 @@ func _ready():
 	对象节点.name="对象"
 	add_child(对象节点)
 	self.对象 = 对象节点
-#endregion
-
-##region 初始化 [addons\YgameEngine\脚本\时间.gd] 添加对象系统
-	var 时间节点 = load("uid://7ufr514c01sm").new()
-	时间节点.name="时间"
-	add_child(时间节点)
-	self.时间 = 时间节点
 #endregion

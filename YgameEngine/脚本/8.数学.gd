@@ -1,4 +1,4 @@
-##math库
+##基于数学库,随机，权重等
 extends Node
 class_name 引擎数学
 
