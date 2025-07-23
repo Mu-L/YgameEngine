@@ -18,7 +18,7 @@ class UDP客户端 extends PacketPeerUDP:
 			elif 数据 is PackedByteArray:
 				self.put_packet(数据)
 		
-		func UDP_获取可用数量() -> int:
+		func UDP_获取可用数据包数量() -> int:
 			return self.get_available_packet_count()
 
 		func UDP_获取数据(编码类型: String = ""):
