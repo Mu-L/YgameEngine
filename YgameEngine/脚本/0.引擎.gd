@@ -1,6 +1,12 @@
 @tool
 ##Ygame Mod 10.0
-extends Node
+#引擎.xx
+extends Node 
+###基于网络封装
+#var 网络:引擎网络
+# 关键：添加一个类型别名，让"引擎.网络类型"指向"引擎网络"类
+# 用于类型声明时识别"引擎.网络"层级
+
 ##基于调试封装的东西
 var 调试:引擎调试
 
@@ -27,7 +33,6 @@ var 数学:引擎数学
 
 ##基于自己时间的东西
 var 时间:引擎时间
-
 ##基于字符串封装的东西
 var 字符串:引擎字符串
 
@@ -35,30 +40,36 @@ var 字符串:引擎字符串
 var 对象:引擎对象
 
 
+# 1. 预加载网络模块的类（用于类型关联）
+const 网络类 = preload("uid://bp4iapmx88yhl")  # 指向12.网络.gd（引擎网络类）
+# 2. 网络实例（加载并初始化）
+var 网络: 网络类 = 网络类.new()
+	
+
 
 ##############以下，待融入参考，
 
 
 
-##基于listitem封装的东西
-var 列表:引擎列表
-
-
-##基于资源封装的东西
-var 资源:引擎资源
-
-
-##基于窗口封装的东西
-var 程序窗口:引擎程序窗口
-
-##基于UDP封装的东西
-var UDP:引擎UDP
-
-##基于缓动封装的东西
-var 缓动:引擎缓动
-
-##基于字节数据封装的东西
-var 字节数据:引擎字节数据
+###基于listitem封装的东西
+#var 列表:引擎列表
+#
+#
+###基于资源封装的东西
+#var 资源:引擎资源
+#
+#
+###基于窗口封装的东西
+#var 程序窗口:引擎程序窗口
+#
+###基于UDP封装的东西
+#var UDP:引擎UDP
+#
+###基于缓动封装的东西
+#var 缓动:引擎缓动
+#
+###基于字节数据封装的东西
+#var 字节数据:引擎字节数据
 
 
 
@@ -146,52 +157,55 @@ func _ready():
 	self.对象 = 对象脚本
 #endregion
 
+	#指向12.网络.gd（引擎网络类）
+	网络.name = "网络"
+	add_child(网络)  # 挂载到引擎节点
+##region 初始化 [addons\YgameEngine\脚本\12.网络.gd] 添加UDP系统
+	#var 网络脚本 = preload("uid://bp4iapmx88yhl").new()
+	#网络脚本.name="网络"
+	#add_child(网络脚本)
+	#self.网络 = 网络脚本
+##endregion
+
 ##以下待修复，融入
-
-#region 初始化 [addons\YgameEngine\脚本\列表.gd] 添加列表系统
-	var 列表节点 = load("uid://ddvmv08fc64oj").new()
-	列表节点.name="列表"
-	add_child(列表节点)
-	self.列表 = 列表节点
-#endregion
-
-
-#region 初始化 [addons\YgameEngine\脚本\资源.gd] 添加资源系统
-	var 资源节点 = load("uid://dh5hqmlerkso6").new()
-	资源节点.name="资源"
-	add_child(资源节点)
-	self.资源 = 资源节点
-#endregion
-
-
-
-#region 初始化 [addons\YgameEngine\脚本\程序窗口.gd] 添加程序窗口系统
-	var 程序窗口节点 = load("uid://bou86tafpgqhs").new()
-	程序窗口节点.name="窗口"
-	add_child(程序窗口节点)
-	self.程序窗口 = 程序窗口节点
-#endregion
-
-
-
-#region 初始化 [addons\YgameEngine\脚本\UDP.gd] 添加UDP系统
-	var UDP节点 = load("uid://cx6o0o5p5i3m4").new()
-	UDP节点.name="UDP"
-	add_child(UDP节点)
-	self.UDP = UDP节点
-#endregion
-
-##region 初始化 [addons\YgameEngine\脚本\缓动.gd] 添加缓动系统
-	var 缓动节点 = load("uid://ccoc56d5ll7gu").new()
-	缓动节点.name="缓动"
-	add_child(缓动节点)
-	self.缓动 = 缓动节点
-#endregion
-
-
-##region 初始化 [addons\YgameEngine\脚本\字节数据.gd] 添加字节数据系统
-	var 字节数据节点 = load("uid://w0jiirwvkqsr").new()
-	字节数据节点.name="字节数据"
-	add_child(字节数据节点)
-	self.字节数据 = 字节数据节点
-#endregion
+#
+##region 初始化 [addons\YgameEngine\脚本\列表.gd] 添加列表系统
+	#var 列表节点 = load("uid://ddvmv08fc64oj").new()
+	#列表节点.name="列表"
+	#add_child(列表节点)
+	#self.列表 = 列表节点
+##endregion
+#
+#
+##region 初始化 [addons\YgameEngine\脚本\资源.gd] 添加资源系统
+	#var 资源节点 = load("uid://dh5hqmlerkso6").new()
+	#资源节点.name="资源"
+	#add_child(资源节点)
+	#self.资源 = 资源节点
+##endregion
+#
+#
+#
+##region 初始化 [addons\YgameEngine\脚本\程序窗口.gd] 添加程序窗口系统
+	#var 程序窗口节点 = load("uid://bou86tafpgqhs").new()
+	#程序窗口节点.name="窗口"
+	#add_child(程序窗口节点)
+	#self.程序窗口 = 程序窗口节点
+##endregion
+#
+#
+#
+###region 初始化 [addons\YgameEngine\脚本\缓动.gd] 添加缓动系统
+	#var 缓动节点 = load("uid://ccoc56d5ll7gu").new()
+	#缓动节点.name="缓动"
+	#add_child(缓动节点)
+	#self.缓动 = 缓动节点
+##endregion
+#
+#
+###region 初始化 [addons\YgameEngine\脚本\字节数据.gd] 添加字节数据系统
+	#var 字节数据节点 = load("uid://w0jiirwvkqsr").new()
+	#字节数据节点.name="字节数据"
+	#add_child(字节数据节点)
+	#self.字节数据 = 字节数据节点
+##endregion

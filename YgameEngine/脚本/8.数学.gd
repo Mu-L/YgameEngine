@@ -6,14 +6,14 @@ class_name 引擎数学
 ##[codeblock]
 ## 引擎.数学.向下取整()  
 ##[/codeblock]
-static func 向下取整(浮点数):
+func 向下取整(浮点数):
 	return floor(浮点数)
 
 ## 向上取整
 ##[codeblock]
 ## 引擎.数学.向上取整()  
 ##[/codeblock]
-static func 向上取整(_浮点数):
+func 向上取整(_浮点数):
 	return ceil(_浮点数)
 
 ## 初始化随机数生成器（使用当前时间作为种子）
