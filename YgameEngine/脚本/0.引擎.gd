@@ -1,5 +1,5 @@
 @tool
-##Dream Mod 10.0
+##Ygame Mod 10.0
 extends Node
 ##基于调试封装的东西
 var 调试:引擎调试
@@ -31,6 +31,11 @@ var 时间:引擎时间
 ##基于字符串封装的东西
 var 字符串:引擎字符串
 
+##基于自己理解的东西,节点统称为对象
+var 对象:引擎对象
+
+
+
 ##############以下，待融入参考，
 
 
@@ -38,18 +43,14 @@ var 字符串:引擎字符串
 ##基于listitem封装的东西
 var 列表:引擎列表
 
-##基于节点的东西
-var 节点:引擎节点
 
 ##基于资源封装的东西
 var 资源:引擎资源
 
 
-
 ##基于窗口封装的东西
 var 程序窗口:引擎程序窗口
 
-	
 ##基于UDP封装的东西
 var UDP:引擎UDP
 
@@ -60,8 +61,7 @@ var 缓动:引擎缓动
 ##基于字节数据封装的东西
 var 字节数据:引擎字节数据
 
-##基于自己理解的东西
-var 对象:引擎对象
+
 
 
 
@@ -70,76 +70,82 @@ var 对象:引擎对象
 func _init() -> void:
 #region 初始化 回调_按钮.gd 接管所有按钮脚本回调。请使用[按钮信号.gd]拖入按钮控件配置相关属性
 	#载入[addons\YgameEngine\脚本\2.按钮.gd]
-	var 按钮节点 = load("uid://d0xhr42vcl758").new()
-	按钮节点.name="按钮"
-	add_child(按钮节点)
-	self.按钮 = 按钮节点
+	var 按钮脚本 = load("uid://d0xhr42vcl758").new()
+	按钮脚本.name="按钮"
+	add_child(按钮脚本)
+	self.按钮 = 按钮脚本
 	#endregion
 func _ready():
 	
 #region 初始化 [addons\YgameEngine\脚本\1.调试.gd] 添加调试系统
-	var 调试节点 = load("uid://boaf24oyvwawd").new()
-	调试节点.name="调试"
-	add_child(调试节点)
-	self.调试 = 调试节点
+	var 调试脚本 = load("uid://boaf24oyvwawd").new()
+	调试脚本.name="调试"
+	add_child(调试脚本)
+	self.调试 = 调试脚本
 #endregion
 
 #region 初始化 [addons\YgameEngine\脚本\3.场景.gd] 添加场景系统
-	var 场景节点 = load("uid://cmmdxughbtv03").new()
-	场景节点.name="场景"
-	add_child(场景节点)
-	self.场景 = 场景节点
+	var 场景脚本 = load("uid://cmmdxughbtv03").new()
+	场景脚本.name="场景"
+	add_child(场景脚本)
+	self.场景 = 场景脚本
 #endregion
 
 #region 初始化 [addons\YgameEngine\场景\对话\4.对话.gd],对话的东西。
-	var 对话节点 = load("uid://bnyxil46lij8e").new()
-	对话节点.name="对话"
-	add_child(对话节点)
-	self.对话 = 对话节点
+	var 对话脚本 = load("uid://bnyxil46lij8e").new()
+	对话脚本.name="对话"
+	add_child(对话脚本)
+	self.对话 = 对话脚本
 #endregion
 	
 #region 初始化 [addons\YgameEngine\脚本\5.屏幕.gd],屏幕的东西。
-	var 屏幕节点 = load("uid://cy1l67aptkolr").new()
-	屏幕节点.name="屏幕"
-	add_child(屏幕节点)
-	self.屏幕 = 屏幕节点
+	var 屏幕脚本 = load("uid://cy1l67aptkolr").new()
+	屏幕脚本.name="屏幕"
+	add_child(屏幕脚本)
+	self.屏幕 = 屏幕脚本
 #endregion
 
 #region 初始化 [addons\YgameEngine\脚本\6.加解密.gd],的东西。
-	var 加解密节点 = load("uid://chwg4gxgysd33").new()
-	加解密节点.name="加解密节点"
-	add_child(加解密节点)
-	self.加解密 = 加解密节点
+	var 加解密脚本 = load("uid://chwg4gxgysd33").new()
+	加解密脚本.name="加解密节点"
+	add_child(加解密脚本)
+	self.加解密 = 加解密脚本
 #endregion
 	
 #region 初始化 [addons\YgameEngine\脚本\7.文件.gd] 添加文件系统
-	var 文件节点 = load("uid://c1v6dd331585h").new()
-	文件节点.name="文件"
-	add_child(文件节点)
-	self.文件 = 文件节点
+	var 文件脚本 = load("uid://c1v6dd331585h").new()
+	文件脚本.name="文件"
+	add_child(文件脚本)
+	self.文件 = 文件脚本
 #endregion
 
 #region 初始化 [addons\YgameEngine\脚本\8.数学.gd] 添加随机系统
-	var 数学节点 = load("uid://be3m8f3yuqecj").new()
-	数学节点.name="数学"
-	add_child(数学节点)
-	self.数学 = 数学节点
+	var 数学脚本 = load("uid://be3m8f3yuqecj").new()
+	数学脚本.name="数学"
+	add_child(数学脚本)
+	self.数学 = 数学脚本
 #endregion
 
 #region 初始化 [addons\YgameEngine\脚本\9.时间.gd] 添加对象系统
-	var 时间节点 = load("uid://7ufr514c01sm").new()
-	时间节点.name="时间"
-	add_child(时间节点)
-	self.时间 = 时间节点
+	var 时间脚本 = load("uid://7ufr514c01sm").new()
+	时间脚本.name="时间"
+	add_child(时间脚本)
+	self.时间 = 时间脚本
 #endregion
 
 #region 初始化 [addons\YgameEngine\脚本\10.字符串.gd] 添加字符串系统
-	var 字符串节点 = load("uid://dt2gymmpyidg5").new()
-	字符串节点.name="字符串"
-	add_child(字符串节点)
-	self.字符串 = 字符串节点
+	var 字符串脚本 = load("uid://dt2gymmpyidg5").new()
+	字符串脚本.name="字符串"
+	add_child(字符串脚本)
+	self.字符串 = 字符串脚本
 #endregion
 
+#region 初始化 [addons\YgameEngine\脚本\11.对象.gd] 添加对象系统
+	var 对象脚本 = load("uid://wva6ajc1nv8o").new()
+	对象脚本.name="对象"
+	add_child(对象脚本)
+	self.对象 = 对象脚本
+#endregion
 
 ##以下待修复，融入
 
@@ -149,14 +155,6 @@ func _ready():
 	add_child(列表节点)
 	self.列表 = 列表节点
 #endregion
-
-#region 初始化 [addons\YgameEngine\脚本\节点.gd] 添加节点系统
-	var 节点节点 = load("uid://bsf7wletqiugu").new()
-	节点节点.name="节点"
-	add_child(节点节点)
-	self.节点 = 节点节点
-#endregion
-
 
 
 #region 初始化 [addons\YgameEngine\脚本\资源.gd] 添加资源系统
@@ -175,12 +173,7 @@ func _ready():
 	self.程序窗口 = 程序窗口节点
 #endregion
 
-#region 初始化 [addons\YgameEngine\脚本\Json序列化.gd] 添加Json序列化系统
-	var Json序列化节点 = load("uid://b476u8oavjn4q").new()
-	Json序列化节点.name="Json序列化"
-	add_child(Json序列化节点)
-	self.Json序列化 = Json序列化节点
-#endregion
+
 
 #region 初始化 [addons\YgameEngine\脚本\UDP.gd] 添加UDP系统
 	var UDP节点 = load("uid://cx6o0o5p5i3m4").new()
@@ -202,14 +195,4 @@ func _ready():
 	字节数据节点.name="字节数据"
 	add_child(字节数据节点)
 	self.字节数据 = 字节数据节点
-#endregion
-
-
-
-
-##region 初始化 [addons\YgameEngine\脚本\对象.gd] 添加对象系统
-	var 对象节点 = load("uid://wva6ajc1nv8o").new()
-	对象节点.name="对象"
-	add_child(对象节点)
-	self.对象 = 对象节点
 #endregion
