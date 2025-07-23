@@ -1,31 +1,33 @@
 extends Node
 class_name 引擎对象
 
-## 向下取整
-##[codeblock]
-##引擎.对象.实例化(对象路径)
-##[/codeblock]
-func 实例化(对象路径:String):
-	var 实例化;
-	var 对象=load(对象路径)
-	if 对象 is PackedScene:
-		实例化=对象.instantiate()
+
+## 创建对象（支持场景资源或普通类）
+## [codeblock]
+## # 创建场景对象
+## var 敌人对象 = 引擎.对象.创建对象("res://scenes/Enemy.tscn")
+## # 创建普通类对象
+## var 数据对象 = 引擎.对象.创建对象("res://scripts/Data.gd")
+## [/codeblock]
+func 创建对象(对象路径: String) -> Object:
+	var 资源 = load(对象路径)
+	if 资源 is PackedScene:
+		return 资源.instantiate()  # 场景对象实例化
 	else:
-		实例化=对象.new()
-	return 实例化
+		return 资源.new()  # 普通类对象创建
 	
 
-## 实例化场景资源并添加为子对象
+## 创建对象并添加为子对象
 ## [br]参数:[br]
 ##   - 父对象: 接收子对象的父级对象（Node类型）[br]
-##   - 子对象场景路径: 要实例化的场景资源路径
+##   - 子对象场景路径: 要创建的子对象场景路径
 ## [br]返回:[br]
-##   - 实例化并添加的子对象
+##   - 创建并添加成功的子对象
 ##[codeblock]
-## 引擎.对象.实例化添加子对象($Parent, "res://scenes/Child.tscn")
+## 引擎.对象.创建并添加子对象($Parent, "res://scenes/Child.tscn")
 ##[/codeblock]
-func 实例化添加子对象(父对象:Node, 子对象场景路径) -> Node:
-	var 子对象 = 实例化(子对象场景路径)
+func 创建并添加子对象(父对象:Node, 子对象场景路径:String) -> Node:
+	var 子对象 = 创建对象(子对象场景路径)  # 复用创建对象的逻辑
 	父对象.add_child(子对象)
 	return 子对象
 
@@ -33,9 +35,9 @@ func 实例化添加子对象(父对象:Node, 子对象场景路径) -> Node:
 ## [br]参数:[br]
 ##   - 目标对象: 要清空子对象的父对象
 ##[codeblock]
-## 引擎.对象.清空所有子对象($Parent)
+## 引擎.对象.清空子对象($Parent)
 ##[/codeblock]
-func 清空所有子对象(目标对象:Node):
+func 清空子对象(目标对象:Node):
 	for 子对象 in 目标对象.get_children():
 		目标对象.remove_child(子对象)
 
@@ -83,10 +85,10 @@ func 获取子对象(父对象:Node, 子对象路径:NodePath) -> Node:
 ##   - 目标对象: 要挂载脚本的对象[br]
 ##   - 脚本资源: 要挂载的脚本资源（通过load()加载）
 ##[codeblock]
-## 引擎.对象.挂载脚本($Node, load("res://scripts/MyScript.gd"))
+## 引擎.对象.挂载脚本到对象($Node, "res://scripts/MyScript.gd")
 ##[/codeblock]
-func 挂载脚本(目标对象:Node, 脚本资源):
-	目标对象.set_script(脚本资源)
+func 挂载脚本到对象(目标对象:Node, 脚本路径):
+	目标对象.set_script(load(脚本路径))
 
 ## 销毁指定对象
 ## [br]参数:[br]
@@ -103,18 +105,18 @@ func 销毁对象(目标对象:Node):
 ## [br]返回:[br]
 ##   - 如果对象有效返回true，否则返回false
 ##[codeblock]
-## if 引擎.对象.对象是否有效($Node):
+## if 引擎.对象.是否有效对象($Node):
 ##     print("对象有效")
 ##[/codeblock]
-func 对象是否有效(目标对象:Node) -> bool:
+func 是否有效对象(目标对象:Node) -> bool:
 	return is_instance_valid(目标对象)  # 优化：判断节点是否真正有效（处理已销毁但未回收的情况）
 
-## 将对象移动到新的父对象下
+## 将对象设置为目标父对象的子对象（变更父子关系）
 ## [br]参数:[br]
-##   - 待移动对象: 要移动的对象[br]
-##   - 目标父对象: 新的父级对象
+##   - 待设置对象: 要成为子对象的对象[br]
+##   - 目标父对象: 新的父级对象（待设置对象将成为其子对象）
 ##[codeblock]
-## 引擎.对象.移动到父对象下($Child, $NewParent)
+## 引擎.对象.设置为子对象($Child, $NewParent)  # $Child 成为 $NewParent 的子对象
 ##[/codeblock]
-func 移动到父对象下(待移动对象:Node, 目标父对象:Node):
-	待移动对象.reparent(目标父对象)
+func 设置为子对象(待设置对象:Node, 目标父对象:Node):
+	待设置对象.reparent(目标父对象)
