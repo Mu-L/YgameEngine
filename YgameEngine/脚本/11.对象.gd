@@ -80,6 +80,8 @@ func 隐藏(目标对象:Node):
 func 获取子对象(父对象:Node, 子对象路径:NodePath) -> Node:
 	return 父对象.get_node(子对象路径)
 
+
+
 ## 为对象挂载脚本
 ## [br]参数:[br]
 ##   - 目标对象: 要挂载脚本的对象[br]
@@ -110,6 +112,11 @@ func 销毁对象(目标对象:Node):
 ##[/codeblock]
 func 是否有效对象(目标对象:Node) -> bool:
 	return is_instance_valid(目标对象)  # 优化：判断节点是否真正有效（处理已销毁但未回收的情况）
+
+func 获取子对象数量(目标对象:Node) -> int:
+	return 目标对象.get_child_count()
+
+
 
 ## 将对象设置为目标父对象的子对象（变更父子关系）
 ## [br]参数:[br]

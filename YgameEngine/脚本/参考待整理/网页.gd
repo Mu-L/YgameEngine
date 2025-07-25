@@ -50,7 +50,6 @@ static func 请求_POST(请求链接: String,响应头:PackedStringArray=PackedS
 		push_error("在HTTP请求中发生了一个错误。")
 
 
-
 ## 能够一次性,下载文件的接口,你并不需要关心进度,只知道完成了会返回
 static func 请求下载文件(直链地址:String,存放地址:String="res://Update.zip"):
 	直链地址=URL_编码(直链地址)
@@ -84,9 +83,7 @@ static func 请求下载文件_响应(直链地址:String,存放地址:String="u
 		return {"请求状态":error,"网页状态码":-1}
 	else:
 		return {"请求状态":0,"网页状态码":200,"网页节点":网页节点}
-#		return HTTP节点
-		#return {"请求状态":返回值[0],"网页状态码":返回值[1],"响应头":返回值[2],"内容":返回值[3].get_string_from_utf8()}
-
+#		
 ## 取到需要下载文件的总大小,单位为:byte
 static func 取响应下载文件的大小(网页节点:Node):	
 	return 网页节点.get_body_size()
@@ -101,7 +98,6 @@ static func URL_编码(链接:String):
 	#var 字符串="https://8973.kstore.space/update/场景-场景.zip"
 	var 新字符串=""
 	for i in 链接:
-		
 		if i.unicode_at(0)<=122:#英文字母最大到122
 			新字符串+=i
 		else:
