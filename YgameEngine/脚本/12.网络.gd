@@ -46,7 +46,8 @@ func UDP_创建客户端() -> UDP客户端:
 ## 自定义UDP服务端内部类（与客户端同级，嵌套在引擎网络中）
 class UDP服务端 extends Node:
 	var 服务器 = UDPServer.new()  # 底层UDPServer实例
-	var 客户端列表 = []  # 存储已连接的客户端
+	var 客户端列表 = [] 
+	var 超时时间 = 300 #心跳包，超过300秒，就主动对客户端列表删除
 
 	## 启动服务端监听
 	## [br]参数:[br]
@@ -72,18 +73,34 @@ class UDP服务端 extends Node:
 			var 客户端 = 服务器.take_connection()
 			var 客户端IP = 客户端.get_packet_ip()
 			var 客户端端口 = 客户端.get_packet_port()
-			客户端列表.append(客户端)
 			
-			# 触发"客户端进入"回调（如果存在）
-			if "客户端进入" in 回调字典 and 回调字典["客户端进入"] is Callable:
-				回调字典["客户端进入"].call(客户端, 客户端IP, 客户端端口)
-
+			# 检查该 IP:端口 是否已在列表中（避免重复添加）
+			var 客户端索引 = -1
+			for i in 客户端列表.size():
+				if 客户端列表[i]["peer"]==客户端:
+					客户端索引=i
+			#不存在时返回 -1
+			if (客户端索引)==-1:
+				#客户端列表.append(客户端)
+				客户端列表.append({"peer":客户端,"time":引擎.时间.取当前时间戳()})
+				
+				# 触发"客户端进入"回调（如果存在）
+				if "客户端进入" in 回调字典 and 回调字典["客户端进入"] is Callable:
+					回调字典["客户端进入"].call(客户端, 客户端IP, 客户端端口)
+			else:#更新时间
+				客户端列表[客户端索引]["time"]=引擎.时间.取当前时间戳()
+				
 		# 处理收到的数据
+		#for i in 客户端列表.size():
 		for i in range(客户端列表.size() - 1, -1, -1):
-			var 客户端 = 客户端列表[i]
-			if not is_instance_valid(客户端):
-				客户端列表.erase_at(i)
-				continue
+			#假装是超时心跳包
+			if 引擎.时间.取当前时间戳()-客户端列表[i]["time"]>超时时间:
+				#超时的客户端，讲被丢弃
+				引擎.调试.打印("服务器主动对"+str(客户端列表[i]["peer"].get_packet_ip()+":"+str(客户端列表[i]["peer"].get_packet_port())+"断开了"))
+				客户端列表.remove_at(i)
+				continue#跳出
+				
+			var 客户端 = 客户端列表[i]["peer"]
 
 			while 客户端.get_available_packet_count() > 0:
 				var 数据 = 客户端.get_packet()
@@ -93,15 +110,19 @@ class UDP服务端 extends Node:
 				# 触发"服务端收到消息"回调（如果存在）
 				if "服务端收到消息" in 回调字典 and 回调字典["服务端收到消息"] is Callable:
 					回调字典["服务端收到消息"].call(客户端, 数据, 客户端IP, 客户端端口)
+					
 	## 向指定客户端发送数据
 	## [br]参数:[br]
 	##   - 客户端: 目标客户端（从客户端列表获取）[br]
 	##   - 数据: 发送内容（String或PackedByteArray）[br]
 	##   - 编码类型: 字符串编码方式，默认为"utf8"
 	func UDP_发送给客户端(客户端, 数据, 编码类型: String = "utf8"):
-		if 客户端 not in 客户端列表:
-			print("客户端未连接，发送失败")
-			return
+		#for i in range(客户端列表.size() - 1, -1, -1):
+			#if 引擎.时间.取当前时间戳()-客户端列表[i]["time"]>超时时间:
+				##超时的客户端，讲被丢弃
+				#客户端列表.remove_at(1)
+				#pass
+	
 		
 		if 数据 is String:
 			if 编码类型 == "utf8":
@@ -114,7 +135,7 @@ class UDP服务端 extends Node:
 	## 广播数据给所有已连接客户端
 	func UDP_广播数据(数据, 编码类型: String = "utf8"):
 		for 客户端 in 客户端列表:
-			UDP_发送给客户端(客户端, 数据, 编码类型)
+			UDP_发送给客户端(客户端["peer"], 数据, 编码类型)
 
 	## 停止服务端
 	func UDP_停止服务():
