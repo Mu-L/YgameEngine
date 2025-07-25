@@ -49,7 +49,7 @@ class UDP客户端 extends PacketPeerUDP:
 			while 发送队列.size() > 0:
 				var 数据 = 发送队列.pop_front()  # 取出第一个元素（保证顺序）
 				self.put_packet(数据)  # 发送
-				await 引擎.场景.等待(0.01)  # 微小延迟，避免瞬间发送过多
+				await 引擎.场景.等待(0.05)  # 微小延迟，避免瞬间发送过多，如果顺序不正常，可以稍微调高
 			
 			正在处理队列 = false
 ##UDP网络通信工具类
@@ -64,7 +64,8 @@ class UDP服务端 extends Node:
 	var 服务器 = UDPServer.new()  # 底层UDPServer实例
 	var 客户端列表 = [] 
 	var 超时时间 = 300 #心跳包，超过300秒，就主动对客户端列表删除
-
+	var 发送队列 = [] 
+	var 正在处理队列=false
 	## 启动服务端监听
 	## [br]参数:[br]
 	##   - 端口: 监听端口，默认为25555[br]
@@ -133,19 +134,38 @@ class UDP服务端 extends Node:
 	##   - 数据: 发送内容（String或PackedByteArray）[br]
 	##   - 编码类型: 字符串编码方式，默认为"utf8"
 	func UDP_发送给客户端(客户端, 数据, 编码类型: String = "utf8"):
+		var 欲发送数据
+		
 		if 数据 is String:
 			if 编码类型 == "utf8":
-				客户端.put_packet(数据.to_utf8_buffer())
+				#客户端.put_packet(数据.to_utf8_buffer())
+				欲发送数据=数据.to_utf8_buffer()
 		elif 数据 is PackedByteArray:
-			客户端.put_packet(数据)
+#			客户端.put_packet(数据)
+			欲发送数据=数据
 		else:
 			print("不支持的数据类型")
-
+		
+		发送队列.append([客户端,欲发送数据])
+		# 3. 如果队列未处理，启动处理流程
+		if not 正在处理队列:
+			处理发送队列()
 	## 广播数据给所有已连接客户端
 	func UDP_广播数据(数据, 编码类型: String = "utf8"):
 		for 客户端 in 客户端列表:
 			UDP_发送给客户端(客户端["peer"], 数据, 编码类型)
-
+	
+	## 内部方法：按顺序发送队列中的数据
+	func 处理发送队列():
+		正在处理队列 = true
+		# 循环发送所有队列数据（直到队列为空）
+		while 发送队列.size() > 0:
+			var 数据 = 发送队列.pop_front()  # 取出第一个元素（保证顺序）
+			数据[0].put_packet(数据[1])
+#			self.put_packet(数据)  # 发送
+			await 引擎.场景.等待(0.01)  # 微小延迟，避免瞬间发送过多
+		
+		正在处理队列 = false
 	## 停止服务端
 	func UDP_停止服务():
 		服务器.stop()
