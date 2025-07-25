@@ -13,7 +13,8 @@ func 字节转字符串(字节数据: PackedByteArray, 编码类型: String = "u
  ## 自定义UDP客户端内部类（嵌套在引擎网络中）
 
 class UDP客户端 extends PacketPeerUDP:		
-
+		var 发送队列=[]
+		var 正在处理队列 = false  # 防止重复处理队列
 ## [br]参数:[br]
 ##   - 互联网协议地址ip: 目标IP地址，默认为"127.0.0.1"[br]
 ##   - 端口: 目标端口，默认为8777
@@ -21,12 +22,18 @@ class UDP客户端 extends PacketPeerUDP:
 			self.connect_to_host(ip地址, 端口)
 
 		func UDP_发送数据(数据, 编码类型:Variant):
+			var 欲发送数据
 			if 数据 is String:
 				if 编码类型 == "utf8":
-					self.put_packet(数据.to_utf8_buffer())
+					欲发送数据=数据.to_utf8_buffer()
 			elif 数据 is PackedByteArray:
-				self.put_packet(数据)
-		
+				欲发送数据=数据
+			#加入队列
+			发送队列.append(欲发送数据)
+			# 3. 如果队列未处理，启动处理流程
+			if not 正在处理队列:
+				_处理发送队列()
+				
 		func UDP_获取可用数据包数量() -> int:
 			if self==null: return 0
 			return self.get_available_packet_count()
@@ -35,7 +42,16 @@ class UDP客户端 extends PacketPeerUDP:
 				return self.get_packet().get_string_from_utf8()
 			else:
 				return self.get_packet()
-
+		## 内部方法：按顺序发送队列中的数据
+		func _处理发送队列():
+			正在处理队列 = true
+			# 循环发送所有队列数据（直到队列为空）
+			while 发送队列.size() > 0:
+				var 数据 = 发送队列.pop_front()  # 取出第一个元素（保证顺序）
+				self.put_packet(数据)  # 发送
+				await 引擎.场景.等待(0.01)  # 微小延迟，避免瞬间发送过多
+			
+			正在处理队列 = false
 ##UDP网络通信工具类
 ##提供UDP客户端的创建和数据收发功能，归类于引擎.网络命名空间
 ## 创建UDP客户端实例（返回内部自定义客户端）
@@ -117,13 +133,6 @@ class UDP服务端 extends Node:
 	##   - 数据: 发送内容（String或PackedByteArray）[br]
 	##   - 编码类型: 字符串编码方式，默认为"utf8"
 	func UDP_发送给客户端(客户端, 数据, 编码类型: String = "utf8"):
-		#for i in range(客户端列表.size() - 1, -1, -1):
-			#if 引擎.时间.取当前时间戳()-客户端列表[i]["time"]>超时时间:
-				##超时的客户端，讲被丢弃
-				#客户端列表.remove_at(1)
-				#pass
-	
-		
 		if 数据 is String:
 			if 编码类型 == "utf8":
 				客户端.put_packet(数据.to_utf8_buffer())
