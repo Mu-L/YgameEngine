@@ -116,9 +116,9 @@ func 路径_取文件名含扩展名(文件路径:String):
 ##   成功返回JSON字符串，失败返回空字符串
 ## [codeblock]
 ## var 数据 = {"a": 1, "b": [2, 3]}
-## var str = 引擎.字符串.JSON_到字符串(数据)  # 结果: '{"a":1,"b":[2,3]}'
+## var str = 引擎.字符串.Json_到字符串(数据)  # 结果: '{"a":1,"b":[2,3]}'
 ## [/codeblock]
-func JSON_到字符串(数据: Variant) -> String:
+func Json_到字符串(数据: Variant) -> String:
 	var json_str = JSON.stringify(数据)
 	if json_str == "":
 		push_error("JSON序列化失败")
@@ -131,9 +131,9 @@ func JSON_到字符串(数据: Variant) -> String:
 ##   成功返回解析后的数据（字典/数组等），失败返回null
 ## [codeblock]
 ## var str = '{"a":1,"b":[2,3]}'
-## var 数据 = 引擎.字符串.JSON_到数据(str)  # 结果: {"a": 1, "b": [2, 3]}
+## var 数据 = 引擎.字符串.Json_到数据(str)  # 结果: {"a": 1, "b": [2, 3]}
 ## [/codeblock]
-func JSON_到数据(json字符串: String) -> Variant:
+func Json_到数据(json字符串: String) -> Variant:
 	var 数据 = JSON.parse_string(json字符串)
 	if 数据 == null:
 		push_error("JSON解析失败")

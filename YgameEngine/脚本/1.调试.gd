@@ -12,9 +12,9 @@ class_name 引擎调试
 ##[/codeblock]
 func 打印(打印的内容, 颜色:String = "green") -> void:
 	var 来源 = get_stack()[1]
-	if 取调试模式():
-		print_rich("%s\t%s:%s\t [color=%s]%s[/color]" % [来源["source"],来源["function"],来源["line"],颜色, 打印的内容])
-
+	#if 取调试模式():
+	print_rich("%s\t%s:%s\t [color=%s]%s[/color]" % [来源["source"],来源["function"],来源["line"],颜色, 打印的内容])
+	
 ## 带注释的调试打印（仅在调试模式下输出）
 ## [br]参数:[br]
 ##   - 注释: 打印内容的前缀说明[br]
@@ -24,8 +24,8 @@ func 打印(打印的内容, 颜色:String = "green") -> void:
 ##[/codeblock]
 func 注释打印(注释:String, 打印的内容) -> void:
 	var 来源 = get_stack()[1]
-	if 取调试模式():
-		print_rich("%s\t%s:%s\t[color=red]%s:\t[/color][color=green]%s[/color]" %[来源["source"],来源["function"],来源["line"],注释, 打印的内容])
+	#if 取调试模式():
+	print_rich("%s\t%s:%s\t[color=red]%s:\t[/color][color=green]%s[/color]" %[来源["source"],来源["function"],来源["line"],注释, 打印的内容])
 #		
 ## 格式化打印字典内容
 ## [br]参数:[br]

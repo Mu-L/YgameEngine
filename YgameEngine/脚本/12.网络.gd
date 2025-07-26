@@ -149,14 +149,14 @@ class UDP服务端 extends Node:
 		发送队列.append([客户端,欲发送数据])
 		# 3. 如果队列未处理，启动处理流程
 		if not 正在处理队列:
-			处理发送队列()
+			_处理发送队列()
 	## 广播数据给所有已连接客户端
 	func UDP_广播数据(数据, 编码类型: String = "utf8"):
 		for 客户端 in 客户端列表:
 			UDP_发送给客户端(客户端["peer"], 数据, 编码类型)
 	
 	## 内部方法：按顺序发送队列中的数据
-	func 处理发送队列():
+	func _处理发送队列():
 		正在处理队列 = true
 		# 循环发送所有队列数据（直到队列为空）
 		while 发送队列.size() > 0:
@@ -180,3 +180,111 @@ class UDP服务端 extends Node:
 ## 创建UDP服务端实例
 func UDP_创建服务端() -> UDP服务端:
 	return UDP服务端.new()
+	
+	
+	
+#######网页请求相关get/post########
+
+#链接待中文的话要转英文
+func 网页_中文链接格式转换(链接:String):
+	var 新字符串=""
+	for i in 链接:
+		if i.unicode_at(0)<=122:#英文字母最大到122
+			新字符串+=i
+		else:
+			新字符串+=i.uri_encode()
+	return 新字符串
+	
+func 网页请求_GET(请求链接: String,请求数据:Variant="",响应头:PackedStringArray=PackedStringArray(),请求类型:HTTPClient.Method=HTTPClient.Method.METHOD_GET):
+	if (请求数据 is String)==false:请求数据=引擎.字符串.Json_到字符串(请求数据)
+	请求链接=网页_中文链接格式转换(请求链接)
+	var 网页节点 = HTTPRequest.new()
+	Engine.get_main_loop().current_scene.add_child(网页节点)
+	### 执行一个 GET 请求。以下 URL 会将写入作为 JSON 返回。
+	var error = 网页节点.request(请求链接,响应头,请求类型,请求数据)
+	if error!=OK:
+		网页节点.queue_free()
+		return {"请求状态":error,"网页状态码":-1}
+	else :	
+		var 返回值=await 网页节点.request_completed
+		网页节点.queue_free()
+		return {"请求状态":返回值[0],"网页状态码":返回值[1],"响应头":返回值[2],"内容":返回值[3].get_string_from_utf8()}
+	
+
+##用于拿到文本，自动返回数据
+func 网页请求_Get到数据(请求链接: String,请求数据:Variant="",响应头:PackedStringArray=PackedStringArray(),请求类型:HTTPClient.Method=HTTPClient.Method.METHOD_GET):
+	var 返回值=await 网页请求_GET(请求链接,请求数据,响应头,请求类型)
+	if "内容" in 返回值:
+		var 拿数据=引擎.字符串.Json_到数据(返回值.内容)
+		返回值.内容=拿数据
+		return 返回值
+	else:
+		return 返回值
+
+func 网页请求_Post(请求链接: String,请求数据:Variant="",响应头:PackedStringArray=PackedStringArray(),请求类型:HTTPClient.Method=HTTPClient.Method.METHOD_POST):
+	if (请求数据 is String)==false:请求数据=引擎.字符串.Json_到字符串(请求数据)
+	请求链接=网页_中文链接格式转换(请求链接)
+	var 网页节点 = HTTPRequest.new()
+	Engine.get_main_loop().current_scene.add_child(网页节点)
+	var error = 网页节点.request(请求链接, 响应头, 请求类型, 请求数据)
+	if error != OK:
+		网页节点.queue_free()
+		return {"请求状态":error,"网页状态码":-1}
+	else:
+		var 返回值=await 网页节点.request_completed
+		网页节点.queue_free()
+		return {"请求状态":返回值[0],"网页状态码":返回值[1],"响应头":返回值[2],"内容":返回值[3].get_string_from_utf8()}
+	
+func 网页请求_Post到数据(请求链接: String,请求数据:Variant="",响应头:PackedStringArray=PackedStringArray(),请求类型:HTTPClient.Method=HTTPClient.Method.METHOD_POST):
+	var 返回值=await 网页请求_GET(请求链接,请求数据,响应头,请求类型)
+	if "内容" in 返回值:
+		var 拿数据=引擎.字符串.Json_到数据(返回值.内容)
+		返回值.内容=拿数据
+		return 返回值
+	else:
+		return 返回值
+
+
+func 网页请求_下载文件(直链地址:String,存放地址:String="user://Update.zip",回调配置:Dictionary={}):
+	var 网页状态=await 网页请求_GET(直链地址) #网页状态码:404 成功:200
+	if 网页状态.请求状态!=0 or 网页状态.网页状态码!=200:
+		if "完成状态" in 回调配置:
+			回调配置["完成状态"].call("超时")
+		return {"完成状态":"超时"}
+	#请求状态2:状态码:0..好像是网页不存在触发的
+	
+	直链地址=网页_中文链接格式转换(直链地址)
+	var 网页节点 = HTTPRequest.new()
+	Engine.get_main_loop().current_scene.add_child(网页节点)
+	网页节点.download_file=存放地址 #存放下载的zip位置
+
+	var error = 网页节点.request(直链地址)
+	if error!=OK:
+		return {"请求状态":error,"网页状态码":-1}
+		网页节点.queue_free()
+	else:
+		if "下载状态" in 回调配置:
+			var 超时计数=0
+			while (网页节点.get_downloaded_bytes()!=网页节点.get_body_size()): # 0/-1
+				await 引擎.场景.等待(0.1)
+				回调配置["下载状态"].call(网页节点.get_downloaded_bytes(),网页节点.get_body_size())
+				#请求体-1就超时
+				if 网页节点.get_body_size()==-1:
+					超时计数+=1
+				else:
+					超时计数=0
+				#假设超时
+				if 超时计数>=50:#假设5秒都超时
+					网页节点.cancel_request()#取消请求
+					if "完成状态" in 回调配置:
+						回调配置["完成状态"].call("超时")
+					return {"完成状态":"超时"}
+			if "完成状态" in 回调配置:
+				回调配置["完成状态"].call("下载完成")
+			return {"完成状态":"下载完成"}
+		else:#不看响应,直接等完成
+			await 网页节点.request_completed
+			if "完成状态" in 回调配置:
+				回调配置["完成状态"].call("下载完成")
+			return {"完成状态":"下载完成"}
+		网页节点.queue_free()
