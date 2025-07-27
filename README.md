@@ -8,4 +8,4 @@ YgameEngine
 
 Q群:696526224
 【合集文档】 YgameEngine
-https://www.yuque.com/u47951911/yang/batazt2bmigi0s42?singleDoc# 《YgameEngine》
+https://kdocs.cn/l/camhGQG66ttP
