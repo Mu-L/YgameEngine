@@ -31,6 +31,29 @@ func 扫描文件(路径:String, 是否扫描子目录:bool = false, 指定格�
 		print("尝试访问路径时出错。")
 	return 文件列表
 	
+func 扫描原始文件(路径:String, 是否扫描子目录:bool = false, 指定格式:Array = []) -> Array:
+	#func 扫描文件(路径:String, 是否扫描子目录:bool = false, 指定格式:Array = []) -> Array:
+	var 文件列表:Array = []
+	var 资源列表 = ResourceLoader.list_directory(路径)
+	
+	for 资源路径 in 资源列表:
+		# 检查是否为目录
+		if 资源路径.ends_with("/"):
+			if 是否扫描子目录:
+				# 递归扫描子目录
+				var 子文件列表 = 扫描原始文件(路径+资源路径, 是否扫描子目录, 指定格式)
+				文件列表.append_array(子文件列表)#["乡村的温暖时光.mp3", "乡村的温暖时光.wav"]
+		else:
+			# 检查文件格式
+			var 文件名 = 资源路径.get_file()
+			var 扩展名 = 文件名.get_extension()
+			if 指定格式.is_empty() or 指定格式.has(扩展名):
+				# 计算相对路径
+				var 相对路径 = 资源路径.replace(路径 + "/", "")
+				文件列表.append(相对路径)
+	
+	return 文件列表
+	
 ## 读取指定目录下所有文件的JSON内容，存储到字典
 ## 功能：扫描目录下的文件，解析JSON内容并以 {文件名: JSON数据} 格式返回
 ## [codeblock]
