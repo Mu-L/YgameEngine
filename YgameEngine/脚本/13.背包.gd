@@ -5,7 +5,7 @@ class 角色背包:
 	func 查询背包()->Array:
 		return self.背包
 		# 添加道具到背包
-	func 添加道具(C_道具ID: String, C_操作数量: int):
+	func 添加道具(C_道具ID: String, C_操作数量: int=1):
 		
 		# 查找道具是否已在背包中
 		var index = 获取道具索引(C_道具ID)
@@ -17,7 +17,7 @@ class 角色背包:
 			self.背包.append({"道具ID": C_道具ID, "数量": C_操作数量})
 
 	# 减少背包中的道具 ### 使用减少具时,请先判断数量
-	func 减少道具(C_道具ID: String, C_操作数量: int):
+	func 减少道具(C_道具ID: String, C_操作数量: int=1):
 		var index = 获取道具索引(C_道具ID)
 		self.背包[index]["数量"] -= C_操作数量
 
