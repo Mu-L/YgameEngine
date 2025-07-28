@@ -92,6 +92,38 @@ func 获取子对象(父对象:Node, 子对象路径:NodePath) -> Node:
 func 挂载脚本到对象(目标对象:Node, 脚本路径):
 	目标对象.set_script(load(脚本路径))
 
+func 检测碰撞体(包围盒位置:Vector2,包围盒尺寸:Vector2,过滤检测方:bool=false):
+	var 检测2D=Area2D.new()
+	
+	var 检测2D碰撞体=CollisionShape2D.new()
+	var 检测2D物理矩形=RectangleShape2D.new()
+	检测2D物理矩形.extents = 包围盒尺寸
+	检测2D碰撞体.shape = 检测2D物理矩形
+	检测2D.add_child(检测2D碰撞体)
+	检测2D.name="包围盒"
+	Engine.get_main_loop().current_scene.add_child(检测2D)
+	检测2D.position=包围盒位置
+	检测2D.z_index = 11
+	var 形状2D查询 = PhysicsShapeQueryParameters2D.new()
+	形状2D查询.set_shape(检测2D物理矩形)
+	形状2D查询.collide_with_areas = true
+	
+	形状2D查询.transform = Transform2D(0, 包围盒位置)
+	var 查询数据 =Engine.get_main_loop().current_scene.get_world_2d().direct_space_state.intersect_shape(形状2D查询)
+	
+	
+	##打包
+	var 碰撞体列表=[]
+	for i in 查询数据:
+		if 过滤检测方==true:
+			if i.collider!=检测2D:
+				碰撞体列表.append(i.collider)
+		else:
+			碰撞体列表.append(i.collider)
+	#延迟销毁(检测2D)
+	销毁对象延迟(检测2D)
+	return 碰撞体列表
+
 ## 销毁指定对象
 ## [br]参数:[br]
 ##   - 目标对象: 要销毁的对象
@@ -101,6 +133,9 @@ func 挂载脚本到对象(目标对象:Node, 脚本路径):
 func 销毁对象(目标对象:Node):
 	目标对象.queue_free()
 
+func 销毁对象延迟(目标对象:Node,时间:float=1.0):
+	await Engine.get_main_loop().create_timer(时间).timeout
+	目标对象.queue_free()
 ## 检查对象实例是否有效
 ## [br]参数:[br]
 ##   - 目标对象: 要检查的对象
