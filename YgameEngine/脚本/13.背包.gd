@@ -2,7 +2,7 @@ extends Node
 class 角色背包:
 	## 道具ID  数量
 	var 背包=[]
-	var 加密=false
+	var 加密=false #记录背包是否加密
 	func 查询背包()->Array:
 		return self.背包
 		# 添加道具到背包
@@ -15,17 +15,23 @@ class 角色背包:
 			
 			if self.加密:
 				#加密
-				print()
-				var 操作=引擎.加解密.浮点数解密(self.背包[index]["数量"]) + C_操作数量
-				self.背包[index]["数量"]=引擎.加解密.浮点数加密(操作)
+				if !引擎.加解密.是否作弊:
+					var 操作=引擎.加解密.浮点数解密(self.背包[index]["数量"]) + C_操作数量
+					self.背包[index]["数量"]=引擎.加解密.浮点数加密(操作)
+					return true
+				else:
+					return false
 			else:
 				self.背包[index]["数量"] += C_操作数量
+				return true
 		else:
 			if self.加密:
 				self.背包.append({"道具ID": C_道具ID, "数量": 引擎.加解密.浮点数加密(C_操作数量)})
 			else:
 				# 如果不存在，添加新道具
 				self.背包.append({"道具ID": C_道具ID, "数量": C_操作数量})
+				
+			return true
 
 	# 获取道具在背包中的索引
 	func 获取道具索引(C_道具ID: String) -> int:
@@ -41,10 +47,15 @@ class 角色背包:
 		#self.背包[index]["数量"] -= C_操作数量
 		if self.加密:
 			#加密
-			var 操作=引擎.加解密.浮点数解密(self.背包[index]["数量"]) - C_操作数量
-			self.背包[index]["数量"]=引擎.加解密.浮点数加密(操作)
+			if !引擎.加解密.是否作弊:
+				var 操作=引擎.加解密.浮点数解密(self.背包[index]["数量"]) - C_操作数量
+				self.背包[index]["数量"]=引擎.加解密.浮点数加密(操作)
+				return true
+			else:
+				return false
 		else:
 			self.背包[index]["数量"] -= C_操作数量
+			return true
 	
 	# 获取道具在背包中的数量
 	func 获取道具数量(C_道具ID: String) -> float:
