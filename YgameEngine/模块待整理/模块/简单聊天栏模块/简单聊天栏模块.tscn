@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c1q5n0f7y62bg"]
 
-[ext_resource type="Script" path="res://模块/简单聊天栏模块/简单聊天栏模块.gd" id="1_ek1uc"]
+[ext_resource type="Script" uid="uid://d1elhga51hqb" path="res://addons/YgameEngine/模块待整理/模块/简单聊天栏模块/简单聊天栏模块.gd" id="1_ek1uc"]
 
 [node name="简单聊天栏模块" type="Panel"]
 custom_minimum_size = Vector2(400, 200)
