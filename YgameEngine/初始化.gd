@@ -1,7 +1,7 @@
 @tool
 extends EditorPlugin
 
-var 数据库
+
 #插件启动函数
 func _enable_plugin() -> void:
 	# Add autoloads here.
