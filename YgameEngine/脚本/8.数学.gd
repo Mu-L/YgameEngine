@@ -145,12 +145,3 @@ func 随机_权重选择(物品列表: Array) -> Variant:
 	
 	push_error("未知错误：权重选择失败")  # 理论上不会执行到这里
 	return null
-
-
-func 正则匹配(字符串:String,模式)->String:
-	var regex = RegEx.new()
-	regex.compile(模式) # Negated whitespace character class.
-	var 返回值 = ""
-	for result in regex.search_all(字符串):
-		返回值+=result.get_string()
-	return 返回值

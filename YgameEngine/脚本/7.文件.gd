@@ -2,6 +2,9 @@
 extends Node
 class_name 引擎文件
 
+func 获取当前运行目录():
+	return 引擎.字符串.路径_取目录(OS.get_executable_path())
+	pass
 ##用于扫描文件的东西,返回:["a/a.gd", "b/b.gd", "c.gd"]
 ##[codeblock]
 ##var 读取文件数组=引擎.文件.扫描文件("res://data/",true,["gd","json"]) #指定找gd + json

@@ -50,7 +50,9 @@ const 角色背包类 = preload("uid://48vedp8jko7w")  # 指向13.背包.gd（�
 # 2. 背包实例（加载并初始化）
 var 角色背包: 角色背包类 = 角色背包类.new()
 	
-
+#弱网
+const 弱网类= preload("uid://bawh8cqwmt7iw") #指向14.弱网(引擎弱网)
+var 弱网:弱网类=弱网类.new()
 ##############以下，待融入参考，
 
 

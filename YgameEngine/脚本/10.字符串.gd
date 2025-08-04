@@ -138,3 +138,11 @@ func Json_到数据(json字符串: String) -> Variant:
 	if 数据 == null:
 		push_error("JSON解析失败")
 	return 数据
+
+func 正则匹配(字符串:String,模式)->String:
+	var regex = RegEx.new()
+	regex.compile(模式) # Negated whitespace character class.
+	var 返回值 = ""
+	for result in regex.search_all(字符串):
+		返回值+=result.get_string()
+	return 返回值

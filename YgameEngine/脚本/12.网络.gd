@@ -1,6 +1,6 @@
 ##基于网络封装,目前有UDP
 extends Node
-class_name 引擎网络
+#class_name 引擎网络
 
 # 全局通用：字节数组转UTF8字符串
 
@@ -23,6 +23,8 @@ class UDP客户端 extends PacketPeerUDP:
 
 		func UDP_发送数据(数据, 编码类型:Variant):
 			var 欲发送数据
+			if 数据 is Dictionary:
+				数据=引擎.字符串.Json_到字符串(数据)
 			if 数据 is String:
 				if 编码类型 == "utf8":
 					欲发送数据=数据.to_utf8_buffer()
@@ -33,6 +35,15 @@ class UDP客户端 extends PacketPeerUDP:
 			# 3. 如果队列未处理，启动处理流程
 			if not 正在处理队列:
 				_处理发送队列()
+		func UDP_处理数据(回调字典: Dictionary = {}):
+			if not self.is_socket_connected(): 
+				return
+			if self.UDP_获取可用数据包数量()>0:
+				var 收到的数据=self.UDP_获取数据("utf8")
+				print("触发???",收到的数据)
+				if "客户端收到消息" in 回调字典 and 回调字典["客户端收到消息"] is Callable:
+					回调字典["客户端收到消息"].call(收到的数据)
+			pass	
 				
 		func UDP_获取可用数据包数量() -> int:
 			if self==null: return 0
@@ -98,7 +109,7 @@ class UDP服务端 extends Node:
 					客户端索引=i
 			#不存在时返回 -1
 			if (客户端索引)==-1:
-				#客户端列表.append(客户端)
+				#加入时间,
 				客户端列表.append({"peer":客户端,"time":引擎.时间.取当前时间戳()})
 				
 				# 触发"客户端进入"回调（如果存在）
@@ -118,7 +129,7 @@ class UDP服务端 extends Node:
 				continue#跳出
 				
 			var 客户端 = 客户端列表[i]["peer"]
-
+			
 			while 客户端.get_available_packet_count() > 0:
 				var 数据 = 客户端.get_packet()
 				var 客户端IP = 客户端.get_packet_ip()
@@ -135,7 +146,8 @@ class UDP服务端 extends Node:
 	##   - 编码类型: 字符串编码方式，默认为"utf8"
 	func UDP_发送给客户端(客户端, 数据, 编码类型: String = "utf8"):
 		var 欲发送数据
-		
+		if 数据 is Dictionary:
+			数据=引擎.字符串.Json_到字符串(数据)
 		if 数据 is String:
 			if 编码类型 == "utf8":
 				#客户端.put_packet(数据.to_utf8_buffer())
