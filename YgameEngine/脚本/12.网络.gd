@@ -40,7 +40,6 @@ class UDP客户端 extends PacketPeerUDP:
 				return
 			if self.UDP_获取可用数据包数量()>0:
 				var 收到的数据=self.UDP_获取数据("utf8")
-				print("触发???",收到的数据)
 				if "客户端收到消息" in 回调字典 and 回调字典["客户端收到消息"] is Callable:
 					回调字典["客户端收到消息"].call(收到的数据)
 			pass	
