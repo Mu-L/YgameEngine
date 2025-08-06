@@ -146,3 +146,19 @@ func 正则匹配(字符串:String,模式)->String:
 	for result in regex.search_all(字符串):
 		返回值+=result.get_string()
 	return 返回值
+
+var 领取次数=1
+func 获取不重复随机码() -> String:
+		if 领取次数==null:
+			print("tool调试无法获取")
+			return ""
+		领取次数+=1
+		var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		var code = ""
+		
+		for i in range(3):
+			# 从字符集中随机选择一个字符
+			var random_index = randi() % chars.length()
+			code += chars[random_index]
+		
+		return str(int(领取次数*10))+str(code)
