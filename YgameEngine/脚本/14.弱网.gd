@@ -143,7 +143,8 @@ class 弱网服务端:
 		pass
 	func __PING():
 		pass
-	func __北京时间戳():
+	func __时间戳(数据):
+		return {"类型":"时间戳","状态":"成功","数据":引擎.时间.取当前时间戳()}
 		pass
 	func __伪随机():
 		pass
