@@ -81,7 +81,6 @@ func 播放音效(音效:AudioStream,指定音量:float=-1):
 		_音效.queue_free()#播放销毁
 	)
 	var 实际音量 = 指定音量 if 指定音量 >= 0 else 音效音量
-
 	_音效.volume_db=linear_to_db(实际音量)#分贝设置
 	_音效.play()#播放
 	
