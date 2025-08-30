@@ -151,6 +151,9 @@ func 是否有效对象(目标对象:Node) -> bool:
 func 获取子对象数量(目标对象:Node) -> int:
 	return 目标对象.get_child_count()
 
+func 获取索引(目标对象:Node)-> int:#
+	return 目标对象.get_index()
+	
 
 
 ## 将对象设置为目标父对象的子对象（变更父子关系）

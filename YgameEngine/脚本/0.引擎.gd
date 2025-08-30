@@ -39,7 +39,8 @@ var 字符串:引擎字符串
 ##基于自己理解的东西,节点统称为对象
 var 对象:引擎对象
 
-
+##基于自己理解的东西,节点统称为对象
+var 图片:引擎图片
 # 1. 预加载网络模块的类（用于类型关联）
 const 网络类 = preload("uid://bp4iapmx88yhl")  # 指向12.网络.gd（引擎网络类）
 # 2. 网络实例（加载并初始化）
@@ -172,12 +173,19 @@ func _ready():
 	#指向12.网络.gd（引擎网络类）
 	网络.name = "网络"
 	add_child(网络)  # 挂载到引擎节点
-##region 初始化 [addons\YgameEngine\脚本\12.网络.gd] 添加UDP系统
-	#var 网络脚本 = preload("uid://bp4iapmx88yhl").new()
-	#网络脚本.name="网络"
-	#add_child(网络脚本)
-	#self.网络 = 网络脚本
-##endregion
+	
+
+
+	
+#region 初始化 [addons\YgameEngine\脚本\16.图片.gd] 添加图片系统
+	var 图片脚本 = preload("uid://dil0tsqss7i21").new()
+	图片脚本.name="网络"
+	add_child(图片脚本)
+	self.图片 = 图片脚本
+#endregion
+
+
+
 
 ##以下待修复，融入
 #

@@ -3,7 +3,9 @@ class 角色背包:
 	## 道具ID  数量
 	var 背包=[]
 	var 加密=false #记录背包是否加密
-	func 查询背包()->Array:
+	func 获取占用数量()->int:
+		return self.背包.size()
+	func 获取数据()->Array:
 		return self.背包
 		# 添加道具到背包
 	func 添加道具(C_道具ID: String, C_操作数量: float=1):
