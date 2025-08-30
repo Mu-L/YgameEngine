@@ -8,6 +8,18 @@ class 角色背包:
 	func 获取数据()->Array:
 		return self.背包
 		# 添加道具到背包
+	
+	#数量会自动给解码可读
+	func 获取索引数据(索引:int) -> Dictionary:
+		if 索引 >= 0 and 索引 < self.背包.size():
+			var 格子数据 = self.背包[索引].duplicate()  # 复制一份数据，避免直接修改原数组里的内容
+			if self.加密 and 格子数据.has("数量"):
+				var 解密后数量 = 引擎.加解密.浮点数解密(格子数据["数量"])
+				格子数据["数量"] = 解密后数量
+			return 格子数据
+			var 操作=引擎.加解密.浮点数解密
+		return {}  # 索引越界返回空字典，方便调用处处理
+		
 	func 添加道具(C_道具ID: String, C_操作数量: float=1):
 		#print(self.背包)
 		# 查找道具是否已在背包中
