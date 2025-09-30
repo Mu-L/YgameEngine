@@ -80,7 +80,8 @@ func 隐藏(目标对象:Node):
 func 获取子对象(父对象:Node, 子对象路径:NodePath) -> Node:
 	return 父对象.get_node(子对象路径)
 
-
+func 获取父对象(对象:Node):
+	return 对象.get_parent()
 
 ## 为对象挂载脚本
 ## [br]参数:[br]

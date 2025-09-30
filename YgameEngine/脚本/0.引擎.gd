@@ -58,10 +58,8 @@ var 弱网:弱网类=弱网类.new()
 const 数据库类=preload("uid://xymsomt1qyx2") #指向15.数据库
 var 数据库:数据库类=数据库类.new()
 
-
-
-
-
+#17装备,尝试减少变量
+const 装备类=preload("uid://dcdsmt5sxbyc4")
 ##############以下，待融入参考，
 
 

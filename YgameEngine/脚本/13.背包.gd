@@ -58,7 +58,6 @@ class 角色背包:
 	# 减少背包中的道具 ### 使用减少具时,请先判断数量
 	func 减少道具(C_道具ID: String, C_操作数量: float=1):
 		var index = 获取道具索引(C_道具ID)
-		#self.背包[index]["数量"] -= C_操作数量
 		if self.加密:
 			#加密
 			if !引擎.加解密.是否作弊:
