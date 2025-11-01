@@ -145,3 +145,25 @@ func 随机_权重选择(物品列表: Array) -> Variant:
 	
 	push_error("未知错误：权重选择失败")  # 理论上不会执行到这里
 	return null
+
+#这是一个 数值的累计计算
+func 字典叠加(属性一: Dictionary, 属性二: Dictionary) -> Dictionary:
+	# 复制基础属性（避免直接修改原字典）
+	var 结果 = 属性一.duplicate()
+	# 遍历附加属性的所有键值对
+	for 键 in 属性二:
+		if 结果.has(键):
+			# 键存在则累加值
+			结果[键] += 属性二[键]
+		else:
+			# 键不存在则新增键值对
+			结果[键] = 属性二[键]
+	return 结果
+
+#var 结果1 = 字典取属性({ "攻击力": 10.0, "力量": 2.0, "敏捷": 0.0 }, ["敏捷", "力量"], 0.0)
+#print(结果1)  # 输出: { "敏捷":0.0, "力量":2.0 }
+func 字典取属性(源字典: Dictionary, 目标属性: Array, 默认值: Variant) -> Dictionary:
+	var 结果 = {}
+	for 属性名 in 目标属性:
+		结果[属性名] =源字典[属性名] if 源字典.has(属性名) else 默认值
+	return 结果

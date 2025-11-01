@@ -97,3 +97,45 @@ func 字符串解密(加密字符串: String) -> String:
 			编码字符串 += 偶数位字符[i]
 	# 进行Base64解码
 	return Marshalls.base64_to_utf8(编码字符串)
+
+#引擎.加解密.加密浮点数字典.new()
+class 加密浮点数字典: 
+	# 存储加密后的键值对（{键: 加密值}）
+	var _加密数据: Dictionary = {}
+	# 引用加解密工具
+	var _加解密工具 = 引擎.加解密
+	
+	# 构造函数：接收明文字典并加密
+	func _init(明文字典: Dictionary = {}) -> void:
+		加密(明文字典)
+	
+	# 加密并存储明文字典（可用于初始化或更新）
+	func 加密(明文字典: Dictionary) -> void:
+		_加密数据.clear()
+		for 键 in 明文字典:
+			# 假设值为浮点数，如需支持其他类型可扩展
+			_加密数据[键] = _加解密工具.浮点数加密(明文字典[键])
+	
+	# 新增/更新单个键值（加密存储）
+	func 加密设置(键: String, 值: float) -> void:
+		_加密数据[键] = _加解密工具.浮点数加密(值)
+	
+	# 获取单个解密后的值（核心场景用）
+	func 获取属性(键: String) -> float:
+		if 键 not in _加密数据:
+			return 0.0
+		return _加解密工具.浮点数解密(_加密数据[键])
+	
+	# 获取所有解密后的值（非核心场景用）
+	func 获取所有属性() -> Dictionary:
+		var 明文字典 = {}
+		for 键 in _加密数据:
+			明文字典[键] = 获取属性(键)
+		return 明文字典
+	
+	# 清空加密数据
+	func 清空() -> void:
+		_加密数据.clear()
+	
+	func 获取加密数据() -> Dictionary:
+		return _加密数据.duplicate()  # 返回副本，外部修改不影响内部数据

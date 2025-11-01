@@ -1,5 +1,8 @@
 extends Node
-
+####道具数据库 读取:res://系统/itemsystem.json
+####NPC数据库  读取:res://系统/npcsystem.json
+####NPC技能数据库 读取:res://系统/npcskillsystem.json
+###技能数据库 读取:res://系统/skillsystem.json
 class 道具数据库:
 	var 道具库={};
 	
@@ -58,3 +61,47 @@ class 道具数据库:
 func 加载道具库() -> 道具数据库:
 	var 道具库=道具数据库.new()
 	return 道具库
+
+
+class NPC数据库:
+	var NPC={};
+	
+	func _init() -> void:
+		if 引擎.文件.是否存在("res://系统/npcsystem.json"):
+			NPC=引擎.文件.读取文件到变量("res://系统/npcsystem.json")
+	func 获取数据库():
+		return NPC
+	
+	pass
+func 加载NPC数据库() -> NPC数据库:
+	var NPCj=NPC数据库.new()
+	return NPCj
+
+
+class NPC技能数据库:
+	var NPC技能={};
+	
+	func _init() -> void:
+		if 引擎.文件.是否存在("res://系统/npcskillsystem.json"):
+			NPC技能=引擎.文件.读取文件到变量("res://系统/npcskillsystem.json")
+	func 获取数据库():
+		return NPC技能
+	
+	pass
+func 加载NPC技能数据库() -> NPC技能数据库:
+	var NPCj=NPC技能数据库.new()
+	return NPCj
+
+class 技能数据库:
+	var 技能={};
+	
+	func _init() -> void:
+		if 引擎.文件.是否存在("res://系统/skillsystem.json"):
+			技能=引擎.文件.读取文件到变量("res://系统/skillsystem.json")
+	func 获取数据库():
+		return 技能
+	
+	pass
+func 加载技能数据库() -> 技能数据库:
+	var JN=技能数据库.new()
+	return JN

@@ -60,6 +60,8 @@ var 数据库:数据库类=数据库类.new()
 
 #17装备,尝试减少变量
 const 装备类=preload("uid://dcdsmt5sxbyc4")
+#18角色属性类,尝试减少变量
+const 角色属性类=preload("uid://c03n37bu8xg7d")
 ##############以下，待融入参考，
 
 
