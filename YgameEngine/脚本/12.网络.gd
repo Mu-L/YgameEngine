@@ -123,7 +123,7 @@ class UDP服务端 extends Node:
 			#假装是超时心跳包
 			if 引擎.时间.取当前时间戳()-客户端列表[i]["time"]>超时时间:
 				#超时的客户端，讲被丢弃
-				引擎.调试.打印("服务器主动对"+str(客户端列表[i]["peer"].get_packet_ip()+":"+str(客户端列表[i]["peer"].get_packet_port())+"断开了"))
+				print("服务器主动对"+str(客户端列表[i]["peer"].get_packet_ip()+":"+str(客户端列表[i]["peer"].get_packet_port())+"断开了"))
 				客户端列表.remove_at(i)
 				continue#跳出
 				

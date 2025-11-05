@@ -48,9 +48,7 @@ var 网络: 网络类 = 网络类.new()
 	
 # 1. 预加载背包的类（用于类型关联）
 const 角色背包类 = preload("uid://48vedp8jko7w")  # 指向13.背包.gd（引擎网络类）
-# 2. 背包实例（加载并初始化）
-var 角色背包: 角色背包类 = 角色背包类.new()
-	
+
 #弱网
 const 弱网类= preload("uid://bawh8cqwmt7iw") #指向14.弱网(引擎弱网)
 var 弱网:弱网类=弱网类.new()
@@ -64,6 +62,8 @@ const 装备类=preload("uid://dcdsmt5sxbyc4")
 const 角色属性类=preload("uid://c03n37bu8xg7d")
 
 const 角色经验类=preload("uid://do1r5cs2spqr4")
+const 生命魔法类=preload("uid://u3hfm4s7vyyi")
+const 怪物类=preload("uid://vitkmt6enhkh")
 ##############以下，待融入参考，
 
 

@@ -23,12 +23,12 @@ class 道具数据库:
 	func 获取道具属性(道具ID: String, 属性名: String) -> Variant:
 		var 道具信息 = 按ID查询道具(道具ID)
 		if 道具信息.is_empty():
-			引擎.调试.打印("道具ID不存在: " + 道具ID)
+			print("道具ID不存在: " + 道具ID)
 			return null
 		
 		if 道具信息.has(属性名):
 			return 道具信息[属性名]
-		引擎.调试.打印("道具" + 道具ID + "不存在属性: " + 属性名)
+		print("道具" + 道具ID + "不存在属性: " + 属性名)
 		return null
 	
 	# 3. 获取指定ID道具的效果字典

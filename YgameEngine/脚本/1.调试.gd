@@ -8,7 +8,7 @@ class_name 引擎调试
 ##   - 打印的内容: 要打印的文本或变量[br]
 ##   - 颜色: 打印文本的颜色，默认为绿色
 ##[codeblock]
-## 引擎.调试.打印("重要信息", "red")
+## print("重要信息", "red")
 ##[/codeblock]
 func 打印(打印的内容, 颜色:String = "green") -> void:
 	var 来源 = get_stack()[1]
@@ -32,7 +32,7 @@ func 注释打印(注释:String, 打印的内容) -> void:
 ##   - 字典: 要打印的字典对象[br]
 ##   - 注释: 打印标题，默认为"无"
 ##[codeblock]
-## 引擎.调试.打印字典(player.stats, "玩家属性")
+## print字典(player.stats, "玩家属性")
 ##[/codeblock]
 func 打印字典(字典:Dictionary, 注释:String = "无"):
 	if 取调试模式():
@@ -49,7 +49,7 @@ func 打印字典(字典:Dictionary, 注释:String = "无"):
 ##   - 数组字典: 包含字典的数组[br]
 ##   - 注释: 打印标题，默认为"无"
 ##[codeblock]
-## 引擎.调试.打印数组字典(items_list, "物品列表")
+## print数组字典(items_list, "物品列表")
 ##[/codeblock]
 func 打印数组(数组:Array, 注释:String = "无"):
 	if 取调试模式():
