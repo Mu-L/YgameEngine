@@ -44,7 +44,7 @@ class 装备:
 				else:
 					属性表[属性名] = 属性值
 		return 属性表	
-func 创建装备栏() -> 装备:
-	var 装备实例=装备.new()
-	return 装备实例
+#func 创建装备栏() -> 装备:
+	#var 装备实例=装备.new()
+	#return 装备实例
 	
