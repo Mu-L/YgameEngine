@@ -20,16 +20,26 @@ class 角色背包:
 				var 解密后数量 = 引擎.加解密.浮点数解密(格子数据["数量"])
 				格子数据["数量"] = 解密后数量
 			return 格子数据
-			var 操作=引擎.加解密.浮点数解密
+			#var 操作=引擎.加解密.浮点数解密
 		return {}  # 索引越界返回空字典，方便调用处处理
 		
-	func 添加道具(C_道具ID: String, C_操作数量: float=1):
-		#print(self.背包)
+	func 添加道具(C_道具ID: String, C_操作数量: float=1,可堆叠: bool=true):
+		# 不可堆叠道具处理（新增逻辑）
+		if not 可堆叠:
+			# 每个道具单独占格，用三元表达式处理数量加密
+			for i in range(C_操作数量):
+				var 格子数据 = {
+					"道具ID": C_道具ID,
+					"数量": 引擎.加解密.浮点数加密(1) if self.加密 else 1,
+					"唯一ID": 引擎.字符串.获取不重复随机码()  # 唯一ID不加密
+				}
+				self.背包.append(格子数据)
+			return true
+		# 原有可堆叠逻辑（完全保留，未作任何修改）
 		# 查找道具是否已在背包中
 		var index = 获取道具索引(C_道具ID)
 		if index != -1:
-			# 如果存在，增加数量
-			
+			# 如果存在，增加数量			
 			if self.加密:
 				#加密
 				if !引擎.加解密.是否作弊:
@@ -47,7 +57,6 @@ class 角色背包:
 			else:
 				# 如果不存在，添加新道具
 				self.背包.append({"道具ID": C_道具ID, "数量": C_操作数量})
-				
 			return true
 
 	# 获取道具在背包中的索引
@@ -56,11 +65,28 @@ class 角色背包:
 			if self.背包[i]["道具ID"] == C_道具ID:
 				return i
 		return -1
-	
+		
+	func 获取道具索引_唯一ID(唯一ID: String) -> int:
+		for i in self.背包.size():
+			if self.背包[i].has("唯一ID") and self.背包[i]["唯一ID"] == 唯一ID:
+				return i
+		return -1
 
 	# 减少背包中的道具 ### 使用减少具时,请先判断数量
-	func 减少道具(C_道具ID: String, C_操作数量: float=1):
+	func 减少道具(C_道具ID: String, C_操作数量: float=1,唯一ID: String=""):
+		#唯一ID删除处理
+		if 唯一ID != "":
+			var index = 获取道具索引_唯一ID(唯一ID)
+			if index == -1:
+				return false  # 未找到该唯一道具
+			self.背包.remove_at(index)
+			return true
+		#修复尝试通过非 唯一ID处理 直接删除道具 
 		var index = 获取道具索引(C_道具ID)
+		if ("唯一ID" in 获取索引数据(index)) ==true:
+			print("检测到是唯一ID,且通过非ID删除,这里已拦截,请通过唯一ID删除")
+			return false
+		#非唯一处理 
 		if self.加密:
 			#加密
 			if !引擎.加解密.是否作弊:
