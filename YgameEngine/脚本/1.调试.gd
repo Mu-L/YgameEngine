@@ -10,11 +10,22 @@ class_name 引擎调试
 ##[codeblock]
 ## print("重要信息", "red")
 ##[/codeblock]
-func 打印(打印的内容, 颜色:String = "green") -> void:
+func 打印(...打印的内容: Array) -> void:
 	var 来源 = get_stack()[1]
-	#if 取调试模式():
-	print_rich("%s\t%s:%s\t [color=%s]%s[/color]" % [来源["source"],来源["function"],来源["line"],颜色, 打印的内容])
+	# 手动拼接可变参数内容
+	var 内容 = ""
+	for i in 打印的内容.size():
+		内容 += str(打印的内容[i])  # 先转成字符串，避免类型错误
+		# 除了最后一个元素，后面加空格分隔
+		if i != 打印的内容.size() - 1:
+			内容 += " "
 	
+	print_rich("%s\t%s:%s\t [color=green]%s[/color]" % [
+		来源["source"],
+		来源["function"],
+		来源["line"],
+		内容
+	])
 ## 带注释的调试打印（仅在调试模式下输出）
 ## [br]参数:[br]
 ##   - 注释: 打印内容的前缀说明[br]
@@ -22,11 +33,23 @@ func 打印(打印的内容, 颜色:String = "green") -> void:
 ##[codeblock]
 ## 引擎.调试.注释打印("玩家位置", player.position)
 ##[/codeblock]
-func 注释打印(注释:String, 打印的内容) -> void:
+func 注释打印(注释: String, ...打印的内容: Array) -> void:
 	var 来源 = get_stack()[1]
-	#if 取调试模式():
-	print_rich("%s\t%s:%s\t[color=red]%s:\t[/color][color=green]%s[/color]" %[来源["source"],来源["function"],来源["line"],注释, 打印的内容])
-#		
+	
+	# 处理可变参数：拼接所有内容为字符串
+	var 内容 = ""
+	for i in 打印的内容.size():
+		内容 += str(打印的内容[i])  # 转为字符串避免类型错误
+		if i != 打印的内容.size() - 1:
+			内容 += " "  # 元素间用空格分隔
+	
+	print_rich("%s\t%s:%s\t[color=red]%s:\t[/color][color=green]%s[/color]" % [
+		来源["source"],
+		来源["function"],
+		来源["line"],
+		注释,
+		内容
+	])
 ## 格式化打印字典内容
 ## [br]参数:[br]
 ##   - 字典: 要打印的字典对象[br]
