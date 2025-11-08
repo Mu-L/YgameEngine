@@ -133,16 +133,16 @@ class 职业与属性:
 				所有属性[效果名] = 加解密工具.浮点数解密(加密数据[效果名])
 			return 所有属性
 	# 计算属性效果
-	func 计算属性效果(包含基础: bool = false) -> 计算结果:
+	func 计算属性效果(包含基础属性: bool = false) -> 计算结果:
 		var 属性点 = 属性表获取()
 		print(属性点)
-		return 计算属性(属性点, 职业, 包含基础)
+		return 计算属性(属性点, 职业, 包含基础属性)
 	
 	# 计算最终属性的核心函数
-	func 计算属性(属性点: Dictionary, 职业: String, 包含基础: bool = false) -> 计算结果:
+	func 计算属性(属性点: Dictionary, 职业: String, 包含基础属性: bool = false) -> 计算结果:
 		# 初始化结果字典
 		var 最终属性 = {}
-		if 包含基础:
+		if 包含基础属性:
 			最终属性 = 基础属性.get(职业, {}).duplicate(true)
 		else:
 			# 从规则中收集所有可能的效果名并初始化为0

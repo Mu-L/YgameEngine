@@ -8,39 +8,37 @@ extends Node
 # 用于类型声明时识别"引擎.网络"层级
 
 ##基于调试封装的东西
-var 调试:引擎调试
-
+var 调试=preload("uid://boaf24oyvwawd").new()
 ##统一管理按钮的东西
-var 按钮:引擎按钮
-
+var 按钮=preload("uid://d0xhr42vcl758").new()
 ##基于场景封装的东西
-var 场景:引擎场景
+var 场景=preload("uid://cmmdxughbtv03").new()
 
 ##统一管理对话的的东西
-var 对话:引擎对话
+var 对话=preload("uid://bnyxil46lij8e").new()
 
 ##统一屏幕的的东西
-var 屏幕:引擎屏幕
+var 屏幕=preload("uid://cy1l67aptkolr").new()
 
 ##统一加解密的的东西
-var 加解密:引擎加解密
+var 加解密=preload("uid://chwg4gxgysd33").new()
 
 ##统一管理文件的东西
-var 文件:引擎文件
+var 文件=preload("uid://c1v6dd331585h").new()
 
 ##统一数学的东西
-var 数学:引擎数学
+var 数学=preload("uid://be3m8f3yuqecj").new()
 
 ##基于自己时间的东西
-var 时间:引擎时间
+var 时间=preload("uid://7ufr514c01sm").new()
 ##基于字符串封装的东西
-var 字符串:引擎字符串
+var 字符串=preload("uid://dt2gymmpyidg5").new()
 
 ##基于自己理解的东西,节点统称为对象
-var 对象:引擎对象
+var 对象=preload("uid://wva6ajc1nv8o").new()
 
 ##基于自己理解的东西,节点统称为对象
-var 图片:引擎图片
+var 图片=preload("uid://dil0tsqss7i21").new()
 # 1. 预加载网络模块的类（用于类型关联）
 const 网络类 = preload("uid://bp4iapmx88yhl")  # 指向12.网络.gd（引擎网络类）
 # 2. 网络实例（加载并初始化）
@@ -92,101 +90,19 @@ const 怪物类=preload("uid://vitkmt6enhkh")
 
 
 func _init() -> void:
-#region 初始化 回调_按钮.gd 接管所有按钮脚本回调。请使用[按钮信号.gd]拖入按钮控件配置相关属性
-	#载入[addons\YgameEngine\脚本\2.按钮.gd]
-	var 按钮脚本 = load("uid://d0xhr42vcl758").new()
-	按钮脚本.name="按钮"
-	add_child(按钮脚本)
-	self.按钮 = 按钮脚本
-	#endregion
+	pass
+##region 初始化 回调_按钮.gd 接管所有按钮脚本回调。请使用[按钮信号.gd]拖入按钮控件配置相关属性
+	##载入[addons\YgameEngine\脚本\2.按钮.gd]
+	#var 按钮脚本 = load("uid://d0xhr42vcl758").new()
+	#按钮脚本.name="按钮"
+	#add_child(按钮脚本)
+	#self.按钮 = 按钮脚本
+	##endregion
 func _ready():
-	
-#region 初始化 [addons\YgameEngine\脚本\1.调试.gd] 添加调试系统
-	var 调试脚本 = load("uid://boaf24oyvwawd").new()
-	调试脚本.name="调试"
-	add_child(调试脚本)
-	self.调试 = 调试脚本
-#endregion
-
-#region 初始化 [addons\YgameEngine\脚本\3.场景.gd] 添加场景系统
-	var 场景脚本 = load("uid://cmmdxughbtv03").new()
-	场景脚本.name="场景"
-	add_child(场景脚本)
-	self.场景 = 场景脚本
-#endregion
-
-#region 初始化 [addons\YgameEngine\场景\对话\4.对话.gd],对话的东西。
-	var 对话脚本 = load("uid://bnyxil46lij8e").new()
-	对话脚本.name="对话"
-	add_child(对话脚本)
-	self.对话 = 对话脚本
-#endregion
-	
-#region 初始化 [addons\YgameEngine\脚本\5.屏幕.gd],屏幕的东西。
-	var 屏幕脚本 = load("uid://cy1l67aptkolr").new()
-	屏幕脚本.name="屏幕"
-	add_child(屏幕脚本)
-	self.屏幕 = 屏幕脚本
-#endregion
-
-#region 初始化 [addons\YgameEngine\脚本\6.加解密.gd],的东西。
-	var 加解密脚本 = load("uid://chwg4gxgysd33").new()
-	加解密脚本.name="加解密节点"
-	add_child(加解密脚本)
-	self.加解密 = 加解密脚本
-#endregion
-	
-#region 初始化 [addons\YgameEngine\脚本\7.文件.gd] 添加文件系统
-	var 文件脚本 = load("uid://c1v6dd331585h").new()
-	文件脚本.name="文件"
-	add_child(文件脚本)
-	self.文件 = 文件脚本
-#endregion
-
-#region 初始化 [addons\YgameEngine\脚本\8.数学.gd] 添加随机系统
-	var 数学脚本 = load("uid://be3m8f3yuqecj").new()
-	数学脚本.name="数学"
-	add_child(数学脚本)
-	self.数学 = 数学脚本
-#endregion
-
-#region 初始化 [addons\YgameEngine\脚本\9.时间.gd] 添加对象系统
-	var 时间脚本 = load("uid://7ufr514c01sm").new()
-	时间脚本.name="时间"
-	add_child(时间脚本)
-	self.时间 = 时间脚本
-#endregion
-
-#region 初始化 [addons\YgameEngine\脚本\10.字符串.gd] 添加字符串系统
-	var 字符串脚本 = load("uid://dt2gymmpyidg5").new()
-	字符串脚本.name="字符串"
-	add_child(字符串脚本)
-	self.字符串 = 字符串脚本
-#endregion
-
-#region 初始化 [addons\YgameEngine\脚本\11.对象.gd] 添加对象系统
-	var 对象脚本 = load("uid://wva6ajc1nv8o").new()
-	对象脚本.name="对象"
-	add_child(对象脚本)
-	self.对象 = 对象脚本
-#endregion
-
 	#指向12.网络.gd（引擎网络类）
 	网络.name = "网络"
 	add_child(网络)  # 挂载到引擎节点
 	
-
-
-	
-#region 初始化 [addons\YgameEngine\脚本\16.图片.gd] 添加图片系统
-	var 图片脚本 = preload("uid://dil0tsqss7i21").new()
-	图片脚本.name="网络"
-	add_child(图片脚本)
-	self.图片 = 图片脚本
-#endregion
-
-
-
 
 ##以下待修复，融入
 #
