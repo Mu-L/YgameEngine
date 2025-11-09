@@ -58,9 +58,7 @@ class 道具数据库:
 		var 道具属性 = 获取道具属性(道具ID, "品质")
 		return 道具属性 if 道具属性!= null else 0.0
 		
-func 加载道具库() -> 道具数据库:
-	var 道具库=道具数据库.new()
-	return 道具库
+
 
 
 class NPC数据库:
@@ -73,9 +71,7 @@ class NPC数据库:
 		return NPC
 	
 	pass
-func 加载NPC数据库() -> NPC数据库:
-	var NPCj=NPC数据库.new()
-	return NPCj
+
 
 
 class NPC技能数据库:
@@ -88,9 +84,7 @@ class NPC技能数据库:
 		return NPC技能
 	
 	pass
-func 加载NPC技能数据库() -> NPC技能数据库:
-	var NPCj=NPC技能数据库.new()
-	return NPCj
+
 
 class 技能数据库:
 	var 技能={};
@@ -102,6 +96,3 @@ class 技能数据库:
 		return 技能
 	
 	pass
-func 加载技能数据库() -> 技能数据库:
-	var JN=技能数据库.new()
-	return JN
