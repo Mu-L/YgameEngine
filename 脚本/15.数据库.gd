@@ -58,8 +58,8 @@ class 道具数据库:
 		func 获取品质(道具ID: String) -> float:
 			return _获取属性(道具ID, "品质", 0.0)
 		
-		# 4. 获取完整数据库
-		func 获取完整数据库() -> Dictionary:
+		# 4. 获取完整数据
+		func 获取完整数据() -> Dictionary:
 			return 道具数据.duplicate(true)
 
 
