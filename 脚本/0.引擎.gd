@@ -51,8 +51,7 @@ const 角色背包类 = preload("uid://48vedp8jko7w")  # 指向13.背包.gd（�
 const 弱网类= preload("uid://bawh8cqwmt7iw") #指向14.弱网(引擎弱网)
 var 弱网:弱网类=弱网类.new()
 
-const 数据库类=preload("uid://xymsomt1qyx2") #指向15.数据库
-var 数据库:数据库类=数据库类.new()
+const 数据库=preload("uid://xymsomt1qyx2") #指向15.数据库
 
 #17装备,尝试减少变量
 const 装备类=preload("uid://dcdsmt5sxbyc4")
