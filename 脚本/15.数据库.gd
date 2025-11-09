@@ -4,60 +4,61 @@ extends Node
 ####NPC技能数据库 读取:res://系统/npcskillsystem.json
 ###技能数据库 读取:res://系统/skillsystem.json
 class 道具数据库:
-	var 道具库={};
+	var 道具库 = {}
 	
 	func _init() -> void:
 		if 引擎.文件.是否存在("res://系统/itemsystem.json"):
 			道具库=引擎.文件.读取文件到变量("res://系统/itemsystem.json")
+	func 获取数据库() -> 道具:
+		return 道具.new(道具库)
+	
+	class 道具:
+		var 道具数据: Dictionary
 		
-	func 获取数据库():
-		return 道具库
-	
-	# 1. 按ID精准查询道具完整信息
-	func 按ID查询道具(道具ID: String) -> Dictionary:
-		if 道具库.has(道具ID):
-			return 道具库[道具ID].duplicate()  # 返回副本避免外部修改
-		return {}  # 不存在返回空字典
-	
-	# 2. 获取指定ID道具的单个属性
-	func 获取道具属性(道具ID: String, 属性名: String) -> Variant:
-		var 道具信息 = 按ID查询道具(道具ID)
-		if 道具信息.is_empty():
-			print("道具ID不存在: " + 道具ID)
-			return null
+		func _init(原始数据: Dictionary) -> void:
+			道具数据 = 原始数据.duplicate(true)  # 深度复制
 		
-		if 道具信息.has(属性名):
-			return 道具信息[属性名]
-		print("道具" + 道具ID + "不存在属性: " + 属性名)
-		return null
-	
-	# 3. 获取指定ID道具的效果字典
-	func 获取道具效果(道具ID: String) -> Dictionary:
-		# 直接调用属性获取方法，指定"效果"属性
-		var 效果 = 获取道具属性(道具ID, "效果")
-		if 效果 == null:
-			return {}  # 无效果返回空字典
-		return 效果.duplicate()  # 返回副本避免外部修改
-	
-	# 新增获取道具分类函数
-	func 获取道具分类(道具ID: String) -> String:
-		var 道具属性 = 获取道具属性(道具ID, "类型")
-		return 道具属性 if 道具属性!= null else ""
-	# 新增获取道具子类函数
-	func 获取道具子类(道具ID: String) -> String:
-		var 道具属性 = 获取道具属性(道具ID, "子类型")
-		return 道具属性 if 道具属性!= null else ""
+		# 核心：通用获取属性方法（复用逻辑，减少重复）
+		func _获取属性(道具ID: String, 属性名: String, 默认值) -> Variant:
+			if not 道具数据.has(道具ID):
+				print("道具ID不存在: " + 道具ID)
+				return 默认值
+			var 道具信息 = 道具数据[道具ID]
+			return 道具信息[属性名] if 道具信息.has(属性名) else 默认值
+		
+		# 1. 按ID查询道具完整信息
+		func 获取道具(道具ID: String) -> Dictionary:
+			return 道具数据[道具ID].duplicate() if 道具数据.has(道具ID) else {}
+		
+		# 2. 获取道具效果（复用通用方法）
+		func 获取道具效果(道具ID: String) -> Dictionary:
+			var 效果 = _获取属性(道具ID, "效果", {})
+			return 效果.duplicate()  if 效果 is Dictionary else {}
+		
+		# 3. 各类属性获取（全部复用通用方法，精简代码）
+		func 获取道具名称(道具ID: String) -> String:
+			return _获取属性(道具ID, "名称", "")
+		
+		func 获取道具类型(道具ID: String) -> String:
+			return _获取属性(道具ID, "类型", "")
+		
+		func 获取道具子类(道具ID: String) -> String:
+			return _获取属性(道具ID, "子类型", "")
+		
+		func 获取道具价格(道具ID: String) -> float:
+			return _获取属性(道具ID, "价格", 0.0)
+		
+		func 获取道具等级(道具ID: String) -> float:
+			return _获取属性(道具ID, "等级", 0.0)
+		
+		func 获取道具品质(道具ID: String) -> float:
+			return _获取属性(道具ID, "品质", 0.0)
+		
+		# 4. 获取完整数据库
+		func 获取完整数据库() -> Dictionary:
+			return 道具数据.duplicate(true)
 
-	# 新增获取道具等级函数
-	func 获取道具等级(道具ID: String) -> float:
-		var 道具属性 = 获取道具属性(道具ID, "等级")
-		return 道具属性 if 道具属性!= null else 0.0
 
-	# 新增获取道具品质函数
-	func 获取道具品质(道具ID: String) -> float:
-		var 道具属性 = 获取道具属性(道具ID, "品质")
-		return 道具属性 if 道具属性!= null else 0.0
-		
 
 
 
