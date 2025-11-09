@@ -27,31 +27,35 @@ class 道具数据库:
 			return 道具信息[属性名] if 道具信息.has(属性名) else 默认值
 		
 		# 1. 按ID查询道具完整信息
-		func 获取道具(道具ID: String) -> Dictionary:
+		func 获取数据(道具ID: String) -> Dictionary:
 			return 道具数据[道具ID].duplicate() if 道具数据.has(道具ID) else {}
 		
 		# 2. 获取道具效果（复用通用方法）
-		func 获取道具效果(道具ID: String) -> Dictionary:
+		func 获取效果(道具ID: String) -> Dictionary:
 			var 效果 = _获取属性(道具ID, "效果", {})
 			return 效果.duplicate()  if 效果 is Dictionary else {}
 		
 		# 3. 各类属性获取（全部复用通用方法，精简代码）
-		func 获取道具名称(道具ID: String) -> String:
+		func 获取名称(道具ID: String) -> String:
 			return _获取属性(道具ID, "名称", "")
-		
-		func 获取道具类型(道具ID: String) -> String:
+		func 获取图标路径(道具ID: String) -> String:
+			return _获取属性(道具ID, "相对图标路径", "")
+		func 获取描述(道具ID: String) -> String:
+			return _获取属性(道具ID, "描述", "")
+				
+		func 获取类型(道具ID: String) -> String:
 			return _获取属性(道具ID, "类型", "")
 		
-		func 获取道具子类(道具ID: String) -> String:
+		func 获取子类(道具ID: String) -> String:
 			return _获取属性(道具ID, "子类型", "")
 		
-		func 获取道具价格(道具ID: String) -> float:
+		func 获取价格(道具ID: String) -> float:
 			return _获取属性(道具ID, "价格", 0.0)
 		
-		func 获取道具等级(道具ID: String) -> float:
+		func 获取等级(道具ID: String) -> float:
 			return _获取属性(道具ID, "等级", 0.0)
 		
-		func 获取道具品质(道具ID: String) -> float:
+		func 获取品质(道具ID: String) -> float:
 			return _获取属性(道具ID, "品质", 0.0)
 		
 		# 4. 获取完整数据库
