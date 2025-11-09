@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bblkg58wiga48"]
+
+[sub_resource type="Gradient" id="Gradient_62e2m"]
+offsets = PackedFloat32Array(0.24584718, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qtu10"]
+gradient = SubResource("Gradient_62e2m")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ee4bf"]
+texture = SubResource("GradientTexture2D_qtu10")
+modulate_color = Color(0, 0, 0, 0.13333334)
+
+[sub_resource type="GDScript" id="GDScript_egv8v"]
+script/source = "extends RichTextLabel
+
+
+@export var duration:float=4
+
+
+func _ready() -> void:
+	await get_tree().create_timer(duration).timeout
+	var tween=create_tween()
+	tween.set_parallel()
+	tween.tween_property(self,\"modulate:a\",0,0.5)
+	tween.tween_property(self,\"custom_minimum_size:y\",0,0.5)
+	await tween.finished
+	queue_free()
+"
+
+[node name="Control" type="RichTextLabel"]
+size_flags_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_ee4bf")
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+script = SubResource("GDScript_egv8v")
