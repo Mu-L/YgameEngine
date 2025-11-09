@@ -108,14 +108,14 @@ class 角色背包:
 			else:
 				return self.背包[index]["数量"]
 		return 0
-	func 获取指定类型道具(道具数据库:引擎.数据库类.道具数据库 = 引擎.数据库.加载道具库(),类型:String=""):#?
+	func 获取指定类型道具(道具数据库:引擎.数据库.道具数据库.道具 = 引擎.数据库.道具数据库.new().获取数据库(),类型:String=""):#?
 		var 新组 = []
 		for i in 背包:
 			if 道具数据库.获取道具分类(i["道具ID"]) == 类型:
 				新组.append(i)
 		return 新组
 		
-	func 获取指定子类道具(道具数据库:引擎.数据库类.道具数据库 = 引擎.数据库.加载道具库(),类型:String="",子类型:String=""):#?
+	func 获取指定子类道具(道具数据库:引擎.数据库.道具数据库.道具 = 引擎.数据库.道具数据库.new().获取数据库(),类型:String="",子类型:String=""):#?
 		var 新组 = []
 		for i in 背包:
 			if 道具数据库.获取道具分类(i["道具ID"]) == 类型 and 道具数据库.获取道具子类(i["道具ID"]) ==子类型 :
@@ -123,11 +123,12 @@ class 角色背包:
 		return 新组
 
 	#先排序分类,子类,在排序等级,等级相同,在排序品质,需要传入数据库
-	func 背包排序(道具数据库:引擎.数据库类.道具数据库 = 引擎.数据库.加载道具库(), 是否反向排序: bool = true):
+	func 背包排序(道具数据库:引擎.数据库.道具数据库.道具, 是否反向排序: bool = true):
 		# 按分类排序
 		背包.sort_custom(func(a, b):
-			var a分类 = 道具数据库.获取道具分类(a["道具ID"])
-			var b分类 = 道具数据库.获取道具分类(b["道具ID"])
+			
+			var a分类 = 道具数据库.获取类型(a["道具ID"])
+			var b分类 = 道具数据库.获取类型(b["道具ID"])
 			if 是否反向排序:
 				if a分类 < b分类:
 					return true
@@ -135,24 +136,24 @@ class 角色背包:
 					return false
 				else:
 					# 分类相同，按子类排序
-					var a子类 = 道具数据库.获取道具子类(a["道具ID"])
-					var b子类 = 道具数据库.获取道具子类(b["道具ID"])
+					var a子类 = 道具数据库.获取子类(a["道具ID"])
+					var b子类 = 道具数据库.获取子类(b["道具ID"])
 					if a子类 < b子类:
 						return true
 					elif a子类 > b子类:
 						return false
 					else:
 						# 子类相同，按等级排序
-						var a等级 = 道具数据库.获取道具等级(a["道具ID"])
-						var b等级 = 道具数据库.获取道具等级(b["道具ID"])
+						var a等级 = 道具数据库.获取等级(a["道具ID"])
+						var b等级 = 道具数据库.获取等级(b["道具ID"])
 						if a等级 < b等级:
 							return true
 						elif a等级 > b等级:
 							return false
 						else:
 							# 等级相同，按品质排序
-							var a品质 = 道具数据库.获取道具品质(a["道具ID"])
-							var b品质 = 道具数据库.获取道具品质(b["道具ID"])
+							var a品质 = 道具数据库.获取品质(a["道具ID"])
+							var b品质 = 道具数据库.获取品质(b["道具ID"])
 							if a品质 < b品质:
 								return true
 							elif a品质 > b品质:
@@ -166,24 +167,24 @@ class 角色背包:
 					return true
 				else:
 					# 分类相同，按子类排序
-					var a子类 = 道具数据库.获取道具子类(a["道具ID"])
-					var b子类 = 道具数据库.获取道具子类(b["道具ID"])
+					var a子类 = 道具数据库.获取子类(a["道具ID"])
+					var b子类 = 道具数据库.获取子类(b["道具ID"])
 					if a子类 < b子类:
 						return false
 					elif a子类 > b子类:
 						return true
 					else:
 						# 子类相同，按等级排序
-						var a等级 = 道具数据库.获取道具等级(a["道具ID"])
-						var b等级 = 道具数据库.获取道具等级(b["道具ID"])
+						var a等级 = 道具数据库.获取等级(a["道具ID"])
+						var b等级 = 道具数据库.获取等级(b["道具ID"])
 						if a等级 < b等级:
 							return false
 						elif a等级 > b等级:
 							return true
 						else:
 							# 等级相同，按品质排序
-							var a品质 = 道具数据库.获取道具品质(a["道具ID"])
-							var b品质 = 道具数据库.获取道具品质(b["道具ID"])
+							var a品质 = 道具数据库.获取品质(a["道具ID"])
+							var b品质 = 道具数据库.获取品质(b["道具ID"])
 							if a品质 < b品质:
 								return false
 							elif a品质 > b品质:
