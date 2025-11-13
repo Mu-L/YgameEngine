@@ -80,24 +80,97 @@ class NPC数据库:
 
 
 class NPC技能数据库:
-	var NPC技能={};
+	var NPC技能库 = {}
 	
 	func _init() -> void:
 		if 引擎.文件.是否存在("res://系统/npcskillsystem.json"):
-			NPC技能=引擎.文件.读取文件到变量("res://系统/npcskillsystem.json")
-	func 获取数据库():
-		return NPC技能
+			NPC技能库 = 引擎.文件.读取文件到变量("res://系统/npcskillsystem.json")
 	
-	pass
+	func 获取数据库() -> NPC技能:
+		return NPC技能.new(NPC技能库)
+	
+	class NPC技能:
+		var 数据: Dictionary
+		
+		func _init(原始数据: Dictionary) -> void:
+			数据 = 原始数据.duplicate(true)
+		
+		# 获取指定NPC、指定索引的技能ID（对应JSON的"技能"字段）
+		func 获取技能(NPCID: String, 索引: int) -> String:
+			if not 数据.has(NPCID) or 索引 < 0 or 索引 >= 数据[NPCID].size():
+				return ""
+			return 数据[NPCID][索引].get("技能", "")
+		
+		# 获取指定NPC、指定索引的技能几率（对应JSON的"几率"字段）
+		func 获取几率(NPCID: String, 索引: int) -> float:
+			if not 数据.has(NPCID) or 索引 < 0 or 索引 >= 数据[NPCID].size():
+				return 0.0
+			return 数据[NPCID][索引].get("几率", 0.0)
 
 
 class 技能数据库:
-	var 技能={};
+	var 技能库={};
 	
 	func _init() -> void:
 		if 引擎.文件.是否存在("res://系统/skillsystem.json"):
-			技能=引擎.文件.读取文件到变量("res://系统/skillsystem.json")
+			技能库=引擎.文件.读取文件到变量("res://系统/skillsystem.json")
 	func 获取数据库():
-		return 技能
-	
+		return 技能.new(技能库)
+	class 技能:
+		var 技能数据: Dictionary
+		
+		func _init(原始数据: Dictionary) -> void:
+			技能数据 = 原始数据.duplicate(true)  # 深度复制，避免外部修改原数据
+		
+		# 核心：通用获取属性方法（复用逻辑，减少重复代码）
+		func _获取属性(技能ID: String, 属性名: String, 默认值) -> Variant:
+			if not 技能数据.has(技能ID):
+				print("技能ID不存在: " + 技能ID)
+				return 默认值
+			var 技能信息 = 技能数据[技能ID]
+			return 技能信息[属性名] if 技能信息.has(属性名) else 默认值
+		
+		# 1. 按ID查询技能完整信息
+		func 获取数据(技能ID: String) -> Dictionary:
+			return 技能数据[技能ID].duplicate() if 技能数据.has(技能ID) else {}
+		
+		# 2. 获取技能效果（复用通用方法）
+		func 获取效果(技能ID: String) -> Dictionary:
+			var 效果 = _获取属性(技能ID, "效果", {})
+			return 效果.duplicate() if 效果 is Dictionary else {}
+		
+		# 3. 各类属性获取（与JSON字段名完全一致）
+		func 获取名称(技能ID: String) -> String:
+			return _获取属性(技能ID, "名称", "")
+		
+		func 获取图标相对路径(技能ID: String) -> String:  # 与JSON的"图标相对路径"对应
+			return _获取属性(技能ID, "图标相对路径", "")
+		
+		func 获取伤害(技能ID: String) -> float:  # 与JSON的"伤害"对应
+			return _获取属性(技能ID, "伤害", 0.0)
+		
+		func 获取消耗(技能ID: String) -> float:  # 与JSON的"消耗"对应
+			return _获取属性(技能ID, "消耗", 0.0)
+		
+		func 获取伤害类型(技能ID: String) -> String:  # 与JSON的"伤害类型"对应
+			return _获取属性(技能ID, "伤害类型", "")
+		
+		func 获取目标(技能ID: String) -> float:  # 与JSON的"目标"对应
+			return _获取属性(技能ID, "目标", 0.0)
+		
+		func 获取射程(技能ID: String) -> float:  # 与JSON的"射程"对应
+			return _获取属性(技能ID, "射程", 0.0)
+		
+		func 获取伤害倍率(技能ID: String) -> float:  # 与JSON的"伤害倍率"对应
+			return _获取属性(技能ID, "伤害倍率", 0.0)
+		
+		func 获取描述(技能ID: String) -> String:  # 与JSON的"描述"对应
+			return _获取属性(技能ID, "描述", "")
+		
+		func 获取类型(技能ID: String) -> String:  # 与JSON的"类型"对应
+			return _获取属性(技能ID, "类型", "")
+		
+		# 4. 获取完整数据
+		func 获取完整数据() -> Dictionary:
+			return 技能数据.duplicate(true)	
 	pass
