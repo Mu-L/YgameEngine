@@ -61,21 +61,63 @@ class 道具数据库:
 		# 4. 获取完整数据
 		func 获取完整数据() -> Dictionary:
 			return 道具数据.duplicate(true)
-
-
-
+	
 
 
 class NPC数据库:
-	var NPC={};
-	
+	var NPC库 = {}  # 统一存储变量名
 	func _init() -> void:
-		if 引擎.文件.是否存在("res://系统/npcsystem.json"):
-			NPC=引擎.文件.读取文件到变量("res://系统/npcsystem.json")
-	func 获取数据库():
-		return NPC
+		if 引擎.文件.是否存在("res://系统/npcsystem.json"):  # 假设NPC数据文件路径
+			NPC库 = 引擎.文件.读取文件到变量("res://系统/npcsystem.json")
 	
-	pass
+	func 获取数据库() -> NPC:
+		return NPC.new(NPC库)
+	
+	class NPC:
+		var NPC数据: Dictionary
+		
+		func _init(原始数据: Dictionary) -> void:
+			NPC数据 = 原始数据.duplicate(true)  # 深度复制，避免外部修改
+		
+		# 通用属性获取方法（复用逻辑）
+		func _获取属性(NPCID: String, 属性名: String, 默认值) -> Variant:
+			if not NPC数据.has(NPCID):
+				print("NPCID不存在: " + NPCID)
+				return 默认值
+			var npc信息 = NPC数据[NPCID]
+			return npc信息[属性名] if npc信息.has(属性名) else 默认值
+		
+		# 1. 获取指定NPC的完整数据
+		func 获取数据(NPCID: String) -> Dictionary:
+			return NPC数据[NPCID].duplicate() if NPC数据.has(NPCID) else {}
+		
+		# 2. 基础信息获取（对应JSON字段）
+		func 获取名称(NPCID: String) -> String:
+			return _获取属性(NPCID, "名称", "")
+		
+		func 获取种族(NPCID: String) -> String:
+			return _获取属性(NPCID, "种族", "")
+		
+		func 获取等级(NPCID: String) -> float:
+			return _获取属性(NPCID, "等级", 0.0)
+		
+		func 获取阵营(NPCID: String) -> String:
+			return _获取属性(NPCID, "阵营", "")
+		
+		func 获取描述(NPCID: String) -> String:
+			return _获取属性(NPCID, "描述", "")
+		
+		func 获取图标路径(NPCID: String) -> String:
+			return _获取属性(NPCID, "图标路径", "")
+		
+		# 3. 属性列表获取（单独处理嵌套字典）
+		func 获取属性列表(NPCID: String) -> Dictionary:
+			var 属性 = _获取属性(NPCID, "属性列表", {})
+			return 属性.duplicate() if 属性 is Dictionary else {}
+		
+		# 5. 获取全部NPC数据（用于批量操作）
+		func 获取完整数据() -> Dictionary:
+			return NPC数据.duplicate(true)
 
 
 
