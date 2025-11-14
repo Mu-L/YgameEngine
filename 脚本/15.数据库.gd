@@ -227,7 +227,7 @@ class 技能数据库:
 		func 获取名称(技能ID: String) -> String:
 			return _获取属性(技能ID, "名称", "")
 		
-		func 获取图标相对路径(技能ID: String) -> String:  # 与JSON的"图标相对路径"对应
+		func 获取图标路径(技能ID: String) -> String:  # 与JSON的"图标相对路径"对应
 			return _获取属性(技能ID, "图标相对路径", "")
 		
 		func 获取伤害(技能ID: String) -> float:  # 与JSON的"伤害"对应
