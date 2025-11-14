@@ -120,34 +120,76 @@ class NPC数据库:
 			return NPC数据.duplicate(true)
 
 
-
 class NPC技能数据库:
-	var NPC技能库 = {}
+	var NPC技能库 = {}  # 统一存储变量名，与NPC数据库保持一致
 	
 	func _init() -> void:
 		if 引擎.文件.是否存在("res://系统/npcskillsystem.json"):
 			NPC技能库 = 引擎.文件.读取文件到变量("res://系统/npcskillsystem.json")
 	
+	# 与NPC数据库保持一致：返回通用数据库操作实例
 	func 获取数据库() -> NPC技能:
 		return NPC技能.new(NPC技能库)
 	
 	class NPC技能:
-		var 数据: Dictionary
+		var 数据: Dictionary  # 存储所有NPC的技能数据
 		
 		func _init(原始数据: Dictionary) -> void:
-			数据 = 原始数据.duplicate(true)
+			数据 = 原始数据.duplicate(true)  # 深度复制
 		
-		# 获取指定NPC、指定索引的技能ID（对应JSON的"技能"字段）
-		func 获取技能(NPCID: String, 索引: int) -> String:
-			if not 数据.has(NPCID) or 索引 < 0 or 索引 >= 数据[NPCID].size():
-				return ""
-			return 数据[NPCID][索引].get("技能", "")
+		# 2. 随机选择技能（返回技能项实例）
+		func 获取随机技能(NPCID: String) -> 技能项:
+			# 内部临时获取技能列表（不对外暴露）
+			var 技能列表 = []
+			if 数据.has(NPCID):
+				for 技能项字典 in 数据[NPCID]:
+					技能列表.append(技能项.new(技能项字典))
+			
+			if 技能列表.is_empty():
+				return 技能项.new({})
+			
+			var 总几率 = 0.0
+			for 技能项实例 in 技能列表:
+				总几率 += 技能项实例.获取几率()
+			
+			if 总几率 <= 0:
+				return 技能项.new({})
+			
+			var 随机值 = randf() * 总几率
+			var 累计几率 = 0.0
+			for 技能项实例 in 技能列表:
+				累计几率 += 技能项实例.获取几率()
+				if 随机值 <= 累计几率:
+					return 技能项实例
+			
+			return 技能项.new({})
 		
-		# 获取指定NPC、指定索引的技能几率（对应JSON的"几率"字段）
-		func 获取几率(NPCID: String, 索引: int) -> float:
-			if not 数据.has(NPCID) or 索引 < 0 or 索引 >= 数据[NPCID].size():
-				return 0.0
-			return 数据[NPCID][索引].get("几率", 0.0)
+		# 3. 获取全部NPC技能数据（原始字典）
+		func 获取完整数据() -> Dictionary:
+			return 数据.duplicate(true)
+	
+	# 新增：技能项内部类（封装原索引获取方法）
+	class 技能项:
+		var 技能数据: Dictionary  # 单个技能项的原始数据
+		
+		func _init(技能项字典: Dictionary) -> void:
+			技能数据 = 技能项字典.duplicate(true)  # 复制数据
+		
+		# 原获取技能方法（挪入此类，无需NPCID和索引，直接操作当前技能项）
+		func 获取技能ID() -> String:
+			return 技能数据.get("技能", "")
+		
+		# 原获取几率方法（挪入此类）
+		func 获取几率() -> float:
+			return 技能数据.get("几率", 0.0)
+		
+		# 原获取属性方法（挪入此类）
+		func 获取属性(属性名: String, 默认值 = null) -> Variant:
+			return 技能数据.get(属性名, 默认值)
+		
+		# 获取当前技能项的完整字典数据
+		func 获取数据() -> Dictionary:
+			return 技能数据.duplicate(true)
 
 
 class 技能数据库:
