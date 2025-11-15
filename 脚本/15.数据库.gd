@@ -198,7 +198,7 @@ class 技能数据库:
 	func _init() -> void:
 		if 引擎.文件.是否存在("res://系统/skillsystem.json"):
 			技能库=引擎.文件.读取文件到变量("res://系统/skillsystem.json")
-	func 获取数据库():
+	func 获取数据库()-> 技能:
 		return 技能.new(技能库)
 	class 技能:
 		var 技能数据: Dictionary
