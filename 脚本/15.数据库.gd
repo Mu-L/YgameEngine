@@ -258,3 +258,100 @@ class 技能数据库:
 		func 获取完整数据() -> Dictionary:
 			return 技能数据.duplicate(true)	
 	pass
+
+
+class 掉落数据库:
+	var 掉落库 = {}  #
+	
+	func _init() -> void:
+		if 引擎.文件.是否存在("res://系统/drop_data.json"):
+			掉落库 = 引擎.文件.读取文件到变量("res://系统/drop_data.json")
+	
+	# 与NPC数据库保持一致：返回通用数据库操作实例
+	func 获取数据库() -> 掉落:
+		return 掉落.new(掉落库)
+	class 掉落:
+		var 掉落数据: Dictionary
+		func _init(原始数据: Dictionary) -> void:
+			掉落数据 = 原始数据.duplicate(true)  # 深度复制，避免外部修改原数据
+		pass
+		# 1. 获取完整数据
+		func 获取完整数据() -> Dictionary:
+			return 掉落数据.duplicate(true)	
+		func 开始掉落(配置:String,等级:float=1.0,宝物是否重复:bool=true):
+			var 最终掉落=[]
+			var 掉落表=掉落数据[配置]
+			if 掉落表.类别=="掉落":
+				for i in 掉落表.掉落:					
+					if 引擎.数学.随机_取0到1的浮点数() < i.掉落几率:
+						if 等级>=i.最小等级 and 等级<=i.最大等级:
+							var 掉落数量=引擎.数学.随机_取范围整数(i.掉落最小数量,i.掉落最大数量)
+							最终掉落.append({物品ID=i.物品ID,数量=掉落数量})
+				return 最终掉落
+			if 掉落表.类别 == "宝物":
+				if 宝物是否重复==true:
+					var 权重表 = []
+					
+					for 宝物 in 掉落表.宝物:
+						权重表.append([宝物.物品ID, 宝物.权重])
+					
+					var 掉落次数 = int(掉落表.权重的掉落数量)
+					for i in 掉落次数:
+						# 1. 权重选择具体物品ID
+						var 选中物品ID = 引擎.数学.随机_权重选择(权重表)
+						
+						# 2. 根据物品ID找到对应的宝物对象
+						var 选中宝物 = null  # GDScript 中用 null 表示空
+						for 宝物 in 掉落表.宝物:
+							if 宝物.物品ID == 选中物品ID:
+								选中宝物 = 宝物
+								break
+						
+						# 3. 获取该宝物的数量范围并随机
+						if 选中宝物 != null:  # GDScript 中判断非空
+							var 数量 = 引擎.数学.随机_取范围整数(
+								选中宝物.掉落最小数量,
+								选中宝物.掉落最大数量
+							)
+							#print("选中物品: ", 选中物品ID, "，数量: ", 数量)
+							最终掉落.append({物品ID=选中物品ID,数量=数量})	
+					return 最终掉落
+				#var 最终掉落 = []
+				if 宝物是否重复==false:
+					var 目标掉落次数 = int(掉落表.权重的掉落数量)
+					var 剩余宝物 = 掉落表.宝物.duplicate()  # 复制宝物列表，用于移除已选
+					
+					# for 循环最多执行 目标掉落次数 次
+					for i in  目标掉落次数:
+						# 若剩余宝物为空，提前终止（避免重复）
+						if 剩余宝物.is_empty():
+							break
+						
+						# 1. 基于剩余宝物构建权重表
+						var 权重表 = []
+						for 宝物 in 剩余宝物:
+							权重表.append([宝物.物品ID, 宝物.权重])
+						
+						# 2. 权重选择物品ID
+						var 选中物品ID = 引擎.数学.随机_权重选择(权重表)
+						
+						# 3. 找到宝物并从剩余列表中移除
+						var 选中宝物 = null
+						for j in range(剩余宝物.size()):
+							if 剩余宝物[j].物品ID == 选中物品ID:
+								选中宝物 = 剩余宝物[j]
+								剩余宝物.remove_at(j)
+								break
+						
+						# 4. 计算数量并添加
+						if 选中宝物 != null:
+							var 数量 = 引擎.数学.随机_取范围整数(
+								选中宝物.掉落最小数量,
+								选中宝物.掉落最大数量
+							)
+							最终掉落.append({ "物品ID"=选中物品ID, "数量"=数量 })
+					
+					return 最终掉落
+				
+			#最终返回[{物品ID:x,数量:x}]
+			
