@@ -21,7 +21,7 @@ class 道具数据库:
 		# 核心：通用获取属性方法（复用逻辑，减少重复）
 		func _获取属性(道具ID: String, 属性名: String, 默认值) -> Variant:
 			if not 道具数据.has(道具ID):
-				print("道具ID不存在: " + 道具ID)
+				引擎.调试.打印("道具ID不存在: " + 道具ID)
 				return 默认值
 			var 道具信息 = 道具数据[道具ID]
 			return 道具信息[属性名] if 道具信息.has(属性名) else 默认值
@@ -70,48 +70,59 @@ class NPC数据库:
 		if 引擎.文件.是否存在("res://系统/npcsystem.json"):  # 假设NPC数据文件路径
 			NPC库 = 引擎.文件.读取文件到变量("res://系统/npcsystem.json")
 	
-	func 获取数据库() -> NPC:
-		return NPC.new(NPC库)
+	func 获取数据库(npcId:String="") -> NPC:
+		return NPC.new(NPC库,npcId)
 	
 	class NPC:
 		var NPC数据: Dictionary
-		
-		func _init(原始数据: Dictionary) -> void:
-			NPC数据 = 原始数据.duplicate(true)  # 深度复制，避免外部修改
-		
+		var npcId:String=""
+		func _init(原始数据: Dictionary,npcId:String="") -> void:
+			self.NPC数据 = 原始数据.duplicate(true)  # 深度复制，避免外部修改
+			self.npcId=npcId
 		# 通用属性获取方法（复用逻辑）
 		func _获取属性(NPCID: String, 属性名: String, 默认值) -> Variant:
-			if not NPC数据.has(NPCID):
-				print("NPCID不存在: " + NPCID)
+			# 优先使用传入的NPCID；如果未传，则使用实例的默认npcId
+			var targetId = NPCID if NPCID != "" else self.npcId
+			
+			# 若最终仍无有效ID，返回默认值并提示
+			if targetId == "":
+				引擎.调试.打印("未指定NPCID且无默认ID")
 				return 默认值
-			var npc信息 = NPC数据[NPCID]
+			
+			# 检查ID是否存在
+			if not NPC数据.has(targetId):
+				引擎.调试.打印("NPCID不存在: " + targetId)
+				return 默认值
+			
+			# 返回属性值（不存在则用默认值）
+			var npc信息 = NPC数据[targetId]
 			return npc信息[属性名] if npc信息.has(属性名) else 默认值
-		
 		# 1. 获取指定NPC的完整数据
 		func 获取数据(NPCID: String) -> Dictionary:
 			return NPC数据[NPCID].duplicate() if NPC数据.has(NPCID) else {}
 		
 		# 2. 基础信息获取（对应JSON字段）
-		func 获取名称(NPCID: String) -> String:
+		func 获取名称(NPCID: String="") -> String:
 			return _获取属性(NPCID, "名称", "")
 		
-		func 获取种族(NPCID: String) -> String:
+		func 获取种族(NPCID: String="") -> String:
 			return _获取属性(NPCID, "种族", "")
 		
-		func 获取等级(NPCID: String) -> float:
+		func 获取等级(NPCID: String="") -> float:
 			return _获取属性(NPCID, "等级", 0.0)
 		
-		func 获取阵营(NPCID: String) -> String:
+		func 获取阵营(NPCID: String="") -> String:
 			return _获取属性(NPCID, "阵营", "")
 		
-		func 获取描述(NPCID: String) -> String:
+		func 获取描述(NPCID: String="") -> String:
 			return _获取属性(NPCID, "描述", "")
 		
-		func 获取图标路径(NPCID: String) -> String:
+		func 获取图标路径(NPCID: String="") -> String:
 			return _获取属性(NPCID, "图标路径", "")
 		
+		
 		# 3. 属性列表获取（单独处理嵌套字典）
-		func 获取属性列表(NPCID: String) -> Dictionary:
+		func 获取属性列表(NPCID: String="") -> Dictionary:
 			var 属性 = _获取属性(NPCID, "属性列表", {})
 			return 属性.duplicate() if 属性 is Dictionary else {}
 		
@@ -209,7 +220,7 @@ class 技能数据库:
 		# 核心：通用获取属性方法（复用逻辑，减少重复代码）
 		func _获取属性(技能ID: String, 属性名: String, 默认值) -> Variant:
 			if not 技能数据.has(技能ID):
-				print("技能ID不存在: " + 技能ID)
+				引擎.调试.打印("技能ID不存在: " + 技能ID)
 				return 默认值
 			var 技能信息 = 技能数据[技能ID]
 			return 技能信息[属性名] if 技能信息.has(属性名) else 默认值
