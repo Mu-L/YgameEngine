@@ -61,6 +61,8 @@ const 角色属性类=preload("uid://c03n37bu8xg7d")
 const 角色经验类=preload("uid://do1r5cs2spqr4")
 const 生命魔法类=preload("uid://u3hfm4s7vyyi")
 const 怪物类=preload("uid://vitkmt6enhkh")
+
+const 舞台类=preload("uid://bu53005rxrd1u")
 ##############以下，待融入参考，
 
 

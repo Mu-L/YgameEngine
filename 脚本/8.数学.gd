@@ -167,3 +167,9 @@ func 字典取属性(源字典: Dictionary, 目标属性: Array, 默认值: Vari
 	for 属性名 in 目标属性:
 		结果[属性名] =源字典[属性名] if 源字典.has(属性名) else 默认值
 	return 结果
+
+func 字典填充更新(字典1: Dictionary, 字典2: Dictionary) -> Dictionary:
+	for 键 in 字典1:
+		if 键 in 字典2:
+			字典1[键] = 字典2[键]
+	return 字典1
