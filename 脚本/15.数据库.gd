@@ -364,3 +364,56 @@ class 掉落数据库:
 					
 					return 最终掉落
 				
+
+class 增益数据库:
+	var 增益库 = {}  # 统一存储变量名
+	
+	func _init() -> void:
+		if 引擎.文件.是否存在("res://系统/buffSystem.json"):
+			增益库 = 引擎.文件.读取文件到变量("res://系统/buffSystem.json")
+	
+	# 
+	func 获取数据库() -> 增益:
+		return 增益.new(增益库)
+	
+	class 增益:
+		var 增益数据: Dictionary
+		func _init(原始数据: Dictionary) -> void:
+			增益数据 = 原始数据.duplicate(true)  # 深度复制，避免外部修改原数据
+		pass
+		# 核心：通用获取属性方法（复用逻辑，减少重复代码）
+		func _获取属性(增益ID: String, 属性名: String, 默认值) -> Variant:
+			if not 增益数据.has(增益ID):
+				引擎.调试.打印("增益ID不存在: " + 增益ID)
+				return 默认值
+			var 增益信息 = 增益数据[增益ID]
+			return 增益信息[属性名] if 增益信息.has(属性名) else 默认值
+			
+		func 获取名称(增益ID:String) -> String:
+			return _获取属性(增益ID, "名称", "")
+		
+		func 获取持续类型(增益ID:String) -> String:
+			return _获取属性(增益ID, "持续类型", "")
+		
+		func 获取堆叠次数(增益ID:String) -> float:
+			return _获取属性(增益ID, "堆叠次数", 0.0)
+		
+		func 获取规则(增益ID:String) -> String:
+			return _获取属性(增益ID, "规则", "")
+		
+		func 获取描述(增益ID:String) -> String:
+			return _获取属性(增益ID, "描述", "")
+		
+		func 获取持续值(增益ID:String) -> float:
+			return _获取属性(增益ID, "持续值", 0.0)
+		
+		func 获取图标(增益ID:String) -> String:
+			return _获取属性(增益ID, "图标路径", "")
+		
+		func 获取效果列表(增益ID:String) -> Dictionary:
+			var 效果 = _获取属性(增益ID, "效果", {})
+			return 效果.duplicate() if 效果 is Dictionary else {}
+		func 获取数据(增益ID: String) -> Dictionary:
+			return 增益数据[增益ID].duplicate() if 增益数据.has(增益ID) else {}
+		func 获取完整数据() -> Dictionary:
+			return 增益数据.duplicate(true)		
