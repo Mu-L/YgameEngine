@@ -28,7 +28,7 @@ func 打开(文本:String,对话包:Dictionary={},标题:String="系统"):
 	if 对话面板!=null:
 		对话面板.queue_free()
 	#
-	var 面板=load("uid://1dk1hdfmbpa4").instantiate()
+	var 面板=load("res://addons/YgameEngine/场景/对话/引擎_对话.tscn").instantiate()
 	add_child(面板)
 	面板.文本.text=文本
 	面板.标题.text=标题
@@ -58,7 +58,7 @@ func 打开(文本:String,对话包:Dictionary={},标题:String="系统"):
 func 询问(文本:String,对话包:Dictionary={},标题:String="系统"):
 	if 询问面板!=null:
 		询问面板.queue_free()
-	var 面板=load("uid://c6545l8ijawo8").instantiate()
+	var 面板=load("res://addons/YgameEngine/场景/对话/引擎_询问.tscn").instantiate()
 	add_child(面板)
 	
 	面板.文本.text=文本

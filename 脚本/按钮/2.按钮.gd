@@ -14,5 +14,5 @@ var ID=0
 signal 按下事件(按钮控件)
 
 #默认按钮配置音效
-var 点击音效:AudioStream=load("uid://cj6u6t8o8spy6")
-var 焦点音效:AudioStream=load("uid://bppuuc31od7bm")
+var 点击音效:AudioStream=load("res://addons/YgameEngine/音效/按钮点击.wav")
+var 焦点音效:AudioStream=load("res://addons/YgameEngine/音效/按钮焦点.wav")

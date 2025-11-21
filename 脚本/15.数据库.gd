@@ -396,7 +396,7 @@ class 增益数据库:
 			return _获取属性(增益ID, "持续类型", "")
 		
 		func 获取堆叠次数(增益ID:String) -> float:
-			return _获取属性(增益ID, "堆叠次数", 0.0)
+			return _获取属性(增益ID, "堆叠次数", 1.0)
 		
 		func 获取规则(增益ID:String) -> String:
 			return _获取属性(增益ID, "规则", "")

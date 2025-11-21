@@ -8,61 +8,61 @@ extends Node
 # 用于类型声明时识别"引擎.网络"层级
 
 ##基于调试封装的东西
-var 调试=preload("uid://boaf24oyvwawd").new()
+var 调试=preload("res://addons/YgameEngine/脚本/1.调试.gd").new()
 ##统一管理按钮的东西
-var 按钮=preload("uid://d0xhr42vcl758").new()
+var 按钮=preload("res://addons/YgameEngine/脚本/按钮/2.按钮.gd").new()
 ##基于场景封装的东西
-var 场景=preload("uid://cmmdxughbtv03").new()
+var 场景=preload("res://addons/YgameEngine/脚本/3.场景.gd").new()
 
 ##统一管理对话的的东西
-var 对话=preload("uid://bnyxil46lij8e").new()
+var 对话=preload("res://addons/YgameEngine/场景/对话/4.对话.gd").new()
 
 ##统一屏幕的的东西
-var 屏幕=preload("uid://cy1l67aptkolr").new()
+var 屏幕=preload("res://addons/YgameEngine/脚本/5.屏幕.gd").new()
 
 ##统一加解密的的东西
-var 加解密=preload("uid://chwg4gxgysd33").new()
+var 加解密=preload("res://addons/YgameEngine/脚本/6.加解密.gd").new()
 
 ##统一管理文件的东西
-var 文件=preload("uid://c1v6dd331585h").new()
+var 文件=preload("res://addons/YgameEngine/脚本/7.文件.gd").new()
 
 ##统一数学的东西
-var 数学=preload("uid://be3m8f3yuqecj").new()
+var 数学=preload("res://addons/YgameEngine/脚本/8.数学.gd").new()
 
 ##基于自己时间的东西
-var 时间=preload("uid://7ufr514c01sm").new()
+var 时间=preload("res://addons/YgameEngine/脚本/9.时间.gd").new()
 ##基于字符串封装的东西
-var 字符串=preload("uid://dt2gymmpyidg5").new()
+var 字符串=preload("res://addons/YgameEngine/脚本/10.字符串.gd").new()
 
 ##基于自己理解的东西,节点统称为对象
-var 对象=preload("uid://wva6ajc1nv8o").new()
+var 对象=preload("res://addons/YgameEngine/脚本/11.对象.gd").new()
 
 ##基于自己理解的东西,节点统称为对象
-var 图片=preload("uid://dil0tsqss7i21").new()
+var 图片=preload("res://addons/YgameEngine/脚本/16.图片.gd").new()
 # 1. 预加载网络模块的类（用于类型关联）
-const 网络类 = preload("uid://bp4iapmx88yhl")  # 指向12.网络.gd（引擎网络类）
+const 网络类 = preload("res://addons/YgameEngine/脚本/12.网络.gd")  # 指向12.网络.gd（引擎网络类）
 # 2. 网络实例（加载并初始化）
 var 网络: 网络类 = 网络类.new()
 	
 # 1. 预加载背包的类（用于类型关联）
-const 角色背包类 = preload("uid://48vedp8jko7w")  # 指向13.背包.gd（引擎网络类）
+const 角色背包类 = preload("res://addons/YgameEngine/脚本/13.背包.gd")  # 指向13.背包.gd（引擎网络类）
 
 #弱网
-const 弱网类= preload("uid://bawh8cqwmt7iw") #指向14.弱网(引擎弱网)
+const 弱网类= preload("res://addons/YgameEngine/脚本/14.弱网.gd") #指向14.弱网(引擎弱网)
 var 弱网:弱网类=弱网类.new()
 
-const 数据库=preload("uid://xymsomt1qyx2") #指向15.数据库
+const 数据库=preload("res://addons/YgameEngine/脚本/15.数据库.gd") #指向15.数据库
 
 #17装备,尝试减少变量
-const 装备类=preload("uid://dcdsmt5sxbyc4")
+const 装备类=preload("res://addons/YgameEngine/脚本/17.装备.gd")
 #18角色属性类,尝试减少变量
-const 角色属性类=preload("uid://c03n37bu8xg7d")
+const 角色属性类=preload("res://addons/YgameEngine/脚本/18.角色属性.gd")
 
-const 角色经验类=preload("uid://do1r5cs2spqr4")
-const 生命魔法类=preload("uid://u3hfm4s7vyyi")
-const 怪物类=preload("uid://vitkmt6enhkh")
-
-const 舞台类=preload("uid://bu53005rxrd1u")
+const 角色经验类=preload("res://addons/YgameEngine/脚本/19.角色经验.gd")
+const 生命魔法类=preload("res://addons/YgameEngine/脚本/20.生命魔法.gd")
+const 怪物类=preload("res://addons/YgameEngine/脚本/21.怪物.gd")
+const 舞台类=preload("res://addons/YgameEngine/脚本/22.舞台.gd")
+const 增益类=preload("res://addons/YgameEngine/脚本/23.增益.gd")
 ##############以下，待融入参考，
 
 
