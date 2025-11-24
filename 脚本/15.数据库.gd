@@ -371,7 +371,7 @@ class 增益数据库:
 	func _init() -> void:
 		if 引擎.文件.是否存在("res://系统/buffSystem.json"):
 			增益库 = 引擎.文件.读取文件到变量("res://系统/buffSystem.json")
-	
+		
 	# 
 	func 获取数据库() -> 增益:
 		return 增益.new(增益库)
@@ -417,3 +417,29 @@ class 增益数据库:
 			return 增益数据[增益ID].duplicate() if 增益数据.has(增益ID) else {}
 		func 获取完整数据() -> Dictionary:
 			return 增益数据.duplicate(true)		
+
+class 增益效果数据库:
+	var 增益库 = {}  # 统一存储变量名
+	
+	func _init() -> void:
+		if 引擎.文件.是否存在("res://系统/buff.json"):
+			增益库 = 引擎.文件.读取文件到变量("res://系统/buff.json")
+		
+	# 
+	func 获取数据库() -> 增益:
+		return 增益.new(增益库)
+	class 增益:
+		var 增益数据: Dictionary
+		func _init(原始数据: Dictionary) -> void:
+			增益数据 = 原始数据.duplicate(true)  # 深度复制，避免外部修改原数据
+		func 获取技能增益数据(技能ID:String)->Dictionary:
+			var 获取的字典={}
+			if 增益数据.技能.has(技能ID):
+				获取的字典=增益数据.技能[技能ID]
+			return 获取的字典
+		func 获取物品增益数据(物品ID:String)->Dictionary:
+			var 获取的字典={}
+			if 增益数据.物品.has(物品ID):
+				获取的字典=增益数据.物品[物品ID]
+			return 获取的字典
+		
