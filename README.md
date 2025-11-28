@@ -5,7 +5,7 @@ YgameEngine
 1.启动插件时，会将"引擎.gd"挂载至项目的全局自动加载 <br>
 1.1 请使用引擎.xxx 加速游戏制作流程 <br>
 
-
+官网:https://0dcszgip.cn-nb1.rainapp.top/YgameEngine.html
 Q群:696526224
 【合集文档】 YgameEngine
 https://dcn9lhqj5lht.feishu.cn/wiki/BCsQwCUYkiNfJikYhJIcZXOsnGf?from=from_copylink
