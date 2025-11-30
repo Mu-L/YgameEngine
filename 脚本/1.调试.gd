@@ -6,10 +6,7 @@ class_name 引擎调试
 ## 带颜色的调试打印
 ## [br]参数:[br]
 ##   - 打印的内容: 要打印的文本或变量[br]
-##   - 颜色: 打印文本的颜色，默认为绿色
-##[codeblock]
-## print("重要信息", "red")
-##[/codeblock]
+
 func 打印(...打印的内容: Array) -> void:
 	var 来源 = get_stack()[1]
 	# 手动拼接可变参数内容
@@ -29,10 +26,6 @@ func 打印(...打印的内容: Array) -> void:
 ## 带注释的调试打印（仅在调试模式下输出）
 ## [br]参数:[br]
 ##   - 注释: 打印内容的前缀说明[br]
-##   - 打印的内容: 要打印的具体内容
-##[codeblock]
-## 引擎.调试.注释打印("玩家位置", player.position)
-##[/codeblock]
 func 注释打印(注释: String, ...打印的内容: Array) -> void:
 	var 来源 = get_stack()[1]
 	
@@ -50,6 +43,26 @@ func 注释打印(注释: String, ...打印的内容: Array) -> void:
 		注释,
 		内容
 	])
+
+
+
+func 打印错误(...打印的内容: Array) -> void:
+	var 来源 = get_stack()[1]
+	# 手动拼接可变参数内容
+	var 内容 = ""
+	for i in 打印的内容.size():
+		内容 += str(打印的内容[i])  # 先转成字符串，避免类型错误
+		# 除了最后一个元素，后面加空格分隔
+		if i != 打印的内容.size() - 1:
+			内容 += " "
+	
+	printerr("%s\t%s:%s\t %s" % [
+		来源["source"],
+		来源["function"],
+		来源["line"],
+		内容
+	])
+	
 ## 格式化打印字典内容
 ## [br]参数:[br]
 ##   - 字典: 要打印的字典对象[br]
