@@ -63,6 +63,7 @@ const 生命魔法类=preload("res://addons/YgameEngine/脚本/20.生命魔法.g
 const 怪物类=preload("res://addons/YgameEngine/脚本/21.怪物.gd")
 const 舞台类=preload("res://addons/YgameEngine/脚本/22.舞台.gd")
 const 增益类=preload("res://addons/YgameEngine/脚本/23.增益.gd")
+const 技能类=preload("res://addons/YgameEngine/脚本/24.技能.gd")
 ##############以下，待融入参考，
 
 
