@@ -18,13 +18,16 @@ var 场景=preload("res://addons/YgameEngine/脚本/3.场景.gd").new()
 var 对话=preload("res://addons/YgameEngine/场景/对话/4.对话.gd").new()
 
 ##统一屏幕的的东西
-var 屏幕=preload("res://addons/YgameEngine/脚本/5.屏幕.gd").new()
+#var 屏幕=preload("res://addons/YgameEngine/脚本/5.屏.gd")#.new()
+const 屏幕类 = preload("res://addons/YgameEngine/脚本/5.屏幕.gd")  # 指向12.网络.gd（引擎网络类）
+# 2. 网络实例（加载并初始化）
+var 屏幕: 屏幕类 = 屏幕类.new()
 
 ##统一加解密的的东西
 var 加解密=preload("res://addons/YgameEngine/脚本/6.加解密.gd").new()
 
 ##统一管理文件的东西
-var 文件=preload("res://addons/YgameEngine/脚本/7.文件.gd").new()
+var 文件:=preload("res://addons/YgameEngine/脚本/7.文件.gd").new()
 
 ##统一数学的东西
 var 数学=preload("res://addons/YgameEngine/脚本/8.数学.gd").new()
@@ -101,10 +104,13 @@ func _init() -> void:
 	#self.按钮 = 按钮脚本
 	##endregion
 func _ready():
+	#引擎.调试.打印("触发10?")
 	#指向12.网络.gd（引擎网络类）
 	网络.name = "网络"
 	add_child(网络)  # 挂载到引擎节点
 	
+	屏幕.name="屏幕"
+	add_child(屏幕)
 
 ##以下待修复，融入
 #

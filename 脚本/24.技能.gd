@@ -60,7 +60,7 @@ class 等级技能:
 	
 	func _init() -> void:
 		# 加载等级配置
-		if 引擎.文件.是否存在("res://系统/skill_levels.json"):
+		if 引擎.文件.是否存在("res://系统/"):
 			等级配置库 = 引擎.文件.读取文件到变量("res://系统/skill_levels.json")
 		else:
 			引擎.调试.打印("技能等级配置文件不存在！")

@@ -54,9 +54,9 @@ func draw(_numbel,_Type="命中",_Mode="正常",_position:Vector2=Vector2(0,0),i
 		#打印伤害
 		var cd=i*(_width)#计算伤害长度
 		var a=load("res://addons/YgameEngine/场景/伤害功能/伤害.tscn").instantiate()
-		a.position.x=_position.x+sjx+cd
-		a.position.y=_position.y+sjy+(ii*-(_height))
-		a.numbel=_numbel_str[i] as int#打印数字
-		a.mode=mode #动画模式
-		a._png=_png
-		self.add_child(a)
+		a.get_node("Node2D").position.x=_position.x+sjx+cd
+		a.get_node("Node2D").position.y=_position.y+sjy+(ii*-(_height))
+		a.get_node("Node2D").numbel=_numbel_str[i] as int#打印数字
+		a.get_node("Node2D").mode=mode #动画模式
+		a.get_node("Node2D")._png=_png
+		引擎.屏幕.add_child(a)

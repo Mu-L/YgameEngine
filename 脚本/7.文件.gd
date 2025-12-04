@@ -1,7 +1,6 @@
 ##引擎文件专属
 extends Node
 class_name 引擎文件
-
 func 获取当前运行目录():
 	return 引擎.字符串.路径_取目录(OS.get_executable_path())
 	pass
@@ -65,8 +64,9 @@ func 扫描原始文件(路径:String, 是否扫描子目录:bool = false, 指�
 ## 
 ## [/codeblock]
 func 读取目录下所有JSON到字典(目录: String) -> Dictionary:
+	
 	var json数据字典 = {}
-	var 文件列表 = 引擎.文件.扫描文件(目录)
+	var 文件列表 = 扫描文件(目录)
 	
 	if 文件列表.is_empty():
 		print("目录为空或无文件: ", 目录)

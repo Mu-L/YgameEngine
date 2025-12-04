@@ -1,16 +1,8 @@
+extends CanvasLayer
 ##绘制绘制相关
-extends Node
-class_name 引擎屏幕
-
-
-	
-var 伤害功能;
+var 伤害功能=preload("uid://dhkr78momttr0").new()
 #注册伤害
-func _ready() -> void:
-	伤害功能 = load("uid://dhkr78momttr0").new()
-	伤害功能.name="伤害功能"
-	add_child(伤害功能)
-	
+
 ## 伤害绘制(Vector2(300,300),123,"命中","正常"，):
 ## 伤害绘制(Vector2(300,300),[["命中", 20478], ["命中", 20278], ["暴击", 24311], ["暴击", 22333]])
 ##	引擎.屏幕.伤害绘制(Vector2(300,300),[["命中", 20478], ["命中", 20278], ["暴击", 24311], ["暴击", 22333]])
@@ -22,10 +14,14 @@ func _ready() -> void:
 func 伤害绘制(坐标:Vector2,伤害,类型:String="命中",模式:String="正常"):
 	#_type类型 暴击,躲避,命中
 	#_mode模式 0正常,1受伤,2补血,3补蓝
+	
 	if 伤害 is int:
-		伤害功能.draw(伤害,类型,模式,坐标)
+		self.伤害功能.draw(伤害,类型,模式,坐标)
+		#var a=load("res://addons/YgameEngine/场景/伤害功能/伤害.tscn").instantiate()
+		#引擎.屏幕.add_child(a)
+		#add_child(load("res://addons/YgameEngine/场景/伤害功能/伤害.tscn"))
 	if 伤害 is Array:
-		伤害功能.drawArr(坐标,伤害)	
+		self.伤害功能.drawArr(坐标,伤害)	
 
 ##用于震动屏幕。
 ##[codeblock]
