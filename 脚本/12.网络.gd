@@ -324,7 +324,8 @@ class 热更 extends Node:
 		var 查询=await 引擎.网络.网页请求_Get到数据(直链)
 		引擎.调试.打印(查询)
 		if 查询.网页状态码!=200:
-			热更回调.call(查询,null, 热更对象)
+			if 热更回调.get_argument_count()>0:
+				热更回调.call(查询,null, 热更对象)
 			if 热更对象.has("失败"):
 				热更对象.失败.call("无法连接")
 			return {"状态":"失败","文本":"无法连接"}
@@ -332,7 +333,8 @@ class 热更 extends Node:
 		var 下载最大进度=需要更新的文件.size()
 		for 在线文件 in 需要更新的文件:
 			var 文件名 = 在线文件["filename"] #1.0.pck
-			热更回调.call(查询,文件名, 热更对象)
+			if 热更回调.get_argument_count()>0:
+				热更回调.call(查询,文件名, 热更对象)
 			var 补丁版本号=引擎.字符串.路径_取文件名不含扩展名(文件名)
 			if 当前版本号==补丁版本号:
 				开始更新=true
