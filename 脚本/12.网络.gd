@@ -236,7 +236,7 @@ func 网页请求_Post(请求链接: String,请求数据:Variant="",响应头:Pa
 	if (请求数据 is String)==false:请求数据=引擎.字符串.Json_到字符串(请求数据)
 	请求链接=网页_中文链接格式转换(请求链接)
 	var 网页节点 = HTTPRequest.new()
-	引擎.网络.current_scene.add_child(网页节点)
+	引擎.网络.add_child(网页节点)
 	var error = 网页节点.request(请求链接, 响应头, 请求类型, 请求数据)
 	if error != OK:
 		网页节点.queue_free()
