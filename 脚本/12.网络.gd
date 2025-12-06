@@ -210,7 +210,7 @@ func 网页请求_GET(请求链接: String,请求数据:Variant="",响应头:Pac
 	if (请求数据 is String)==false:请求数据=引擎.字符串.Json_到字符串(请求数据)
 	请求链接=网页_中文链接格式转换(请求链接)
 	var 网页节点 = HTTPRequest.new()
-	Engine.get_main_loop().current_scene.add_child(网页节点)
+	引擎.网络.add_child(网页节点)
 	### 执行一个 GET 请求。以下 URL 会将写入作为 JSON 返回。
 	var error = 网页节点.request(请求链接,响应头,请求类型,请求数据)
 	if error!=OK:
@@ -236,7 +236,7 @@ func 网页请求_Post(请求链接: String,请求数据:Variant="",响应头:Pa
 	if (请求数据 is String)==false:请求数据=引擎.字符串.Json_到字符串(请求数据)
 	请求链接=网页_中文链接格式转换(请求链接)
 	var 网页节点 = HTTPRequest.new()
-	Engine.get_main_loop().current_scene.add_child(网页节点)
+	引擎.网络.current_scene.add_child(网页节点)
 	var error = 网页节点.request(请求链接, 响应头, 请求类型, 请求数据)
 	if error != OK:
 		网页节点.queue_free()
@@ -256,46 +256,116 @@ func 网页请求_Post到数据(请求链接: String,请求数据:Variant="",响
 		return 返回值
 
 
-func 网页请求_下载文件(直链地址:String,存放地址:String="user://Update.zip",回调配置:Dictionary={}):
-	var 网页状态=await 网页请求_GET(直链地址) #网页状态码:404 成功:200
-	if 网页状态.请求状态!=0 or 网页状态.网页状态码!=200:
-		if "完成状态" in 回调配置:
-			回调配置["完成状态"].call("超时")
-		return {"完成状态":"超时"}
-	#请求状态2:状态码:0..好像是网页不存在触发的
+func 网页请求_下载文件(直链地址: String,存放地址: String = "user://Update.zip",请求回调: Callable = func(): pass):
+	var 对象 = {}
+	var 文件名 = 引擎.字符串.路径_取文件名(直链地址)
+	var 网页状态 = await 网页请求_GET(直链地址)  # 网页状态码:404 成功:200
 	
-	直链地址=网页_中文链接格式转换(直链地址)
+	if 网页状态.请求状态!= 0 or 网页状态.网页状态码!= 200:
+		if 请求回调.get_argument_count()>0:
+			请求回调.call(网页状态, 文件名, 对象)
+		if 对象.has("超时"):
+			对象.超时.call()
+		
+	# 请求状态2:状态码:0..好像是网页不存在触发的
+	直链地址 = 网页_中文链接格式转换(直链地址)
 	var 网页节点 = HTTPRequest.new()
-	Engine.get_main_loop().current_scene.add_child(网页节点)
-	网页节点.download_file=存放地址 #存放下载的zip位置
+	引擎.网络.add_child(网页节点)
+	网页节点.download_file = 存放地址  # 存放下载的zip位置
 
 	var error = 网页节点.request(直链地址)
-	if error!=OK:
-		return {"请求状态":error,"网页状态码":-1}
+	if error!= OK:
+		return {"请求状态": error,"状态":"请求错误"}
 		网页节点.queue_free()
 	else:
-		if "下载状态" in 回调配置:
-			var 超时计数=0
-			while (网页节点.get_downloaded_bytes()!=网页节点.get_body_size()): # 0/-1
-				await 引擎.场景.等待(0.1)
-				回调配置["下载状态"].call(网页节点.get_downloaded_bytes(),网页节点.get_body_size())
-				#请求体-1就超时
-				if 网页节点.get_body_size()==-1:
-					超时计数+=1
-				else:
-					超时计数=0
-				#假设超时
-				if 超时计数>=50:#假设5秒都超时
-					网页节点.cancel_request()#取消请求
-					if "完成状态" in 回调配置:
-						回调配置["完成状态"].call("超时")
-					return {"完成状态":"超时"}
-			if "完成状态" in 回调配置:
-				回调配置["完成状态"].call("下载完成")
-			return {"完成状态":"下载完成"}
-		else:#不看响应,直接等完成
-			await 网页节点.request_completed
-			if "完成状态" in 回调配置:
-				回调配置["完成状态"].call("下载完成")
-			return {"完成状态":"下载完成"}
+		var 超时计数 = 0
+		if 请求回调.get_argument_count()>0:
+			请求回调.call(网页状态, 文件名, 对象)
+		while (网页节点.get_downloaded_bytes()!= 网页节点.get_body_size()):  # 0/-1
+			await 引擎.场景.等待(0.1)
+				# 转换为MB
+			var 已下载_MB = "%.2f" % (网页节点.get_downloaded_bytes() / float(1024 * 1024))
+			var 总_MB = "%.2f" % (网页节点.get_body_size() / float(1024 * 1024))
+			if abs(float(总_MB))!= 0:
+				print(对象)
+				if 对象.has("下载状态"):
+					对象.下载状态.call(已下载_MB + "MB",总_MB + "MB")
+			# 请求体 -1就超时
+			if 网页节点.get_body_size() == -1:
+				超时计数 += 1
+			else:
+				超时计数 = 0
+			# 假设超时
+			if 超时计数 >= 50:  # 假设5秒都超时
+				网页节点.cancel_request()  # 取消请求
+				if 请求回调.get_argument_count()>0:
+					请求回调.call(网页状态, 文件名, 对象)
+				if 对象.has("超时"):
+					对象.超时.call()
+				
+				return {"请求状态": error,"状态":"超时"}
+		
+		
+		if 对象.has("下载完成"):
+			对象.下载完成.call()
 		网页节点.queue_free()
+		return {"请求状态": error,"状态":"下载完成"}
+		
+class 热更 extends Node:
+	var 版本号="1.0.0"
+	var 下载加载进度=0
+	var 文件加载进度=0#用于简易表达进度判定
+	func _init(预设版本号:String) -> void:
+		self.版本号=预设版本号
+	func 热更开始(直链:String,热更回调:Callable=func ():pass):
+		var 热更对象={}
+		var 当前版本号="1.0.0"
+		var 开始更新=false
+		var 查询=await 引擎.网络.网页请求_Get到数据(直链)
+		引擎.调试.打印(查询)
+		if 查询.网页状态码!=200:
+			热更回调.call(查询,null, 热更对象)
+			if 热更对象.has("失败"):
+				热更对象.失败.call("无法连接")
+			return {"状态":"失败","文本":"无法连接"}
+		var 需要更新的文件 = 查询.内容
+		var 下载最大进度=需要更新的文件.size()
+		for 在线文件 in 需要更新的文件:
+			var 文件名 = 在线文件["filename"] #1.0.pck
+			热更回调.call(查询,文件名, 热更对象)
+			var 补丁版本号=引擎.字符串.路径_取文件名不含扩展名(文件名)
+			if 当前版本号==补丁版本号:
+				开始更新=true
+				下载最大进度-=1
+				continue
+			if 开始更新==false: 
+				下载最大进度-=1
+				continue#还没开始,代表当前版本比较新,不需要下载
+			var 文件MD5 = 在线文件["md5"]
+			var 本地路径 = "user://"  # 假设文件保存在项目的资源目录下
+			var 文件是否存在=引擎.文件.是否存在(本地路径+文件名) #本地路径+文件名
+			if 文件是否存在==true and 文件MD5==引擎.文件.获取MD5值(本地路径+文件名):
+				引擎.调试.打印("文件已有%s跳过" % 文件名)
+			else :
+				var 回调 = func(网页状态,文件名, 对象):
+					对象.下载状态 = func (已下载大小,总文件大小):
+						if 热更对象.has("下载状态"):
+							热更对象.下载状态.call(已下载大小,总文件大小)
+					对象.下载完成 = func ():
+						下载加载进度+=1
+						if 热更对象.has("下载进度"):
+							热更对象.下载进度.call(下载加载进度,下载最大进度)
+					对象.超时 = func ():
+						引擎.调试.打印("文件 %s 下载超时" % 文件名)
+						if 热更对象.has("失败"):
+							热更对象.失败.call("超时")
+				var 状态 = await 引擎.网络.网页请求_下载文件(引擎.字符串.路径_取目录(直链)+"/"+ 文件名, "user://" + 文件名,回调)	
+			if 文件MD5==引擎.文件.获取MD5值(本地路径+文件名):
+				var 加载pck状态=引擎.文件.加载PCK("user://"+文件名)
+				if 加载pck状态:
+					文件加载进度+=1
+				if 热更对象.has("加载进度"):
+					热更对象.加载进度.call(文件加载进度,下载最大进度)
+				if 文件加载进度==下载最大进度:
+					return {"状态":"成功","文本":"文件加载完毕"}
+				pass

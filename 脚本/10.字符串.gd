@@ -92,7 +92,7 @@ func 路径_取文件名(文件路径:String):
 	var 提取的文件名=文件路径.substr(取最后出现的字符串位置+1,文件路径.length()-取最后出现的字符串位置)
 	return 提取的文件名
 
-## "c:/b/a.txt" >>> c:/b/a  从路口取不含扩展名
+## "c:/b/a.txt" >>> a  从路口取不含扩展名
 func 路径_取文件名不含扩展名(文件路径:String):
 	return 文件路径.get_basename()
 

@@ -12,7 +12,7 @@ var 调试=preload("res://addons/YgameEngine/脚本/1.调试.gd").new()
 ##统一管理按钮的东西
 var 按钮=preload("res://addons/YgameEngine/脚本/按钮/2.按钮.gd").new()
 ##基于场景封装的东西
-var 场景=preload("res://addons/YgameEngine/脚本/3.场景.gd").new()
+var 场景:=preload("res://addons/YgameEngine/脚本/3.场景.gd").new()
 
 ##统一管理对话的的东西
 var 对话=preload("res://addons/YgameEngine/场景/对话/4.对话.gd").new()
@@ -35,7 +35,7 @@ var 数学=preload("res://addons/YgameEngine/脚本/8.数学.gd").new()
 ##基于自己时间的东西
 var 时间=preload("res://addons/YgameEngine/脚本/9.时间.gd").new()
 ##基于字符串封装的东西
-var 字符串=preload("res://addons/YgameEngine/脚本/10.字符串.gd").new()
+var 字符串:=preload("res://addons/YgameEngine/脚本/10.字符串.gd").new()
 
 ##基于自己理解的东西,节点统称为对象
 var 对象=preload("res://addons/YgameEngine/脚本/11.对象.gd").new()
