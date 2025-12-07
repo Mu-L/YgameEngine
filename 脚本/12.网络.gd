@@ -313,10 +313,13 @@ func 网页请求_下载文件(直链地址: String,存放地址: String = "user
 		
 class 热更 extends Node:
 	var 版本号="1.0.0"
+	var 最新版本号="1.0.0"
 	var 下载加载进度=0
 	var 文件加载进度=0#用于简易表达进度判定
 	func _init(预设版本号:String) -> void:
 		self.版本号=预设版本号
+	func 获取当前版本号()->String:
+		return 最新版本号
 	func 热更开始(直链:String,热更回调:Callable=func ():pass):
 		var 热更对象={}
 		var 当前版本号="1.0.0"
@@ -366,8 +369,11 @@ class 热更 extends Node:
 				var 加载pck状态=引擎.文件.加载PCK("user://"+文件名)
 				if 加载pck状态:
 					文件加载进度+=1
+					最新版本号=引擎.字符串.路径_取文件名不含扩展名(文件名)
+					
 				if 热更对象.has("加载进度"):
 					热更对象.加载进度.call(文件加载进度,下载最大进度)
 				if 文件加载进度==下载最大进度:
 					return {"状态":"成功","文本":"文件加载完毕"}
 				pass
+	
