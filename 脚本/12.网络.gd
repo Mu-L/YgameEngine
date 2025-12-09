@@ -312,17 +312,16 @@ func 网页请求_下载文件(直链地址: String,存放地址: String = "user
 		return {"请求状态": error,"状态":"下载完成"}
 		
 class 热更 extends Node:
-	var 版本号="1.0.0"
+	var 当前版本号="1.0.0"
 	var 最新版本号="1.0.0"
 	var 下载加载进度=0
 	var 文件加载进度=0#用于简易表达进度判定
 	func _init(预设版本号:String) -> void:
-		self.版本号=预设版本号
+		self.当前版本号=预设版本号
 	func 获取当前版本号()->String:
 		return 最新版本号
 	func 热更开始(直链:String,热更回调:Callable=func ():pass):
 		var 热更对象={}
-		var 当前版本号="1.0.0"
 		var 开始更新=false
 		var 查询=await 引擎.网络.网页请求_Get到数据(直链)
 		引擎.调试.打印(查询)

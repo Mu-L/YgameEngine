@@ -68,6 +68,10 @@ const 舞台类=preload("res://addons/YgameEngine/脚本/22.舞台.gd")
 const 增益类=preload("res://addons/YgameEngine/脚本/23.增益.gd")
 const 技能类=preload("res://addons/YgameEngine/脚本/24.技能.gd")
 ##############以下，待融入参考，
+const 绘制类= preload("res://addons/YgameEngine/脚本/绘制.gd") #指向14.弱网(引擎弱网)
+var 绘制:绘制类=绘制类.new()
+
+const 缓动类=preload("res://addons/YgameEngine/脚本/25.缓动.gd")
 
 
 ###基于listitem封装的东西
@@ -82,8 +86,7 @@ const 技能类=preload("res://addons/YgameEngine/脚本/24.技能.gd")
 #var 程序窗口:引擎程序窗口
 
 #
-###基于缓动封装的东西
-#var 缓动:引擎缓动
+
 #
 ###基于字节数据封装的东西
 #var 字节数据:引擎字节数据
@@ -111,7 +114,9 @@ func _ready():
 	
 	屏幕.name="屏幕"
 	add_child(屏幕)
-
+	
+	绘制.name="绘制"
+	引擎.场景.取当前场景().add_child(绘制)
 ##以下待修复，融入
 #
 ##region 初始化 [addons\YgameEngine\脚本\列表.gd] 添加列表系统
@@ -154,3 +159,29 @@ func _ready():
 	#add_child(字节数据节点)
 	#self.字节数据 = 字节数据节点
 ##endregion
+
+
+
+class 如果逻辑 :
+	var 条件结果: bool
+	var 成立逻辑: Callable 
+	var 不成立逻辑: Callable 
+
+	func _init(条件: bool):
+		条件结果 = 条件
+	func 真(执行逻辑: Callable) -> 如果逻辑: 
+		成立逻辑 = 执行逻辑
+		return self
+
+	func 假(执行逻辑: Callable) -> 如果逻辑:
+		不成立逻辑 = 执行逻辑
+		return self
+
+	func 执行() -> void:  # 【关键】必须调用此函数触发逻辑
+		if 条件结果 and 成立逻辑 != null:
+			成立逻辑.call()  # 触发引擎.调试.打印
+		elif 不成立逻辑 != null:
+			不成立逻辑.call()
+# 封装顶层“如果”函数
+func 如果(条件: bool) -> 如果逻辑:
+	return 如果逻辑.new(条件)
