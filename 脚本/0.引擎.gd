@@ -116,7 +116,7 @@ func _ready():
 	add_child(屏幕)
 	
 	绘制.name="绘制"
-	引擎.场景.取当前场景().add_child(绘制)
+	add_child(绘制)
 ##以下待修复，融入
 #
 ##region 初始化 [addons\YgameEngine\脚本\列表.gd] 添加列表系统
