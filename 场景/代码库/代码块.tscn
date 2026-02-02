@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cnaidpvj1rpwl"]
+
+[ext_resource type="Script" uid="uid://c0527n6ymm1ap" path="res://addons/YgameEngine/场景/代码库/按钮.gd" id="1_mpp5d"]
+
+[node name="代码块" type="Control" unique_id=2041420452]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="调试" type="Button" parent="." unique_id=1875626871]
+custom_minimum_size = Vector2(50, 32)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+tooltip_text = "拖拽插入：
+引擎.调试.打印(\"你好\")"
+mouse_default_cursor_shape = 6
+text = "调试"
+script = ExtResource("1_mpp5d")
+code_to_insert = "引擎.调试.打印(\"你好\")"
+
+[node name="等待" type="Button" parent="." unique_id=1530574497]
+custom_minimum_size = Vector2(50, 32)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 37.0
+offset_right = 51.0
+offset_bottom = 69.0
+tooltip_text = "拖拽插入：
+await 引擎.场景.等待(2.0)  # 等待2秒后继续执行"
+mouse_default_cursor_shape = 6
+text = "等待"
+script = ExtResource("1_mpp5d")
+code_to_insert = "await 引擎.场景.等待(2.0)  # 等待2秒后继续执行"

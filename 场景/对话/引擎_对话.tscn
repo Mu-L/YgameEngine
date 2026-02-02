@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://1dk1hdfmbpa4"]
+[gd_scene format=3 uid="uid://1dk1hdfmbpa4"]
 
 [sub_resource type="GDScript" id="GDScript_ypp1s"]
 script/source = "extends CanvasLayer
@@ -20,12 +20,12 @@ content_margin_bottom = 0.0
 color = Color(0.5, 0.5, 0.5, 1)
 thickness = 3
 
-[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("标题", "文本")]
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1410802596 node_paths=PackedStringArray("标题", "文本")]
 script = SubResource("GDScript_ypp1s")
 "标题" = NodePath("引擎对话/标题")
 "文本" = NodePath("引擎对话/文本")
 
-[node name="引擎对话" type="Panel" parent="."]
+[node name="引擎对话" type="Panel" parent="." unique_id=1615824035]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -37,7 +37,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 
-[node name="文本" type="RichTextLabel" parent="引擎对话"]
+[node name="文本" type="RichTextLabel" parent="引擎对话" unique_id=49260690]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -50,7 +50,7 @@ theme_override_font_sizes/normal_font_size = 62
 bbcode_enabled = true
 text = "你好"
 
-[node name="HSeparator" type="HSeparator" parent="引擎对话"]
+[node name="HSeparator" type="HSeparator" parent="引擎对话" unique_id=1109079575]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -59,7 +59,7 @@ offset_bottom = 111.0
 grow_horizontal = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_ypp1s")
 
-[node name="标题" type="RichTextLabel" parent="引擎对话"]
+[node name="标题" type="RichTextLabel" parent="引擎对话" unique_id=197221502]
 layout_mode = 0
 offset_top = -4.0
 offset_right = 814.0
