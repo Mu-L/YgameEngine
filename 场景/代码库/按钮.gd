@@ -3,12 +3,13 @@
 
 @tool  # 让它在编辑器里也能运行
 extends Button  # 如果你按钮是 TextureButton，就改成 extends TextureButton
-
-@export_multiline() var code_to_insert: String = 'print("Hello from snippet!")' :
+@export_multiline() var 提示的内容: String = '代码提示'
+@export_multiline() var 插入的内容: String = 'print("Hello from snippet!")' :
 	set(value):
-		code_to_insert = value
-		tooltip_text = "拖拽插入：\n" + value  # 可选：鼠标悬停显示代码预览
+		插入的内容 = value
+		tooltip_text = 提示的内容#"拖拽插入：\n" + value  # 可选：鼠标悬停显示代码预览
 
+	
 var is_dragging: bool = false
 var drag_preview: Control = null
 
@@ -73,7 +74,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			drag_preview.hide()
 			
 			# 插入当前光标位置（因为拖拽中已实时移动光标）
-			code_edit.insert_text_at_caret(code_to_insert)
+			code_edit.insert_text_at_caret(插入的内容)
 			code_edit.grab_focus()
 			
 			var line = code_edit.get_caret_line() + 1

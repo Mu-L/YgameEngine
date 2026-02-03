@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://brgtrow1gk2ni"]
+
+[ext_resource type="Script" uid="uid://c0527n6ymm1ap" path="res://addons/YgameEngine/场景/代码库/按钮.gd" id="1_5qfgs"]
+
+[node name="调试" type="Button" unique_id=1387989888]
+custom_minimum_size = Vector2(50, 32)
+offset_right = 8.0
+offset_bottom = 8.0
+tooltip_text = "拖拽插入：
+引擎.调试.打印(\"文本\")"
+mouse_default_cursor_shape = 6
+text = "调试"
+script = ExtResource("1_5qfgs")
