@@ -97,7 +97,8 @@ const 对齐标志映射 = {
 
 
 # 全局配置（可外部调整）
-var 字体: FontFile = load("res://ziti.otf")  # 替换为你的字体路径
+var 字体
+#var 字体: FontFile = load("res://ziti.otf")  # 替换为你的字体路径
 var 字体大小: int = 25  # 字体大小
 var 单条提示高度: float = 40.0  # 每条提示的高度（控制上下间距）
 var 最大显示数量: int = 20  # 最多同时显示的提示数

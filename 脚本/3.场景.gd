@@ -59,10 +59,15 @@ func 等待(秒数:float) -> void:
 
 ## 销毁当前活动场景
 ##[codeblock]
+## 销毁当前场景
 ## 引擎.场景.销毁当前场景()
 ##[/codeblock]
-func 销毁当前场景() -> void:
-	Engine.get_main_loop().current_scene.queue_free()
+func 销毁当前场景(是否立即销毁:bool) -> void:
+	if 是否立即销毁:
+		Engine.get_main_loop().current_scene.free()
+	else:
+		Engine.get_main_loop().current_scene.queue_free()
+		
 
 
 ##音乐
