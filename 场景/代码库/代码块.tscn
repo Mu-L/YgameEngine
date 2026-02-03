@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cnaidpvj1rpwl"]
 
 [ext_resource type="PackedScene" uid="uid://brgtrow1gk2ni" path="res://addons/YgameEngine/场景/代码库/按钮.tscn" id="1_mpp5d"]
-[ext_resource type="Script" uid="uid://brxu1jd1hnufv" path="res://addons/YgameEngine/场景/代码库/按钮1.gd" id="2_5xa1y"]
 
 [node name="代码块" type="Control" unique_id=2041420452]
 z_as_relative = false
@@ -13,6 +12,7 @@ anchor_bottom = 1.0
 offset_bottom = -953.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=697684232]
 layout_mode = 1
@@ -20,42 +20,38 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 204.0
 grow_horizontal = 2
+mouse_filter = 2
 
 [node name="GridContainer" type="GridContainer" parent="ScrollContainer" unique_id=1008537974]
 layout_mode = 2
+mouse_filter = 2
 columns = 3
 
 [node name="调试打印" parent="ScrollContainer/GridContainer" unique_id=1387989888 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
-tooltip_text = "代码提示"
 text = "调试打印"
 
 [node name="注释打印" parent="ScrollContainer/GridContainer" unique_id=824984307 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
-tooltip_text = "代码提示"
 text = "注释打印"
 
 [node name="打印字典" parent="ScrollContainer/GridContainer" unique_id=1277059949 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
-tooltip_text = "代码提示"
 text = "打印字典"
 
 [node name="打印数组" parent="ScrollContainer/GridContainer" unique_id=2056355629 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
-tooltip_text = "代码提示"
 text = "打印数组"
 
 [node name="打印错误" parent="ScrollContainer/GridContainer" unique_id=1353603140 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
-tooltip_text = "代码提示"
 text = "打印错误"
 
 [node name="调试模式" parent="ScrollContainer/GridContainer" unique_id=344063018 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
-tooltip_text = "代码提示"
 text = "调试模式"
 "插入的内容" = "if 引擎.调试.取调试模式():
-		print(\"当前处于调试模式\")"
+	print(\"当前处于调试模式\")"
 
 [node name="屏幕震动" parent="ScrollContainer/GridContainer" unique_id=1046711295 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
@@ -126,8 +122,9 @@ text = "设置背景声音大小"
 
 [node name="设置音效声音大小" parent="ScrollContainer/GridContainer" unique_id=722952626 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
-tooltip_text = "通常用于播放音乐声音设置,0.5为一半，0是静音"
 text = "设置音效声音大小"
-script = ExtResource("2_5xa1y")
-"提示的内容" = "通常用于播放音乐声音设置,0.5为一半，0是静音"
-"插入的内容" = "引擎.场景.设置背景声音大小(0.5)"
+"插入的内容" = "if 引擎.调试.取调试模式():
+	print(\"当前处于调试模式\")
+	a=0
+	if a==0:
+		print(a)"
