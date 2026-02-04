@@ -7,11 +7,11 @@ var panel: Control
 const AUTOLOAD_NAME = "引擎"
 const AUTOLOAD_PATH = "res://addons/YgameEngine/脚本/0.引擎.gd"
 func _enable_plugin() -> void:
-	
-	# Initialization of the plugin goes here.
+	#print("启动插件")
+	_move_autoload_to_top(AUTOLOAD_NAME)
+	print("引擎 已添加并尝试置顶,引擎插件已启动，全局'引擎.xxx'可使用")
 	pass
-	#
-	
+
 
 #插件关闭函数
 func _disable_plugin() -> void:
@@ -30,14 +30,14 @@ func _disable_plugin() -> void:
 var dock: EditorDock = null
 
 func _enter_tree() -> void:
+	#print("自动触发加载")
 	# 再挪到最前面（hack方式）
-	_move_autoload_to_top(AUTOLOAD_NAME)
-	print("引擎 已添加并尝试置顶,引擎插件已启动，全局'引擎.xxx'可使用")
+	
 	## 1. 加载插件UI面板
 	var scene = load("res://addons/YgameEngine/场景/代码库/代码块.tscn")
 	panel = scene.instantiate()
 	## 2. 将面板添加到编辑器的底部面板（也可改为top/left/right）
-	#add_control_to_bottom_panel(panel, "代码片段拖拽")
+	#add_control_to_bottom_panel(panel, "代码片段拖拽") #已废弃
 	
 	## 2. 改用新的add_dock()方法添加到底部面板（核心修改部分）
 	# 创建EditorDock容器（这是新方法必须的载体）
@@ -51,9 +51,9 @@ func _enter_tree() -> void:
 	# 最终添加这个dock到编辑器
 	add_dock(dock)
 
-func _exit_tree() -> void:
-	# Clean-up of the plugin goes here.
-	pass
+#func _exit_tree() -> void:
+	## Clean-up of the plugin goes here.
+	#pass
 
 func _move_autoload_to_top(autoload_name: String) -> void:
 	print(get_autoload_list())
@@ -73,12 +73,11 @@ func _move_autoload_to_top(autoload_name: String) -> void:
 	
 #获取类似{ "游戏": "*res://游戏.gd", "业务按钮": "*res://业务按钮.gd", "引擎": "*uid://rxpcxfu68go3" }
 func get_autoload_list() -> Dictionary:
-	
-	var result: Dictionary = {}  # 键：名称  值：路径（带*前缀）
+	var 字典: Dictionary = {}  # 键：名称  值：路径（带*前缀）
 	for prop in ProjectSettings.get_property_list():
 		if prop.name.begins_with("autoload/"):
 			var name = prop.name.trim_prefix("autoload/")
 			var path = ProjectSettings.get_setting(prop.name)
-			result[name] = path
+			字典[name] = path
 	
-	return result
+	return 字典

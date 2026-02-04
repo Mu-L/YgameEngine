@@ -52,7 +52,8 @@ func _create_drag_preview() -> void:
 func _exit_tree() -> void:
 	if is_instance_valid(drag_preview):
 		drag_preview.queue_free()
-
+var 松开的tab数量=0
+var 点击=false
 func _on_gui_input(event: InputEvent) -> void:
 	# 先找当前 Script 编辑器里的 CodeEdit（复用你原来的函数）
 	var script_editor = EditorInterface.get_script_editor()  # Godot 4.x 标准写法
@@ -68,18 +69,72 @@ func _on_gui_input(event: InputEvent) -> void:
 			is_dragging = true
 			_update_preview_position(event.global_position)
 			drag_preview.show()
+			print("点击")
+			点击=true
+		# ... 前面的代码不变 ...
 		
 		else:  # 松手
-			is_dragging = false
-			drag_preview.hide()
-			
-			# 插入当前光标位置（因为拖拽中已实时移动光标）
-			code_edit.insert_text_at_caret(插入的内容)
-			code_edit.grab_focus()
-			
-			var line = code_edit.get_caret_line() + 1
-			var col  = code_edit.get_caret_column() + 1
-			print("已插入代码到：第%d行 第%d列" % [line, col])
+			if 点击==false:
+				print("执行拖拽程序逻辑")
+				is_dragging = false
+				drag_preview.hide()
+				
+				# 步骤1：获取基础信息
+				var caret_line = code_edit.get_caret_line()
+				var current_line_text = code_edit.get_line(caret_line)
+				# 修正tab数量（pos_info.x从0开始，所以减1，避免负数）
+				var target_tab_count = max(0, 松开的tab数量 - 1)
+				print("目标插入tab数量：", target_tab_count)
+				
+				# 步骤2：清空当前行所有开头空白（你的核心逻辑）
+				var stripped_line = current_line_text.lstrip(" \t")
+				if stripped_line != current_line_text:
+					code_edit.set_line(caret_line, stripped_line)
+					code_edit.set_caret_column(0)  # 光标移到行首，确保插入位置准确
+				
+				# 步骤3：处理代码片段（清空自身缩进 + 按tab数量加缩进）
+				var processed_code = 拖拽(插入的内容, target_tab_count)
+				print("处理后的代码：", processed_code)
+				
+				# 步骤4：插入最终代码
+				code_edit.insert_text_at_caret(processed_code)
+				code_edit.grab_focus()
+				
+				# 日志输出
+				var line = code_edit.get_caret_line() + 1
+				var col  = code_edit.get_caret_column() + 1
+				print("已插入代码到：第%d行 第%d列" % [line, col])
+			##else:  # 松手
+			#
+			if 点击==true:
+				print("执行点击程序逻辑")
+				is_dragging = false
+				drag_preview.hide()
+				# ───────────── 關鍵：先把當前行開頭所有空白去掉 ─────────────
+				#var caret_line = code_edit.get_caret_line()
+				#var current_line_text = code_edit.get_line(caret_line)
+				#var stripped_line = current_line_text.lstrip(" \t")
+				#if stripped_line != current_line_text:
+					#code_edit.set_line(caret_line, stripped_line)
+					## 如果你希望光標也移到最左邊
+					#code_edit.set_caret_column(0)
+				#print(松开的tab数量)#拿到挪到到第几个tab,之前都清空了
+				# 1. 获取光标所在行的缩进字符
+				var caret_line = code_edit.get_caret_line()
+				var current_line_text = code_edit.get_line(caret_line)
+				var indent = _get_indent_from_line(current_line_text)
+				
+				# 2. 处理插入的代码，从第二行开始添加缩进
+				var processed_code = _add_indent_to_codeB(插入的内容, indent)
+				print(processed_code)
+				# 3. 插入处理后的代码
+				code_edit.insert_text_at_caret(processed_code)
+				code_edit.grab_focus()
+				
+				var line = code_edit.get_caret_line() + 1
+				var col  = code_edit.get_caret_column() + 1
+				print("已插入代码到：第%d行 第%d列" % [line, col])
+				#
 	
 	elif event is InputEventMouseMotion and is_dragging:
 		_update_preview_position(event.global_position)
@@ -107,7 +162,123 @@ func _on_gui_input(event: InputEvent) -> void:
 				var label = drag_preview.get_child(1) as Label
 				if label:
 					label.text = "插入到：%d:%d" % [pos_info.y + 1, pos_info.x + 1]
+					print("第",pos_info.y + 1,"行")
+					print("第",pos_info.x + 1,"tab")
+					松开的tab数量=pos_info.x + 1
+					点击=false
+# 新增：提取一行代码的缩进字符（空格/tab）
+func _get_indent_from_line(line_text: String) -> String:
+	var indent = ""
+	for char in line_text:
+		if char == " " or char == "\t":
+			indent += char
+		else:
+			break
+	return indent
 
+# 新增：给多行代码从第二行开始添加缩进
+# 新增：给多行代码添加缩进（核心逻辑：tab数量 + 清空片段缩进）
+func 拖拽(code: String, target_tab_count: int) -> String:
+	# 步骤1：分析代码片段，计算每行的原始层级差（核心！保留片段自身缩进关系）
+	var lines = code.split("\n", true)
+	var raw_indent_levels = []  # 存储每行原始缩进层级（1个tab=1级）
+	var clean_lines = []        # 存储清空缩进后的纯代码
+	
+	# 1.1 遍历每行，计算原始层级 + 清空缩进
+	for line in lines:
+		# 计算当前行原始缩进层级（兼容tab/4空格）
+		var level = 0
+		var idx = 0
+		while idx < line.length() and line[idx] in [" ", "\t"]:
+			if line[idx] == "\t":
+				level += 1
+			elif idx % 4 == 3:  # 4个空格 = 1个tab
+				level += 1
+			idx += 1
+		raw_indent_levels.append(level)
+		
+		# 清空当前行所有缩进，得到纯代码
+		clean_lines.append(_clear_all_leading_whitespace(line))
+	
+	# 1.2 计算片段的基础层级（第一行的缩进层级），用于算层级差
+	var base_level = raw_indent_levels[0] if raw_indent_levels.size() > 0 else 0
+	var level_diffs = []  # 每行相对于第一行的层级差
+	for level in raw_indent_levels:
+		level_diffs.append(level - base_level)
+	
+	# 步骤2：生成最终缩进（松开的tab数量 + 片段自身层级差）
+	var processed_lines = []
+	var base_indent = "\t".repeat(target_tab_count)  # 松开的tab数量作为基础缩进
+	for i in range(clean_lines.size()):
+		# 最终缩进 = 基础缩进 + 片段自身层级差对应的tab
+		var diff_indent = "\t".repeat(level_diffs[i])
+		processed_lines.append(base_indent + diff_indent + clean_lines[i])
+	
+	# 步骤3：拼接成最终代码
+	return "\n".join(processed_lines)
+#func 拖拽(code: String, target_tab_count: int) -> String:
+	## 步骤1：清空代码片段所有行的原始缩进（彻底去掉自带的\t/空格）
+	#var clean_lines = []
+	#var lines = code.split("\n", true)
+	#for line in lines:
+		#clean_lines.append(_clear_all_leading_whitespace(line))
+	#
+	## 步骤2：生成基础缩进字符（根据松开的tab数量）
+	#var base_indent = "\t".repeat(target_tab_count)  # 1个tab=1级
+	#
+	## 步骤3：给每行添加缩进（第一行=基础缩进，第二行+=1级，匹配你的习惯）
+	#var processed_lines = []
+	#for i in range(clean_lines.size()):
+		#if i == 0:
+			## 第一行：仅基础缩进
+			#processed_lines.append(base_indent + clean_lines[i])
+		#else:
+			## 第二行及以后：基础缩进 + 1级（保留片段的层级关系）
+			#processed_lines.append(base_indent + "\t" + clean_lines[i])
+	#
+	## 步骤4：拼接成最终代码
+	#return "\n".join(processed_lines)
+func _add_indent_to_codeB(code: String, indent: String) -> String:
+	# 按换行符分割代码行（兼容 \n 和 \r\n）
+	var lines = code.split("\n", true)
+	if lines.size() <= 1:
+		return code  # 单行代码无需处理
+	
+	var processed_lines = [lines[0]]  # 第一行保持原样
+	# 从第二行开始，每行开头添加缩进
+	for i in range(1, lines.size()):
+		processed_lines.append(indent + lines[i])
+	print(processed_lines)
+	# 重新拼接成完整字符串
+	return "\n".join(processed_lines)
+ #新增：给多行代码从第二行开始添加缩进（适配你的需求）
+
+
+# 新增：暴力清空行开头所有的 \t/空格（核心工具函数）
+func _clear_all_leading_whitespace(line: String) -> String:
+	var start_idx = 0
+	# 遍历字符，直到找到第一个非 \t/空格 的字符
+	while start_idx < line.length():
+		var c = line[start_idx]
+		if c != "\t" and c != " ":
+			break
+		start_idx += 1
+	# 截取从第一个有效字符开始的内容
+	return line.substr(start_idx)
+func _get_line_leading_whitespace(code_edit: CodeEdit, line: int) -> String:
+	if line < 0 or line >= code_edit.get_line_count():
+		return ""
+	
+	var text = code_edit.get_line(line)
+	var indent = ""
+	
+	for c in text:
+		if c in [" ", "\t"]:
+			indent += c
+		else:
+			break
+			
+	return indent
 func _update_preview_position(global_pos: Vector2) -> void:
 	if drag_preview:
 		drag_preview.global_position = global_pos + Vector2(20, 20)

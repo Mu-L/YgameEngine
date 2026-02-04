@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://brgtrow1gk2ni"]
 
-[ext_resource type="Script" uid="uid://brxu1jd1hnufv" path="res://addons/YgameEngine/场景/代码库/按钮1.gd" id="1_5qfgs"]
+[ext_resource type="Script" uid="uid://c0527n6ymm1ap" path="res://addons/YgameEngine/场景/代码库/按钮.gd" id="1_5qfgs"]
 
 [node name="调试" type="Button" unique_id=1387989888]
 custom_minimum_size = Vector2(50, 32)
