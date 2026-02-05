@@ -2,100 +2,108 @@
 
 [ext_resource type="PackedScene" uid="uid://brgtrow1gk2ni" path="res://addons/YgameEngine/场景/代码库/按钮.tscn" id="1_mpp5d"]
 
-[node name="代码块" type="Control" unique_id=2041420452]
+[sub_resource type="GDScript" id="GDScript_mpp5d"]
+script/source = "@tool
+extends Control
+
+
+func _on_pre_sort_children() -> void:
+	#print($ScrollContainer.size,$\"ScrollContainer/GridContainer/调试打印\".size)
+	#var a=$\".\".size.x
+	#var b=$\"ScrollContainer/GridContainer/调试打印\".size.x
+	#var c=floor(a/b)
+	##print(c)
+	#$ScrollContainer/GridContainer.columns=c-1
+	##print($ScrollContainer/GridContainer.columns)
+	pass # Replace with function body.
+"
+
+[node name="代码块" type="PanelContainer" unique_id=301642565]
 z_as_relative = false
 y_sort_enabled = true
-layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 389.0
-offset_bottom = -947.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = SubResource("GDScript_mpp5d")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=697684232]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_right = 10.0
-offset_bottom = 216.0
-grow_horizontal = 2
+layout_mode = 2
 follow_focus = true
 
-[node name="GridContainer" type="GridContainer" parent="ScrollContainer" unique_id=1008537974]
+[node name="HFlowContainer" type="HFlowContainer" parent="ScrollContainer" unique_id=1629788101]
 layout_mode = 2
-mouse_filter = 2
-columns = 6
+size_flags_horizontal = 3
 
-[node name="调试打印" parent="ScrollContainer/GridContainer" unique_id=1387989888 instance=ExtResource("1_mpp5d")]
+[node name="调试打印" parent="ScrollContainer/HFlowContainer" unique_id=1387989888 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 text = "调试打印"
 "插入的内容" = "引擎.调试.打印(\"a\")"
 
-[node name="注释打印" parent="ScrollContainer/GridContainer" unique_id=824984307 instance=ExtResource("1_mpp5d")]
+[node name="注释打印" parent="ScrollContainer/HFlowContainer" unique_id=824984307 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 text = "注释打印"
 "插入的内容" = "引擎.调试.注释打印(\"注释\",\"你好\")"
 
-[node name="打印字典" parent="ScrollContainer/GridContainer" unique_id=1277059949 instance=ExtResource("1_mpp5d")]
+[node name="打印字典" parent="ScrollContainer/HFlowContainer" unique_id=1277059949 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 text = "打印字典"
 "插入的内容" = "引擎.调试.打印字典({},\"注释\")"
 
-[node name="打印数组" parent="ScrollContainer/GridContainer" unique_id=2056355629 instance=ExtResource("1_mpp5d")]
+[node name="打印数组" parent="ScrollContainer/HFlowContainer" unique_id=2056355629 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 text = "打印数组"
 "插入的内容" = "引擎.调试.打印数组([])"
 
-[node name="打印错误" parent="ScrollContainer/GridContainer" unique_id=1353603140 instance=ExtResource("1_mpp5d")]
+[node name="打印错误" parent="ScrollContainer/HFlowContainer" unique_id=1353603140 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 text = "打印错误"
 "插入的内容" = "引擎.调试.打印错误(\"错误\")"
 
-[node name="调试模式" parent="ScrollContainer/GridContainer" unique_id=344063018 instance=ExtResource("1_mpp5d")]
+[node name="调试模式" parent="ScrollContainer/HFlowContainer" unique_id=344063018 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 text = "调试模式"
 "插入的内容" = "if 引擎.调试.取调试模式():
 	print(\"当前处于调试模式\")"
 
-[node name="切换场景" parent="ScrollContainer/GridContainer" unique_id=1829157817 instance=ExtResource("1_mpp5d")]
+[node name="切换场景" parent="ScrollContainer/HFlowContainer" unique_id=1829157817 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "切换场景(文件名)"
 text = "切换场景"
 "提示的内容" = "切换场景(文件名)"
 "插入的内容" = "引擎.场景.切换场景(\"res://scenes/gameplay.tscn\")"
 
-[node name="取当前场景" parent="ScrollContainer/GridContainer" unique_id=1740645738 instance=ExtResource("1_mpp5d")]
+[node name="取当前场景" parent="ScrollContainer/HFlowContainer" unique_id=1740645738 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "当前活动场景的根节点"
 text = "取当前场景"
 "提示的内容" = "当前活动场景的根节点"
 "插入的内容" = "var 当前场景 = 引擎.场景.取当前场景()"
 
-[node name="取场景树" parent="ScrollContainer/GridContainer" unique_id=1195426645 instance=ExtResource("1_mpp5d")]
+[node name="取场景树" parent="ScrollContainer/HFlowContainer" unique_id=1195426645 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "主循环的MainLoop对象"
 text = "取场景数"
 "提示的内容" = "主循环的MainLoop对象"
 "插入的内容" = "取场景树()"
 
-[node name="场景等待" parent="ScrollContainer/GridContainer" unique_id=381739315 instance=ExtResource("1_mpp5d")]
+[node name="场景等待" parent="ScrollContainer/HFlowContainer" unique_id=381739315 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "秒数:float"
 text = "等待"
 "提示的内容" = "秒数:float"
 "插入的内容" = "await 引擎.场景.等待(2.0)"
 
-[node name="销毁当前场景" parent="ScrollContainer/GridContainer" unique_id=434560041 instance=ExtResource("1_mpp5d")]
+[node name="销毁当前场景" parent="ScrollContainer/HFlowContainer" unique_id=434560041 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "销毁当前场景(是否立即销毁:bool)"
 text = "销毁当前场景"
 "提示的内容" = "销毁当前场景(是否立即销毁:bool)"
 "插入的内容" = "引擎.场景.销毁当前场景()"
 
-[node name="播放音效" parent="ScrollContainer/GridContainer" unique_id=1162447289 instance=ExtResource("1_mpp5d")]
+[node name="播放音效" parent="ScrollContainer/HFlowContainer" unique_id=1162447289 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "音效:AudioStream,指定音量:float=-1
 
@@ -106,35 +114,60 @@ text = "播放音效"
 通常用于mav格式一次性的播放"
 "插入的内容" = "引擎.场景.播放音效(load(\"uid://vh28ybcjpqam\"))"
 
-[node name="播放音乐" parent="ScrollContainer/GridContainer" unique_id=1112411420 instance=ExtResource("1_mpp5d")]
+[node name="播放音乐" parent="ScrollContainer/HFlowContainer" unique_id=1112411420 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "通常用于MP3格式播放，自动循环"
 text = "播放音乐"
 "提示的内容" = "通常用于MP3格式播放，自动循环"
 "插入的内容" = "引擎.场景.播放音乐(load(\"uid://vh28ybcjpqam\"))"
 
-[node name="设置背景声音大小" parent="ScrollContainer/GridContainer" unique_id=537405771 instance=ExtResource("1_mpp5d")]
+[node name="设置背景声音大小" parent="ScrollContainer/HFlowContainer" unique_id=537405771 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "音量:float=0.5"
 text = "设置背景声音大小"
 "提示的内容" = "音量:float=0.5"
 "插入的内容" = "引擎.场景.设置背景声音大小(0.5)"
 
-[node name="设置音效声音大小" parent="ScrollContainer/GridContainer" unique_id=722952626 instance=ExtResource("1_mpp5d")]
+[node name="设置音效声音大小" parent="ScrollContainer/HFlowContainer" unique_id=722952626 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
+tooltip_text = "0.5为一半，0是静音"
 text = "设置音效声音大小"
 "提示的内容" = "0.5为一半，0是静音"
 "插入的内容" = "引擎.场景.设置音效声音大小(0.5)"
 
-[node name="基础循环" parent="ScrollContainer/GridContainer" unique_id=2041562001 instance=ExtResource("1_mpp5d")]
+[node name="基础判断" parent="ScrollContainer/HFlowContainer" unique_id=1118077184 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "基础的循环"
-text = "基础循环"
+text = "判断"
+"提示的内容" = "基础的循环"
+"插入的内容" = "if true:
+	pass"
+
+[node name="基础否则" parent="ScrollContainer/HFlowContainer" unique_id=2133854508 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "else"
+text = "否则"
+"提示的内容" = "else"
+"插入的内容" = "else:
+	pass"
+
+[node name="基础循环" parent="ScrollContainer/HFlowContainer" unique_id=2041562001 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "基础的循环"
+text = "For循环"
 "提示的内容" = "基础的循环"
 "插入的内容" = "for i索引 in 3:
    引擎.调试.打印(i)"
 
-[node name="伤害绘制" parent="ScrollContainer/GridContainer" unique_id=1865898920 instance=ExtResource("1_mpp5d")]
+[node name="基础循环2" parent="ScrollContainer/HFlowContainer" unique_id=180855696 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "基础的while循环"
+text = "while循环"
+"提示的内容" = "基础的while循环"
+"插入的内容" = "while(true):
+  pass"
+
+[node name="伤害绘制" parent="ScrollContainer/HFlowContainer" unique_id=1865898920 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "引擎.屏幕.伤害绘制(Vector2(300,600),123,\"命中\",\"正常\") 
 引擎.屏幕.伤害绘制(Vector2(300,400),123,\"暴击\",\"正常\")
@@ -151,32 +184,36 @@ text = "伤害绘制"
 引擎.屏幕.伤害绘制(Vector2(300,300),[[\"命中\", 20478], [\"命中\", 20278], [\"暴击\", 24311], [\"暴击\", 22333]])"
 "插入的内容" = "引擎.屏幕.伤害绘制(Vector2(300,600),123,\"命中\",\"正常\") "
 
-[node name="屏幕震动" parent="ScrollContainer/GridContainer" unique_id=1046711295 instance=ExtResource("1_mpp5d")]
+[node name="屏幕震动" parent="ScrollContainer/HFlowContainer" unique_id=1046711295 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02"
 text = "屏幕震动"
 "提示的内容" = "相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02"
 "插入的内容" = "引擎.屏幕.屏幕震动($Camera2D)"
 
-[node name="滚动提示" parent="ScrollContainer/GridContainer" unique_id=886043410 instance=ExtResource("1_mpp5d")]
+[node name="滚动提示" parent="ScrollContainer/HFlowContainer" unique_id=886043410 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "滚动提示(组件位置:GridContainer,文本:String)"
 text = "滚动提示"
 "提示的内容" = "滚动提示(组件位置:GridContainer,文本:String)"
-"插入的内容" = "引擎.窗口.滚动提示(GridContainer,\"测试\")"
+"插入的内容" = "引擎.屏幕.滚动提示(GridContainer,\"测试\")"
 
-[node name="获取运行目录" parent="ScrollContainer/GridContainer" unique_id=438445565 instance=ExtResource("1_mpp5d")]
+[node name="获取运行目录" parent="ScrollContainer/HFlowContainer" unique_id=438445565 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
+tooltip_text = "获取当前运行游戏的目录"
 text = "获取运行目录"
 "提示的内容" = "获取当前运行游戏的目录"
 "插入的内容" = "引擎.文件.获取当前运行目录()"
 
-[node name="扫描文件" parent="ScrollContainer/GridContainer" unique_id=1109981486 instance=ExtResource("1_mpp5d")]
+[node name="扫描文件" parent="ScrollContainer/HFlowContainer" unique_id=1109981486 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
-tooltip_text = "用于扫描文件的东西,返回:[\"a/a.gd\", \"b/b.gd\", \"c.gd\"]
+tooltip_text = "(路径:String, 是否扫描子目录:bool = false, 指定格式:Array = [])
+用于扫描文件的东西,返回:[\"a/a.gd\", \"b/b.gd\", \"c.gd\"]
 var 读取文件数组=引擎.文件.扫描文件(\"res://data/\",true,[\"gd\",\"json\"]) #指定找gd + json
 var 读取文件数组=引擎.文件.扫描文件(\"res://data/\",true) #递归扫子目录
-var 读取文件数组=引擎.文件.扫描文件(\"res://data/\") #默认不扫子目录"
+var 读取文件数组=引擎.文件.扫描文件(\"res://data/\") #默认不扫子目录
+
+"
 text = "扫描文件"
 "提示的内容" = "(路径:String, 是否扫描子目录:bool = false, 指定格式:Array = [])
 用于扫描文件的东西,返回:[\"a/a.gd\", \"b/b.gd\", \"c.gd\"]
@@ -187,9 +224,12 @@ var 读取文件数组=引擎.文件.扫描文件(\"res://data/\") #默认不扫
 "
 "插入的内容" = "var 读取文件数组=引擎.文件.扫描文件(\"res://data/\") #默认不扫子目录"
 
-[node name="扫描原始文件" parent="ScrollContainer/GridContainer" unique_id=1233447512 instance=ExtResource("1_mpp5d")]
+[node name="扫描原始文件" parent="ScrollContainer/HFlowContainer" unique_id=1233447512 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
-tooltip_text = "与扫描文件一样,但是提取过滤了.import之类的,虽然说用扫描文件 也可以指定获取格式的说"
+tooltip_text = "扫描原始文件(路径:String, 是否扫描子目录:bool = false, 指定格式:Array = []) -> Array
+
+与扫描文件一样,但是提取过滤了.import之类的,虽然说用扫描文件 也可以指定获取格式的说
+"
 text = "扫描原始文件"
 "提示的内容" = "扫描原始文件(路径:String, 是否扫描子目录:bool = false, 指定格式:Array = []) -> Array
 
@@ -197,7 +237,7 @@ text = "扫描原始文件"
 "
 "插入的内容" = "引擎.文件.扫描原始文件(\"res://音效/\")"
 
-[node name="读取目录下所有JSON到字典" parent="ScrollContainer/GridContainer" unique_id=377250058 instance=ExtResource("1_mpp5d")]
+[node name="读取目录下所有JSON到字典" parent="ScrollContainer/HFlowContainer" unique_id=377250058 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "读取目录下所有JSON到字典
 功能：扫描目录下的文件，解析JSON内容并以 {文件名: JSON数据} 格式返回"
@@ -207,7 +247,7 @@ text = "读取目录下所有JSON到字典"
 "插入的内容" = "var 文件字典=引擎.文件.读取目录下所有JSON到字典(\"res://文件/\")
 引擎.调试.注释打印(\"读取的变量\",文件字典)#读取的变量:    { \"a.json\": { \"a\": 1.0 }, \"b.json\": { \"b\": 2.0 } }"
 
-[node name="获取MD5值" parent="ScrollContainer/GridContainer" unique_id=1104569574 instance=ExtResource("1_mpp5d")]
+[node name="获取MD5值" parent="ScrollContainer/HFlowContainer" unique_id=1104569574 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "获取MD5值(文件路径:String)
 获取文件的MD5哈希值(用于文件校验)
@@ -218,20 +258,20 @@ text = "获取MD5值"
 "
 "插入的内容" = "var md5 = 引擎.文件.获取MD5值(\"res://data/savegame.dat\")"
 
-[node name="加载资源" parent="ScrollContainer/GridContainer" unique_id=576994746 instance=ExtResource("1_mpp5d")]
+[node name="加载资源" parent="ScrollContainer/HFlowContainer" unique_id=576994746 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "加载Godot资源(如场景、纹理、脚本等)"
 text = "加载资源"
 "提示的内容" = "加载Godot资源(如场景、纹理、脚本等)"
 "插入的内容" = "var scene = 引擎.文件.加载资源(\"res://scenes/main.tscn\")"
 
-[node name="文件是否存在" parent="ScrollContainer/GridContainer" unique_id=1697315207 instance=ExtResource("1_mpp5d")]
+[node name="文件是否存在" parent="ScrollContainer/HFlowContainer" unique_id=1697315207 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "智能检查文件或资源是否存在(自动处理物理文件和导入资源)
 
-##if 引擎.文件.是否存在(\"res://scripts/player.gd\"):           # 检查普通文件
-##if 引擎.文件.是否存在(\"res://images/player.png\"):          # 检查导入资源
-##if 引擎.文件.是否存在(\"res://fonts/my_font.tres\"):         # 检查TRES资源"
+if 引擎.文件.是否存在(\"res://scripts/player.gd\"):           # 检查普通文件
+if 引擎.文件.是否存在(\"res://images/player.png\"):          # 检查导入资源
+if 引擎.文件.是否存在(\"res://fonts/my_font.tres\"):         # 检查TRES资源"
 text = "文件是否存在"
 "提示的内容" = "智能检查文件或资源是否存在(自动处理物理文件和导入资源)
 
@@ -240,10 +280,16 @@ if 引擎.文件.是否存在(\"res://images/player.png\"):          # 检查导
 if 引擎.文件.是否存在(\"res://fonts/my_font.tres\"):         # 检查TRES资源"
 "插入的内容" = "if 引擎.文件.是否存在(\"res://player.gd\")"
 
-[node name="保存文本到文件" parent="ScrollContainer/GridContainer" unique_id=309127622 instance=ExtResource("1_mpp5d")]
+[node name="保存文本到文件" parent="ScrollContainer/HFlowContainer" unique_id=309127622 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "将文本内容保存到指定文件
- 保存文本到文件(文本:String, 文件地址:String = \"user://save_game.dat\")"
+ 保存文本到文件(文本:String, 文件地址:String = \"user://save_game.dat\")
+
+## [br]参数:[br]
+##   - 文本: 要保存的文本内容[br]
+##   - 文件地址: 保存路径，默认为\"user://save_game.dat\"
+## [br]异常:[br]
+##   - 如果文件无法打开，会抛出错误"
 text = "保存文本到文件"
 "提示的内容" = "将文本内容保存到指定文件
  保存文本到文件(文本:String, 文件地址:String = \"user://save_game.dat\")
@@ -255,13 +301,13 @@ text = "保存文本到文件"
 ##   - 如果文件无法打开，会抛出错误"
 "插入的内容" = "引擎.文件.保存文本到文件(\"游戏进度数据\", \"user://save_game.dat\")"
 
-[node name="读取文件到文本" parent="ScrollContainer/GridContainer" unique_id=788912624 instance=ExtResource("1_mpp5d")]
+[node name="读取文件到文本" parent="ScrollContainer/HFlowContainer" unique_id=788912624 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "## 从指定文件读取文本内容
 ## [br]参数:[br]
-##   - 文件地址: 读取路径，默认为\"user://save_game.dat\"
+   - 文件地址: 读取路径，默认为\"user://save_game.dat\"
 ## [br]返回:[br]
-##   - 成功时返回文件内容字符串，失败时返回空字符串
+   - 成功时返回文件内容字符串，失败时返回空字符串
 ##[codeblock]"
 text = "读取文件到文本"
 "提示的内容" = "## 从指定文件读取文本内容
@@ -272,18 +318,18 @@ text = "读取文件到文本"
 ##[codeblock]"
 "插入的内容" = "var 保存数据 = 引擎.文件.读取文件到文本(\"user://save_game.dat\")"
 
-[node name="保存变量到文件" parent="ScrollContainer/GridContainer" unique_id=1614169380 instance=ExtResource("1_mpp5d")]
+[node name="保存变量到文件" parent="ScrollContainer/HFlowContainer" unique_id=1614169380 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "## 将变量序列化并保存到指定文件，支持加密
 ## [br]参数:[br]
-##   - 数据: 要保存的变量[br]
-##   - 文件地址: 保存路径，默认为\"user://save_game.dat\"[br]
-##   - 密码: 加密密码，为空则不加密，默认为空
+   - 数据: 要保存的变量[br]
+   - 文件地址: 保存路径，默认为\"user://save_game.dat\"[br]
+   - 密码: 加密密码，为空则不加密，默认为空
 ## [br]返回:[br]
-##   - 成功返回true，失败返回false
+   - 成功返回true，失败返回false
 ## [br]异常:[br]
-##   - 如果JSON序列化失败，会抛出错误
-##   - 如果文件无法打开，会抛出错误"
+  - 如果JSON序列化失败，会抛出错误
+   - 如果文件无法打开，会抛出错误"
 text = "保存变量到文件"
 "提示的内容" = "## 将变量序列化并保存到指定文件，支持加密
 ## [br]参数:[br]
@@ -297,9 +343,18 @@ text = "保存变量到文件"
    - 如果文件无法打开，会抛出错误"
 "插入的内容" = "引擎.文件.保存变量到文件( {\"分数\": 100, \"关卡\": 5}, \"user://game_data.dat\")  # 不加密"
 
-[node name="读取文件到变量" parent="ScrollContainer/GridContainer" unique_id=990629021 instance=ExtResource("1_mpp5d")]
+[node name="读取文件到变量" parent="ScrollContainer/HFlowContainer" unique_id=990629021 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
-tooltip_text = "读取文件到变量"
+tooltip_text = "## 从指定文件读取数据并反序列化为变量，支持加密
+ [br]参数:[br]
+   - 文件地址: 读取路径，默认为\"user://save_game.dat\"[br]
+  - 密码: 解密密码，需与保存时一致，默认为空
+ [br]返回:[br]
+  - 成功返回变量内容，失败返回null
+ [br]异常:[br]
+  - 如果文件不存在或无法打开，会抛出错误
+   - 如果JSON解析失败，会抛出错误
+ - 如果密码错误，会抛出错误"
 text = "读取文件到变量"
 "提示的内容" = "## 从指定文件读取数据并反序列化为变量，支持加密
  [br]参数:[br]
@@ -313,8 +368,16 @@ text = "读取文件到变量"
  - 如果密码错误，会抛出错误"
 "插入的内容" = "var 读取的数据 = 引擎.文件.读取文件到变量(\"user://game_data.dat\")"
 
-[node name="加载PCK" parent="ScrollContainer/GridContainer" unique_id=72007306 instance=ExtResource("1_mpp5d")]
+[node name="加载PCK" parent="ScrollContainer/HFlowContainer" unique_id=72007306 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
+tooltip_text = "## 加载外部PCK或ZIP资源包
+## [br]参数:[br]
+##   - 路径资源: 要加载的资源包路径，默认为\"user://update.zip\"
+## [br]返回:[br]
+##   - 加载成功返回true，失败返回false
+##[codeblock]
+## 引擎.文件.加载PCK(\"user://custom_content.pck\")
+##[/codeblock]"
 text = "加载PCK"
 "提示的内容" = "## 加载外部PCK或ZIP资源包
 ## [br]参数:[br]
@@ -326,16 +389,16 @@ text = "加载PCK"
 ##[/codeblock]"
 "插入的内容" = "引擎.文件.加载PCK(\"user://custom_content.pck\")"
 
-[node name="ini_读取配置文件" parent="ScrollContainer/GridContainer" unique_id=1613040776 instance=ExtResource("1_mpp5d")]
+[node name="ini_读取配置文件" parent="ScrollContainer/HFlowContainer" unique_id=1613040776 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "## 加载指定路径的配置文件（或从缓存中获取）
-## [br]参数:[br]
-##   - _文件路径: 配置文件路径，默认为\"res://配置项.ini\"
-## [br]返回:[br]
-##   - ConfigFile对象，可用于读取和修改配置
-##[codeblock]
-## var 配置 = 引擎.配置文件.ini_读取配置文件(\"res://settings.ini\")
-##[/codeblock]"
+[br]参数:[br]
+   - _文件路径: 配置文件路径，默认为\"res://配置项.ini\"
+ [br]返回:[br]
+  - ConfigFile对象，可用于读取和修改配置
+[codeblock]
+var 配置 = 引擎.配置文件.ini_读取配置文件(\"res://settings.ini\")
+[/codeblock]"
 text = "ini_读取配置文件"
 "提示的内容" = "## 加载指定路径的配置文件（或从缓存中获取）
 [br]参数:[br]
@@ -347,18 +410,18 @@ var 配置 = 引擎.配置文件.ini_读取配置文件(\"res://settings.ini\")
 [/codeblock]"
 "插入的内容" = "var 配置 = 引擎.配置文件.ini_读取配置文件(\"res://settings.ini\")"
 
-[node name="ini_读取" parent="ScrollContainer/GridContainer" unique_id=794579862 instance=ExtResource("1_mpp5d")]
+[node name="ini_读取" parent="ScrollContainer/HFlowContainer" unique_id=794579862 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "## 从配置文件中读取指定节和键的值
-## [br]参数:[br]
-##   - _文件: ConfigFile对象[br]
-##   - _节: 配置节名称[br]
-##   - _键: 配置键名称
-## [br]返回:[br]
-##   - 配置值，如果不存在则返回null
-##[codeblock]
-## var 值 = 引擎.配置文件.ini_读取(配置, \"General\", \"Volume\")
-##[/codeblock]"
+ [br]参数:[br]
+   - _文件: ConfigFile对象[br]
+   - _节: 配置节名称[br]
+  - _键: 配置键名称
+ [br]返回:[br]
+   - 配置值，如果不存在则返回null
+[codeblock]
+var 值 = 引擎.配置文件.ini_读取(配置, \"General\", \"Volume\")
+[/codeblock]"
 text = "ini_读取"
 "提示的内容" = "## 从配置文件中读取指定节和键的值
  [br]参数:[br]
@@ -372,8 +435,19 @@ var 值 = 引擎.配置文件.ini_读取(配置, \"General\", \"Volume\")
 [/codeblock]"
 "插入的内容" = "var 值 = 引擎.配置文件.ini_读取(配置, \"General\", \"Volume\")"
 
-[node name="ini_设置" parent="ScrollContainer/GridContainer" unique_id=1829922263 instance=ExtResource("1_mpp5d")]
+[node name="ini_设置" parent="ScrollContainer/HFlowContainer" unique_id=1829922263 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
+tooltip_text = " 设置配置文件中指定节和键的值
+ [br]参数:[br]
+   - _文件: ConfigFile对象[br]
+   - _节: 配置节名称[br]
+   - _键: 配置键名称[br]
+   - _内容: 要设置的值
+ [br]返回:[br]
+   - 操作是否成功（始终返回true）
+[codeblock]
+ 引擎.配置文件.ini_设置(配置, \"General\", \"Fullscreen\", true)
+[/codeblock]"
 text = "ini_设置"
 "提示的内容" = " 设置配置文件中指定节和键的值
  [br]参数:[br]
@@ -388,8 +462,17 @@ text = "ini_设置"
 [/codeblock]"
 "插入的内容" = "引擎.配置文件.ini_设置(配置, \"General\", \"Fullscreen\", true)"
 
-[node name="ini_保存配置文件" parent="ScrollContainer/GridContainer" unique_id=27143636 instance=ExtResource("1_mpp5d")]
+[node name="ini_保存配置文件" parent="ScrollContainer/HFlowContainer" unique_id=27143636 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
+tooltip_text = " 保存配置文件到指定路径
+ [br]参数:[br]
+   - _文件: ConfigFile对象[br]
+   - 保存到哪里: 保存路径，默认为\"res://配置项.ini\"
+ [br]返回:[br]
+   - 错误码（OK表示成功，其他值表示失败）
+[codeblock]
+ 引擎.配置文件.ini_保存配置文件(配置, \"user://saved_settings.ini\")
+[/codeblock]"
 text = "ini_保存配置文件"
 "提示的内容" = " 保存配置文件到指定路径
  [br]参数:[br]
@@ -402,7 +485,7 @@ text = "ini_保存配置文件"
 [/codeblock]"
 "插入的内容" = "引擎.配置文件.ini_保存配置文件(配置, \"user://saved_settings.ini\")"
 
-[node name="保存自带配置的变量" parent="ScrollContainer/GridContainer" unique_id=889536994 instance=ExtResource("1_mpp5d")]
+[node name="保存自带配置的变量" parent="ScrollContainer/HFlowContainer" unique_id=889536994 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "##保存到自带配置
 func 保存自带配置的变量(配置项名称:String,配置值:Variant)"
@@ -411,7 +494,7 @@ text = "保存自带配置的变量"
 func 保存自带配置的变量(配置项名称:String,配置值:Variant)"
 "插入的内容" = "引擎.文件.保存自带配置的变量(配置项名称:String,配置值:Variant)"
 
-[node name="调试" parent="ScrollContainer/GridContainer" unique_id=1439533761 instance=ExtResource("1_mpp5d")]
+[node name="读取自带配置的变量" parent="ScrollContainer/HFlowContainer" unique_id=1439533761 instance=ExtResource("1_mpp5d")]
 layout_mode = 2
 tooltip_text = "从自带配置读取
 读取自带配置的变量(配置项名称:String):"
@@ -419,3 +502,214 @@ text = "读取自带配置的变量"
 "提示的内容" = "从自带配置读取
 读取自带配置的变量(配置项名称:String):"
 "插入的内容" = "引擎.文件.读取自带配置的变量(配置项名称:String)"
+
+[node name="向下取整" parent="ScrollContainer/HFlowContainer" unique_id=1354655863 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "引擎.数学.向下取整(1.1)"
+text = "向下取整"
+"提示的内容" = "引擎.数学.向下取整(1.1)"
+"插入的内容" = "引擎.数学.向下取整()"
+
+[node name="向上取整" parent="ScrollContainer/HFlowContainer" unique_id=2005250821 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "引擎.数学.向上取整(1.1)"
+text = "向上取整"
+"提示的内容" = "引擎.数学.向上取整(1.1)"
+"插入的内容" = "引擎.数学.向上取整()"
+
+[node name="取范围浮点数" parent="ScrollContainer/HFlowContainer" unique_id=2019808795 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "## 生成指定范围内的随机浮点数
+## [br]参数:[br]
+##   - 最小浮点数: 最小值（包含）[br]
+##   - 最大浮点数: 最大值（包含）
+## [br]返回:[br]
+##   - 范围内的随机浮点数"
+text = "随机_取范围浮点数"
+"提示的内容" = "## 生成指定范围内的随机浮点数
+## [br]参数:[br]
+##   - 最小浮点数: 最小值（包含）[br]
+##   - 最大浮点数: 最大值（包含）
+## [br]返回:[br]
+##   - 范围内的随机浮点数"
+"插入的内容" = "var 随机值 = 引擎.数学.随机_取范围浮点数(1.5, 3.5)"
+
+[node name="取0到1的浮点数" parent="ScrollContainer/HFlowContainer" unique_id=1169906135 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "## 生成0到1之间的随机浮点数（包含0和1）
+## [br]返回:[br]
+  - 0到1之间的随机浮点数
+##[codeblock]"
+text = "随机_取0到1的浮点数"
+"提示的内容" = "## 生成0到1之间的随机浮点数（包含0和1）
+## [br]返回:[br]
+  - 0到1之间的随机浮点数
+##[codeblock]"
+"插入的内容" = "var 随机值 = 引擎.数学.随机_取0到1的浮点数()"
+
+[node name="随机_取0到最大整数" parent="ScrollContainer/HFlowContainer" unique_id=1714310795 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "## 生成0到指定值之间的随机整数（包含0和指定值）
+## [br]参数:[br]
+##   - 最大整数: 最大值（包含）[br]
+## [br]返回:[br]
+##   - 0到最大整数之间的随机整数
+##[codeblock]"
+text = "随机_取0到最大整数"
+"提示的内容" = "## 生成0到指定值之间的随机整数（包含0和指定值）
+## [br]参数:[br]
+##   - 最大整数: 最大值（包含）[br]
+## [br]返回:[br]
+##   - 0到最大整数之间的随机整数
+##[codeblock]"
+"插入的内容" = "var 随机数 = 引擎.数学.随机_取0到最大整数(10)"
+
+[node name="随机_取范围整数" parent="ScrollContainer/HFlowContainer" unique_id=811284535 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "## 生成指定范围内的随机整数（包含最小值和最大值）
+## [br]参数:[br]
+   - 最小整数: 最小值（包含）[br]
+   - 最大整数: 最大值（包含）
+## [br]返回:[br]
+   - 范围内的随机整数
+##[codeblock]"
+text = "随机_取范围整数"
+"提示的内容" = "## 生成指定范围内的随机整数（包含最小值和最大值）
+## [br]参数:[br]
+   - 最小整数: 最小值（包含）[br]
+   - 最大整数: 最大值（包含）
+## [br]返回:[br]
+   - 范围内的随机整数
+##[codeblock]"
+"插入的内容" = "var 随机数 = 引擎.数学.随机_取范围整数(5, 15)"
+
+[node name="随机_取角度整数" parent="ScrollContainer/HFlowContainer" unique_id=356007822 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "## 生成指定范围内的随机整数角度（闭区间 [最小角度, 最大角度]）
+## [br]参数:[br]
+##   - 最小角度: 最小值（包含），默认0[br]
+##   - 最大角度: 最大值（包含），默认360[br]
+## [br]返回:[br]
+##   - 指定范围内的随机整数角度
+##[codeblock]
+ var 角度 = 引擎.数学.随机_取角度整数()      # 默认生成0-360之间的随机整数
+ var 角度 = 引擎.数学.随机_取角度整数(-90)  # 生成-90-360之间的随机整数
+ var 角度 = 引擎.数学.随机_取角度整数(-90, 90)  # 生成-90-90之间的随机整数
+##[/codeblock]"
+text = "随机_取角度整数"
+"提示的内容" = "## 生成指定范围内的随机整数角度（闭区间 [最小角度, 最大角度]）
+## [br]参数:[br]
+##   - 最小角度: 最小值（包含），默认0[br]
+##   - 最大角度: 最大值（包含），默认360[br]
+## [br]返回:[br]
+##   - 指定范围内的随机整数角度
+##[codeblock]
+ var 角度 = 引擎.数学.随机_取角度整数()      # 默认生成0-360之间的随机整数
+ var 角度 = 引擎.数学.随机_取角度整数(-90)  # 生成-90-360之间的随机整数
+ var 角度 = 引擎.数学.随机_取角度整数(-90, 90)  # 生成-90-90之间的随机整数
+##[/codeblock]"
+"插入的内容" = "var 角度 =引擎.数学.随机_取角度整数()"
+
+[node name="随机_取角度浮点数" parent="ScrollContainer/HFlowContainer" unique_id=1212676885 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "## 生成指定范围内的随机浮点数角度（闭区间 [最小角度, 最大角度]）
+## [br]参数:[br]
+  - 最小角度: 最小值（包含），默认0.0[br]
+   - 最大角度: 最大值（包含），默认360.0[br]
+## [br]返回:[br]
+##   - 指定范围内的随机浮点数角度
+##[codeblock]
+ var 角度 = 引擎.数学.随机_取角度浮点数()      # 默认生成0.0-360.0之间的随机浮点数
+ var 角度 = 引擎.数学.随机_取角度浮点数(-90.0)  # 生成-90.0-360.0之间的随机浮点数
+ var 角度 = 引擎.数学.随机_取角度浮点数(-45.5, 45.5)  # 生成-45.5-45.5之间的随机浮点数
+##[/codeblock]"
+text = "随机_取角度浮点数"
+"提示的内容" = "## 生成指定范围内的随机浮点数角度（闭区间 [最小角度, 最大角度]）
+## [br]参数:[br]
+  - 最小角度: 最小值（包含），默认0.0[br]
+   - 最大角度: 最大值（包含），默认360.0[br]
+## [br]返回:[br]
+##   - 指定范围内的随机浮点数角度
+##[codeblock]
+ var 角度 = 引擎.数学.随机_取角度浮点数()      # 默认生成0.0-360.0之间的随机浮点数
+ var 角度 = 引擎.数学.随机_取角度浮点数(-90.0)  # 生成-90.0-360.0之间的随机浮点数
+ var 角度 = 引擎.数学.随机_取角度浮点数(-45.5, 45.5)  # 生成-45.5-45.5之间的随机浮点数
+##[/codeblock]"
+"插入的内容" = "var 角度 = 引擎.数学.随机_取角度浮点数() "
+
+[node name="随机_取字符串" parent="ScrollContainer/HFlowContainer" unique_id=61259333 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "## 从数组中随机选择一个字符串
+## [br]参数:[br]
+##   - 字符串数组: 待选择的字符串数组[br]
+## [br]返回:[br]
+##   - 随机选中的字符串，若数组为空则返回空字符串
+##[codeblock]"
+text = "随机_取字符串"
+"提示的内容" = "## 从数组中随机选择一个字符串
+## [br]参数:[br]
+##   - 字符串数组: 待选择的字符串数组[br]
+## [br]返回:[br]
+##   - 随机选中的字符串，若数组为空则返回空字符串
+##[codeblock]"
+"插入的内容" = "var 随机颜色 = 引擎.数学.随机_取字符串([\"红\", \"绿\", \"蓝\"])"
+
+[node name="随机_权重选择" parent="ScrollContainer/HFlowContainer" unique_id=1869957063 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "## 按权重从数组中随机选择一个元素
+## [br]参数:[br]
+##   - 物品列表: 格式为 [[值1, 权重1], [值2, 权重2], ...]，值可以是任意类型[br]
+## [br]返回:[br]
+##   - 随机选中的值（类型与数组中一致），若列表为空或权重无效返回 null
+##[codeblock]"
+text = "随机_权重选择"
+"提示的内容" = "## 按权重从数组中随机选择一个元素
+## [br]参数:[br]
+##   - 物品列表: 格式为 [[值1, 权重1], [值2, 权重2], ...]，值可以是任意类型[br]
+## [br]返回:[br]
+##   - 随机选中的值（类型与数组中一致），若列表为空或权重无效返回 null
+##[codeblock]"
+"插入的内容" = "var 结果 = 引擎.数学.随机_权重选择([[\"苹果\", 10], [\"香蕉\", 20], [\"橙子\", 5]])  # 香蕉概率最高"
+
+[node name="字典数值叠加" parent="ScrollContainer/HFlowContainer" unique_id=272510198 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "将2个字段的字典值进行总和计算"
+text = "字典数值叠加"
+"提示的内容" = "将2个字段的字典值进行总和计算"
+"插入的内容" = "var 叠加后的数值字典=字典叠加(Dictionary,Dictionary)"
+
+[node name="字典取属性" parent="ScrollContainer/HFlowContainer" unique_id=854890795 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "#var 结果1 = 字典取属性({ \"攻击力\": 10.0, \"力量\": 2.0, \"敏捷\": 0.0 }, [\"敏捷\", \"力量\"], 0.0)
+#print(结果1)  # 输出: { \"敏捷\":0.0, \"力量\":2.0 }"
+text = "字典取属性"
+"提示的内容" = "#var 结果1 = 字典取属性({ \"攻击力\": 10.0, \"力量\": 2.0, \"敏捷\": 0.0 }, [\"敏捷\", \"力量\"], 0.0)
+#print(结果1)  # 输出: { \"敏捷\":0.0, \"力量\":2.0 }"
+"插入的内容" = "var 结果1 = 字典取属性({ \"攻击力\": 10.0, \"力量\": 2.0, \"敏捷\": 0.0 }, [\"敏捷\", \"力量\"], 0.0)"
+
+[node name="字典填充更新" parent="ScrollContainer/HFlowContainer" unique_id=1716549222 instance=ExtResource("1_mpp5d")]
+layout_mode = 2
+tooltip_text = "#用字典 2 的值覆盖字典 1 中相同键的值，不新增字典 2 独有的键
+	#初始化待更新的字典
+	var 基础信息 = {\"姓名\": \"张三\", \"年龄\": 25, \"性别\": \"男\"}
+	#初始化用于更新的字典
+	var 新信息 = {\"年龄\": 26, \"职业\": \"程序员\"}
+	引擎.调试.打印(引擎.数学.字典填充更新(基础信息,新信息))#{ \"姓名\": \"张三\", \"年龄\": 26, \"性别\": \"男\" }
+	"
+text = "字典填充更新"
+"提示的内容" = "#用字典 2 的值覆盖字典 1 中相同键的值，不新增字典 2 独有的键
+	#初始化待更新的字典
+	var 基础信息 = {\"姓名\": \"张三\", \"年龄\": 25, \"性别\": \"男\"}
+	#初始化用于更新的字典
+	var 新信息 = {\"年龄\": 26, \"职业\": \"程序员\"}
+	引擎.调试.打印(引擎.数学.字典填充更新(基础信息,新信息))#{ \"姓名\": \"张三\", \"年龄\": 26, \"性别\": \"男\" }
+	"
+"插入的内容" = "var 更新的字典=引擎.数学.字典填充更新(字典1: Dictionary, 字典2: Dictionary)"
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer" unique_id=1008537974]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+columns = 6
+
+[connection signal="pre_sort_children" from="." to="." method="_on_pre_sort_children"]

@@ -43,7 +43,7 @@ func _enter_tree() -> void:
 	# 创建EditorDock容器（这是新方法必须的载体）
 	dock = EditorDock.new()
 	# 设置面板标题（对应原来的title参数）
-	dock.title = "代码片段拖拽"
+	dock.title = "引擎代码片段"
 	# 指定默认停靠位置为底部（关键：替代原来的bottom_panel）
 	dock.default_slot = EditorDock.DOCK_SLOT_BOTTOM
 	# 将你的自定义面板添加到dock容器中
