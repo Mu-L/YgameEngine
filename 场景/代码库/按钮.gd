@@ -69,10 +69,11 @@ func _on_gui_input(event: InputEvent) -> void:
 			is_dragging = true
 			_update_preview_position(event.global_position)
 			drag_preview.show()
-			print("点击")
+			print("点击",)
 			点击=true
+			#print("选中的内容?:",code_edit.get_selected_text())
 		# ... 前面的代码不变 ...
-		
+			
 		else:  # 松手
 			if 点击==false:
 				print("执行拖拽程序逻辑")
@@ -97,27 +98,24 @@ func _on_gui_input(event: InputEvent) -> void:
 				print("处理后的代码：", processed_code)
 				
 				# 步骤4：插入最终代码
-				code_edit.insert_text_at_caret(processed_code)
-				code_edit.grab_focus()
-				
-				# 日志输出
-				var line = code_edit.get_caret_line() + 1
-				var col  = code_edit.get_caret_column() + 1
-				print("已插入代码到：第%d行 第%d列" % [line, col])
+				var 插入的代码片段=processed_code
+				插入代码片段定位光标(code_edit,插入的代码片段,"拖拽")
+				#code_edit.insert_text_at_caret(processed_code)
+				#code_edit.grab_focus()
+				#
+				## 日志输出
+				#var line = code_edit.get_caret_line() + 1
+				#var col  = code_edit.get_caret_column() + 1
+				#print("已插入代码到：第%d行 第%d列" % [line, col])
 			##else:  # 松手
 			#
 			if 点击==true:
+				
 				print("执行点击程序逻辑")
+				print("选中的内容2",code_edit.get_selected_text())
 				is_dragging = false
 				drag_preview.hide()
-				# ───────────── 關鍵：先把當前行開頭所有空白去掉 ─────────────
-				#var caret_line = code_edit.get_caret_line()
-				#var current_line_text = code_edit.get_line(caret_line)
-				#var stripped_line = current_line_text.lstrip(" \t")
-				#if stripped_line != current_line_text:
-					#code_edit.set_line(caret_line, stripped_line)
-					## 如果你希望光標也移到最左邊
-					#code_edit.set_caret_column(0)
+				
 				#print(松开的tab数量)#拿到挪到到第几个tab,之前都清空了
 				# 1. 获取光标所在行的缩进字符
 				var caret_line = code_edit.get_caret_line()
@@ -125,16 +123,24 @@ func _on_gui_input(event: InputEvent) -> void:
 				var indent = _get_indent_from_line(current_line_text)
 				
 				# 2. 处理插入的代码，从第二行开始添加缩进
-				var processed_code = _add_indent_to_codeB(插入的内容, indent)
-				print(processed_code)
-				# 3. 插入处理后的代码
-				code_edit.insert_text_at_caret(processed_code)
-				code_edit.grab_focus()
+				var 插入的代码片段 = _add_indent_to_codeB(插入的内容, indent)
+				#print("处理插入的代码:",processed_code) 输出:处理插入的代码:引擎.数学.向下取整($)
 				
-				var line = code_edit.get_caret_line() + 1
-				var col  = code_edit.get_caret_column() + 1
-				print("已插入代码到：第%d行 第%d列" % [line, col])
-				#
+				##2.5核心添加更好玩的东西
+				var 选择的内容=code_edit.get_selected_text()
+				if 选择的内容!="":
+					#使用占位符 $
+					print(选择的内容) #a
+					插入的代码片段 = 插入的代码片段.replace("$", 选择的内容)  # 核心替换代码
+					pass
+				else:
+					插入的代码片段 = 插入的代码片段.replace("$", "")
+				##
+				
+		   		##把| 替换			
+				## 3. 插入处理后的代码
+				
+				插入代码片段定位光标(code_edit,插入的代码片段)
 	
 	elif event is InputEventMouseMotion and is_dragging:
 		_update_preview_position(event.global_position)
@@ -166,6 +172,51 @@ func _on_gui_input(event: InputEvent) -> void:
 					print("第",pos_info.x + 1,"tab")
 					松开的tab数量=pos_info.x + 1
 					点击=false
+func 插入代码片段定位光标(code_edit,插入的代码片段,定位="点击"):
+	# 1. 核心判断：插入内容是否是多行（是否包含换行符）
+				var 是否多行 = 插入的代码片段.find("\n") != -1
+
+				# 2. 找 | 的位置，并计算基础偏移
+				var 光标行偏移 = 0
+				var 光标列偏移 = 0
+				var 待插入文本 = 插入的代码片段
+
+				var 占位符位置 = 插入的代码片段.find("|")
+				if 占位符位置 != -1:
+					var 占位符前文本 = 插入的代码片段.substr(0, 占位符位置)
+					var 占位符前行列表 = 占位符前文本.split("\n")
+					# 基础偏移计算（和你原有逻辑一致）
+					光标行偏移 = 占位符前行列表.size() - 1
+					光标列偏移 = 占位符前行列表[-1].length() if 占位符前行列表.size() > 0 else 0
+					# 👉 按你的思路：多行场景加补偿值（核心！）
+					if 是否多行:
+						光标列偏移 -= 1  # 列偏移-1，抵消多行的列渲染偏差
+						if 定位=="拖拽":
+							光标列偏移+=4
+					# 移除 |
+					待插入文本 = 插入的代码片段.replace("|", "")
+
+				# 3. 记录插入前的光标基准（行+列）
+				var 插入起始行 = code_edit.get_caret_line()
+				var 插入起始列 = code_edit.get_caret_column()
+
+				# 4. 插入代码
+				code_edit.insert_text_at_caret(待插入文本)
+				code_edit.grab_focus()
+
+				# 5. 定位光标（分支处理单行/多行）
+				if 占位符位置 != -1:
+					var 目标行 = 插入起始行 + 光标行偏移
+					var 目标列 = 插入起始列 + 光标列偏移
+					
+					code_edit.set_caret_line(目标行, true)
+					code_edit.set_caret_column(目标列, true)
+
+				# 日志
+				var 当前行 = code_edit.get_caret_line() + 1
+				var 当前列 = code_edit.get_caret_column() + 1
+				print("多行？%s | 最终光标：第%d行 第%d列" % [是否多行, 当前行, 当前列])
+
 # 新增：提取一行代码的缩进字符（空格/tab）
 func _get_indent_from_line(line_text: String) -> String:
 	var indent = ""
