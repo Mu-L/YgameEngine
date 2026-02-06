@@ -2,24 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://brgtrow1gk2ni" path="res://addons/YgameEngine/场景/代码库/按钮.tscn" id="1_mpp5d"]
 
-[sub_resource type="GDScript" id="GDScript_mpp5d"]
-script/source = "@tool
-extends Control
-##代码块,$是占位符,|是光标位置
-
-func _on_pre_sort_children() -> void:
-	
-	引擎.时间.获取下一次签到的时间字符串()
-
-	pass # Replace with functi引擎.调试.打印字典({},\"注释\")on body.
-	
-
-
-func _on_button_pressed() -> void:
-	#引擎.调试.打印字典(代码片段)
-	pass # Replace with function body.
-"
-
 [node name="代码块" type="PanelContainer" unique_id=301642565]
 z_as_relative = false
 y_sort_enabled = true
@@ -29,7 +11,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = SubResource("GDScript_mpp5d")
 
 [node name="TabContainer" type="TabContainer" parent="." unique_id=1310294581]
 layout_mode = 2
@@ -126,6 +107,14 @@ custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = ""
 text = ""
+text_overrun_behavior = 1
+
+[node name="声明变量" parent="TabContainer/基础/ScrollContainer/HFlowContainer" unique_id=164939802 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = ""
+text = "调试输出2"
 text_overrun_behavior = 1
 
 [node name="场景" type="PanelContainer" parent="TabContainer" unique_id=82114944]
@@ -612,5 +601,3 @@ layout_mode = 2
 tooltip_text = "用于上往下的文字滚动提示"
 text = "获取到现在所经历的天数7"
 text_overrun_behavior = 1
-
-[connection signal="pre_sort_children" from="." to="." method="_on_pre_sort_children"]
