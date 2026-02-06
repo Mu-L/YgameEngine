@@ -11,6 +11,7 @@ func _enable_plugin() -> void:
 	_move_autoload_to_top(AUTOLOAD_NAME)
 	print("引擎 已添加并尝试置顶,引擎插件已启动，全局'引擎.xxx'可使用")
 	#print("优先指向1?")
+	
 	pass
 
 

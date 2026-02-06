@@ -139,6 +139,9 @@ func Json_到数据(json字符串: String) -> Variant:
 		push_error("JSON解析失败")
 	return 数据
 
+
+#引擎.字符串.正则匹配("asd@11","\\w") #asd11 去除特殊字符和中文
+#引擎.字符串.正则匹配("asda","^[A-Za-z0-9][A-Za-z0-9_]*$") #空代表有特殊符号
 func 正则匹配(字符串:String,模式)->String:
 	var regex = RegEx.new()
 	regex.compile(模式) # Negated whitespace character class.
@@ -147,6 +150,7 @@ func 正则匹配(字符串:String,模式)->String:
 		返回值+=result.get_string()
 	return 返回值
 
+#引擎.字符串.获取不重复随机码() #服务端需求,重启后无效,用于临时数据
 var 领取次数=1
 func 获取不重复随机码() -> String:
 		if 领取次数==null:

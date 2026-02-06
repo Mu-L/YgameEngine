@@ -30,7 +30,7 @@ var 加解密=preload("res://addons/YgameEngine/脚本/6.加解密.gd").new()
 var 文件:=preload("res://addons/YgameEngine/脚本/7.文件.gd").new()
 
 ##统一数学的东西
-var 数学=preload("res://addons/YgameEngine/脚本/8.数学.gd").new()
+var 数学:=preload("res://addons/YgameEngine/脚本/8.数学.gd").new()
 
 ##基于自己时间的东西
 var 时间=preload("res://addons/YgameEngine/脚本/9.时间.gd").new()
