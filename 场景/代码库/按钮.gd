@@ -114,6 +114,9 @@ func _on_gui_input(event: InputEvent) -> void:
 				
 				# 步骤4：插入最终代码
 				var 插入的代码片段=processed_code
+				#拖拽不需要$
+				插入的代码片段 = 插入的代码片段.replace("$", "")  # 核心替换代码
+				
 				插入代码片段定位光标(code_edit,插入的代码片段,"拖拽")
 				#code_edit.insert_text_at_caret(processed_code)
 				#code_edit.grab_focus()

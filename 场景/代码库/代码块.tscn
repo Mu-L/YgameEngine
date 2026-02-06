@@ -8,8 +8,9 @@ extends Control
 ##代码块,$是占位符,|是光标位置
 
 func _on_pre_sort_children() -> void:
-	var 结果 = 引擎.数学.随机_权重选择([[\"苹果\", 10], [\"香蕉\", 20], [\"橙子\", 5]])
 	
+	引擎.时间.获取下一次签到的时间字符串()
+
 	pass # Replace with functi引擎.调试.打印字典({},\"注释\")on body.
 	
 
@@ -229,21 +230,27 @@ size_flags_horizontal = 3
 
 [node name="伤害绘制" parent="TabContainer/屏幕/ScrollContainer/HFlowContainer" unique_id=1294485200 instance=ExtResource("1_mpp5d")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = ""
 text = ""
+text_overrun_behavior = 1
 
 [node name="屏幕震动" parent="TabContainer/屏幕/ScrollContainer/HFlowContainer" unique_id=571294842 instance=ExtResource("1_mpp5d")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = ""
 text = ""
+text_overrun_behavior = 1
 
 [node name="滚动提示" parent="TabContainer/屏幕/ScrollContainer/HFlowContainer" unique_id=1207841402 instance=ExtResource("1_mpp5d")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = ""
 text = ""
+text_overrun_behavior = 1
 
 [node name="文件" type="PanelContainer" parent="TabContainer" unique_id=2036260830]
 visible = false
@@ -520,5 +527,90 @@ layout_mode = 2
 tooltip_text = ""
 text = ""
 text_overrun_behavior = 6
+
+[node name="时间" type="PanelContainer" parent="TabContainer" unique_id=514146462]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/时间" unique_id=32043040]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="HFlowContainer" type="HFlowContainer" parent="TabContainer/时间/ScrollContainer" unique_id=340779676]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="获取预设的时间戳" parent="TabContainer/时间/ScrollContainer/HFlowContainer" unique_id=1925725383 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "## 伤害绘制(Vector2(300,300),123,\"命中\",\"正常\"，):
+## 伤害绘制(Vector2(300,300),[[\"命中\", 20478], [\"命中\", 20278], [\"暴击\", 24311], [\"暴击\", 22333]])
+##	引擎.屏幕.伤害绘制(Vector2(300,300),[[\"命中\", 20478], [\"命中\", 20278], [\"暴击\", 24311], [\"暴击\", 22333]])
+	#引擎.屏幕.伤害绘制(Vector2(300,600),123,\"命中\",\"正常\")	
+	#引擎.屏幕.伤害绘制(Vector2(300,400),123,\"暴击\",\"正常\")
+	#引擎.屏幕.伤害绘制(Vector2(300,400),123,\"命中\",\"受伤\")
+	#引擎.屏幕.伤害绘制(Vector2(340,400),123,\"命中\",\"补血\")
+	#引擎.屏幕.伤害绘制(Vector2(500,400),123,\"暴击\",\"补蓝\")"
+text = "伤害绘制"
+text_overrun_behavior = 1
+
+[node name="获取预设到现在所经历的秒数" parent="TabContainer/时间/ScrollContainer/HFlowContainer" unique_id=1551905822 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于震动屏幕。
+(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
+text = "屏幕震动"
+text_overrun_behavior = 1
+
+[node name="获取到现在所经历的天数" parent="TabContainer/时间/ScrollContainer/HFlowContainer" unique_id=1899612256 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "滚动提示"
+text_overrun_behavior = 1
+
+[node name="获取下一次签到的时间字符串" parent="TabContainer/时间/ScrollContainer/HFlowContainer" unique_id=1616473562 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "获取到现在所经历的天数2"
+text_overrun_behavior = 1
+
+[node name="取当前时间戳" parent="TabContainer/时间/ScrollContainer/HFlowContainer" unique_id=1194580233 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "获取到现在所经历的天数3"
+text_overrun_behavior = 1
+
+[node name="取时区偏移量" parent="TabContainer/时间/ScrollContainer/HFlowContainer" unique_id=812189161 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "获取到现在所经历的天数4"
+text_overrun_behavior = 1
+
+[node name="取当前日期字符串" parent="TabContainer/时间/ScrollContainer/HFlowContainer" unique_id=1323547158 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "获取到现在所经历的天数5"
+text_overrun_behavior = 1
+
+[node name="取当前日期时间字符串" parent="TabContainer/时间/ScrollContainer/HFlowContainer" unique_id=218815192 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "获取到现在所经历的天数6"
+text_overrun_behavior = 1
+
+[node name="从时间戳取本地日期时间字符串" parent="TabContainer/时间/ScrollContainer/HFlowContainer" unique_id=608908963 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "获取到现在所经历的天数7"
+text_overrun_behavior = 1
 
 [connection signal="pre_sort_children" from="." to="." method="_on_pre_sort_children"]
