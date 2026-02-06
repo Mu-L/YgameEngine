@@ -96,8 +96,9 @@ const 缓动类=preload("res://addons/YgameEngine/脚本/25.缓动.gd")
 
 
 
-
+var 可视化代码;
 func _init() -> void:
+	
 	pass
 ##region 初始化 回调_按钮.gd 接管所有按钮脚本回调。请使用[按钮信号.gd]拖入按钮控件配置相关属性
 	##载入[addons\YgameEngine\脚本\2.按钮.gd]
@@ -106,8 +107,64 @@ func _init() -> void:
 	#add_child(按钮脚本)
 	#self.按钮 = 按钮脚本
 	##endregion
+
+
+##解析并提供字典,代码,提示
+func 解析可视化代码():
+	print("执行解析")
+		
+	var 配置文件=引擎.文件.读取文件到文本("res://addons/YgameEngine/场景/代码库/code.txt")
+	var 代码片段: Dictionary = {}
+
+	var 部分们 = 配置文件.split("---code:")
+
+	for i in range(1, 部分们.size()):
+		
+		var 这一段 = 部分们[i].strip_edges()
+		if 这一段.is_empty():
+			continue
+		
+		var 标题结束位置 = 这一段.find("---")
+		if 标题结束位置 == -1:
+			continue
+		
+		var 标题 = 这一段.substr(0, 标题结束位置).strip_edges()
+		
+		var 内容起始 = 标题结束位置 + 3
+		while 内容起始 < 这一段.length() and 这一段[内容起始] in ["\n", "\r"]:
+			内容起始 += 1
+		
+		var 全部内容 = 这一段.substr(内容起始).strip_edges(false, true)
+		
+		if 标题.is_empty():
+			continue
+		
+		var 提示位置 = 全部内容.find("[提示]")
+		var 代码部分: String = ""
+		var 提示部分: String = ""
+		
+		if 提示位置 != -1:
+			代码部分 = 全部内容.substr(0, 提示位置).strip_edges(false, true)
+			var 提示起始 = 提示位置 + "[提示]".length()
+			while 提示起始 < 全部内容.length() and 全部内容[提示起始] in ["\n", "\r"]:
+				提示起始 += 1
+			提示部分 = 全部内容.substr(提示起始).strip_edges(false, true)
+		else:
+			代码部分 = 全部内容
+		
+		代码片段[标题] = {
+			"代码": 代码部分,
+			"提示": 提示部分,
+		}
+		
+		# 這裡加回打印（可看到每個片段的行數）
+		var 代码行数 = 代码部分.count("\n") + 1 if 代码部分 else 0
+		var 提示行数 = 提示部分.count("\n") + 1 if 提示部分 else 0
+		引擎.调试.打印("解析到片段：", 标题, " (代碼 ", 代码行数, " 行, 提示 ", 提示行数, " 行)")
+	return 代码片段
 func _ready():
-	#引擎.调试.打印("触发10?")
+	print("优先指向1?")
+	可视化代码=解析可视化代码()
 	#指向12.网络.gd（引擎网络类）
 	网络.name = "网络"
 	add_child(网络)  # 挂载到引擎节点
@@ -117,6 +174,7 @@ func _ready():
 	
 	绘制.name="绘制"
 	add_child(绘制)
+	
 ##以下待修复，融入
 #
 ##region 初始化 [addons\YgameEngine\脚本\列表.gd] 添加列表系统

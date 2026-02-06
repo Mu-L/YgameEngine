@@ -3,17 +3,32 @@
 
 @tool  # 让它在编辑器里也能运行
 extends Button  # 如果你按钮是 TextureButton，就改成 extends TextureButton
-@export_multiline() var 提示的内容: String = '代码提示'
-@export_multiline() var 插入的内容: String = 'print("Hello from snippet!")' :
-	set(value):
-		插入的内容 = value
-		tooltip_text = 提示的内容#"拖拽插入：\n" + value  # 可选：鼠标悬停显示代码预览
+#@export_multiline() var 提示的内容: String = '代码提示'
+var 插入的内容: String
+#@export_multiline() var 插入的内容: String = 'print("Hello from snippet!")' :
+	#set(value):
+		#插入的内容 = value
+		#tooltip_text = 提示的内容#"拖拽插入：\n" + value  # 可选：鼠标悬停显示代码预览
 
 	
 var is_dragging: bool = false
 var drag_preview: Control = null
 
 func _ready() -> void:
+	#进行等待,延迟指向
+	await get_tree().create_timer(1.0).timeout 
+	text=name
+	#重新txt植入插入的内容
+	#print("优先指向2?")
+	#print(name,引擎.可视化代码)
+	#引擎.调试.注释打印("准备内容?>",引擎.可视化代码.get(name))#.代码)
+	var 代码片段=引擎.可视化代码.get(name)
+	if 代码片段==null:
+		引擎.调试.打印错误("警告,代码片段提示错误,缺少:",name)
+	else:
+		插入的内容=代码片段.代码
+		tooltip_text=代码片段.提示
+	#引擎.调试.注释打印("准备提示?>",引擎.可视化代码.get(name))#.代码)
 	# 每个按钮自己创建一个预览（避免共用一个导致混乱）
 	_create_drag_preview()
 	
