@@ -77,7 +77,7 @@ def unzip_file(zip_path: str, target_dir: str) -> bool:
         with zipfile.ZipFile(zip_path, "r") as zf:
             # 解压所有文件（覆盖已有文件）
             zf.extractall(target_dir)
-        print("[√] 解压完成！")
+        print("[√] 解压完成！（已自动覆盖local_version.txt）")
         return True
     except zipfile.BadZipFile:
         print("[×] 解压失败：补丁文件不是有效的ZIP格式！")
@@ -97,16 +97,59 @@ def read_version_file(file_path: str) -> str:
     except Exception:
         return ""
 
-# ========== 工具函数：写入版本文件 ==========
-def write_version_file(file_path: str, version: str) -> bool:
-    """写入版本号到文件"""
-    try:
-        with open(file_path, "w", encoding="utf-8") as f:
-            f.write(version.strip())
-        return True
-    except Exception as e:
-        print(f"[×] 写入版本文件失败：{str(e)}")
-        return False
+# ========== 工具函数：初始化版本文件（仅首次） ==========
+def init_version_file(file_path: str, init_version: str) -> str:
+    """首次初始化版本文件，返回初始版本号"""
+    print(f"\n[*] 未检测到本地版本文件，初始化版本为：{init_version}")
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(init_version.strip())
+    return init_version
+
+# ========== 核心函数：逐级更新（依赖补丁自动覆盖版本号） ==========
+def update_step_by_step(current_version: str, server_version: str, version_map: dict) -> bool:
+    """
+    逐级更新版本（如v1.0→v1.1→v1.2），版本号由补丁中的local_version.txt自动覆盖
+    :param current_version: 当前本地版本
+    :param server_version: 服务器最新版本
+    :param version_map: 版本-补丁映射字典
+    :return: 是否更新成功
+    """
+    print(f"\n[📌] 开始逐级更新：{current_version} → {server_version}")
+    
+    # 循环更新，直到当前版本等于服务器版本
+    while current_version != server_version:
+        # 检查当前版本是否有对应的补丁
+        if current_version not in version_map:
+            print(f"[×] 更新失败：未找到{current_version}对应的增量补丁！")
+            return False
+        
+        # 获取当前版本的补丁文件名
+        patch_file_name = version_map[current_version]
+        print(f"\n[🔍] 准备更新 {current_version} → 下一个版本，补丁：{patch_file_name}")
+        
+        # 下载补丁
+        patch_url = f"{DOMAIN}/patch/{patch_file_name}"
+        patch_path = os.path.join(TEMP_DIR, patch_file_name)
+        if not download_file(patch_url, patch_path):
+            print(f"[×] 补丁{patch_file_name}下载失败！")
+            return False
+        
+        # 解压补丁（自动覆盖local_version.txt）
+        if not unzip_file(patch_path, TARGET_DIR):
+            print(f"[×] 补丁{patch_file_name}解压失败！")
+            return False
+        
+        # 重新读取本地版本号（关键：从补丁覆盖后的文件中读取）
+        new_version = read_version_file(LOCAL_VERSION_FILE)
+        if not new_version or new_version == current_version:
+            print(f"[×] 补丁{patch_file_name}未正确更新版本号！")
+            return False
+        
+        print(f"[📝] 本地版本已自动更新为：{new_version}（来自补丁中的local_version.txt）")
+        # 更新当前版本，继续循环
+        current_version = new_version
+    
+    return True
 
 # ========== 主更新逻辑 ==========
 def main():
@@ -114,12 +157,10 @@ def main():
     print("YgameEngine 增量更新工具")
     print("=" * 50)
     
-    # 1. 初始化本地版本文件（无则创建）
+    # 1. 读取/初始化本地版本文件
     local_version = read_version_file(LOCAL_VERSION_FILE)
     if not local_version:
-        print(f"\n[*] 未检测到本地版本文件，初始化版本为：{INIT_VERSION}")
-        write_version_file(LOCAL_VERSION_FILE, INIT_VERSION)
-        local_version = INIT_VERSION
+        local_version = init_version_file(LOCAL_VERSION_FILE, INIT_VERSION)
     print(f"[🔍] 本地当前版本：{local_version}")
     
     # 2. 创建临时目录
@@ -157,26 +198,14 @@ def main():
         with open(version_map_path, "r", encoding="utf-8") as f:
             version_map = json.load(f)
         
-        # 7. 查找对应增量补丁
-        if local_version not in version_map:
-            raise Exception(f"未找到{local_version}对应的增量补丁！")
-        patch_file_name = version_map[local_version]
-        print(f"\n[🔍] 找到增量补丁：{patch_file_name}")
-        
-        # 8. 下载增量补丁
-        patch_url = f"{DOMAIN}/patch/{patch_file_name}"
-        patch_path = os.path.join(TEMP_DIR, patch_file_name)
-        if not download_file(patch_url, patch_path):
-            raise Exception("增量补丁下载失败！")
-        
-        # 9. 解压增量补丁
-        if not unzip_file(patch_path, TARGET_DIR):
-            raise Exception("增量补丁解压失败！")
-        
-        # 10. 更新本地版本号
-        if write_version_file(LOCAL_VERSION_FILE, server_version):
-            print(f"\n[📝] 本地版本已更新为：{server_version}")
+        # 7. 核心：逐级更新（版本号由补丁自动覆盖）
+        if update_step_by_step(local_version, server_version, version_map):
+            # 最终验证版本号
+            final_version = read_version_file(LOCAL_VERSION_FILE)
+            print(f"\n[✅] 最终版本验证：{final_version}（与服务器版本{server_version}一致）")
             print("\n[🎉] 增量更新完成！可直接运行游戏程序～")
+        else:
+            raise Exception("逐级更新失败！")
     
     except Exception as e:
         print(f"\n[×] 更新失败：{str(e)}")
