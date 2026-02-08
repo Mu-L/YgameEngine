@@ -1212,15 +1212,33 @@ size_flags_horizontal = 3
 [node name="字节转字符串" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1376200529 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "## 伤害绘制(Vector2(300,300),123,\"命中\",\"正常\"，):
-## 伤害绘制(Vector2(300,300),[[\"命中\", 20478], [\"命中\", 20278], [\"暴击\", 24311], [\"暴击\", 22333]])
-##	引擎.屏幕.伤害绘制(Vector2(300,300),[[\"命中\", 20478], [\"命中\", 20278], [\"暴击\", 24311], [\"暴击\", 22333]])
-	#引擎.屏幕.伤害绘制(Vector2(300,600),123,\"命中\",\"正常\")	
-	#引擎.屏幕.伤害绘制(Vector2(300,400),123,\"暴击\",\"正常\")
-	#引擎.屏幕.伤害绘制(Vector2(300,400),123,\"命中\",\"受伤\")
-	#引擎.屏幕.伤害绘制(Vector2(340,400),123,\"命中\",\"补血\")
-	#引擎.屏幕.伤害绘制(Vector2(500,400),123,\"暴击\",\"补蓝\")"
-text = "伤害绘制"
+tooltip_text = "引擎.网络.字节转字符串(字节数据, \"utf8\") → UTF8格式字符串
+参数:
+  - 字节数据: PackedByteArray（待转换的字节数组）
+  - 编码类型: String（编码格式，默认\"utf8\"）
+返回:
+  - Variant（转换后的字符串/原字节数据）
+
+--UDP_创建客户端示例---
+##初始化并获取引用
+var UDP客户端: 引擎.网络类.UDP客户端
+func _ready() -> void:
+		UDP客户端=引擎.网络.UDP_创建客户端()
+		UDP客户端.UDP_连接(\"127.0.0.1\",25555)
+func _process(delta: float) -> void:
+		UDP客户端.UDP_处理数据({
+				\"客户端收到消息\": func(数据):
+						print(\"收到-=-\",数据)
+						,
+				})
+		
+		if Input.is_action_just_pressed(\"ui_accept\"):
+				var 数据=\"你好\"
+				UDP客户端.UDP_发送数据(数据,\"utf8\")
+				pass
+[提示]
+一个UDP客户端示例"
+text = "字节转字符串"
 text_overrun_behavior = 1
 
 [node name="UDP_创建客户端示例" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1074123526 instance=ExtResource("1_mpp5d")]
@@ -1228,157 +1246,209 @@ custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = "用于震动屏幕。
 (相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
-text = "UDP_创建客户端"
+text = "UDP_创建客户端示例"
 text_overrun_behavior = 1
 
 [node name="UDP_创建客户端" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1062891722 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于震动屏幕。
-(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
-text = "屏幕震动"
+tooltip_text = "引擎.网络.UDP_创建客户端() → UDP客户端实例
+返回:
+  - UDP客户端（自定义UDP客户端对象）"
+text = "UDP_创建客户端"
 text_overrun_behavior = 1
 
 [node name="UDP_发送数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1111076377 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "滚动提示"
+tooltip_text = "引擎.网络.UDP_发送数据({\"msg\":\"Hello\"}, \"utf8\") → 将字典转JSON后发送
+参数:
+  - 数据: Variant（String/Dictionary/PackedByteArray）
+  - 编码类型: Variant（编码格式，如\"utf8\"）"
+text = "UDP_发送数据"
 text_overrun_behavior = 1
 
 [node name="UDP_处理数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=781124775 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于震动屏幕。
-(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
-text = "屏幕震动2"
+tooltip_text = "引擎.网络.UDP_处理数据({\"客户端收到消息\":Callable(self, \"_on_client_msg\")}) → 处理收到的UDP数据
+参数:
+  - 回调字典: Dictionary（包含\"客户端收到消息\"回调）"
+text = "UDP_处理数据"
 text_overrun_behavior = 1
 
 [node name="UDP_获取可用数据包数量" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1207049715 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "滚动提示2"
+tooltip_text = "引擎.网络.UDP_获取可用数据包数量() → 待处理的数据包数量
+返回:
+  - int（可用数据包数量）"
+text = "UDP_获取可用数据包数量"
 text_overrun_behavior = 1
 
 [node name="UDP_获取数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=963986112 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于震动屏幕。
-(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
-text = "屏幕震动3"
+tooltip_text = "引擎.网络.UDP_获取数据(\"utf8\") → 解码后的字符串数据
+UDP客户端.UDP_获取数据() #返回字节数据类型
+参数:
+  - 编码类型: String（编码格式，默认空）
+返回:
+  - Variant（解码后的字符串/原字节数组）"
+text = "UDP_获取数据"
 text_overrun_behavior = 1
 
 [node name="UDP_创建服务端示例" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=947767359 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "UDP_创建服务端"
+tooltip_text = "一个UDP服务端示例"
+text = "UDP_创建服务端示例"
 text_overrun_behavior = 1
 
 [node name="UDP_创建服务端" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=50742082 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "滚动提示3"
+tooltip_text = "引擎.网络.UDP_创建服务端() → UDP服务端实例
+返回:
+  - UDP服务端（自定义UDP服务端对象）"
+text = "UDP_创建服务端"
 text_overrun_behavior = 1
 
 [node name="UDP_启动服务" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1433327981 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于震动屏幕。
-(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
-text = "屏幕震动4"
+tooltip_text = "引擎.网络.UDP_启动服务(35555, \"*\") → 启动UDP服务端监听
+参数:
+  - 端口: int（监听端口，默认35555）
+  - 绑定IP: String（本地绑定IP，默认\"*\"）
+返回:
+  - int（启动结果，OK为成功）"
+text = "UDP_启动服务"
 text_overrun_behavior = 1
 
 [node name="UDP_停止服务" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=2120710868 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "滚动提示4"
+tooltip_text = "引擎.网络.UDP_停止服务() → 停止UDP服务端并清空客户端列表"
+text = "UDP_停止服务"
 text_overrun_behavior = 1
 
 [node name="UDP_获取客户端数量" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=2070068232 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于震动屏幕。
-(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
-text = "屏幕震动5"
+tooltip_text = "引擎.网络.UDP_获取客户端数量() → 当前连接的客户端数
+返回:
+  - int（客户端数量）"
+text = "UDP_获取客户端数量"
 text_overrun_behavior = 1
 
 [node name="UDP_发送给客户端" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1717015914 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "滚动提示5"
+tooltip_text = "引擎.网络.UDP_发送给客户端(客户端实例, \"Hello\", \"utf8\") → 给指定客户端发数据
+参数:
+  - 客户端: PacketPeerUDP（目标客户端实例）
+  - 数据: Variant（String/Dictionary/PackedByteArray）
+  - 编码类型: String（编码格式，默认\"utf8\"）"
+text = "UDP_发送给客户端"
 text_overrun_behavior = 1
 
 [node name="UDP_广播数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=930700968 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于震动屏幕。
-(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
-text = "屏幕震动6"
+tooltip_text = "引擎.网络.UDP_广播数据({\"msg\":\"广播\"}, \"utf8\") → 给所有客户端广播数据
+参数:
+  - 数据: Variant（String/Dictionary/PackedByteArray）
+  - 编码类型: String（编码格式，默认\"utf8\"）"
+text = "UDP_广播数据"
 text_overrun_behavior = 1
 
 [node name="网页_中文链接格式转换" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1135570104 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "滚动提示6"
+tooltip_text = "中文链接需要转码
+参数:
+  - 链接: String（含中文的原始链接）
+返回:
+  - String（URI编码后的链接）"
+text = "网页_中文链接格式转换"
 text_overrun_behavior = 1
 
 [node name="网页请求_GET" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=689265091 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于震动屏幕。
-(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
-text = "屏幕震动7"
+tooltip_text = "引擎.网络.网页请求_GET(\"https://test.com\", {\"key\":\"val\"}) → GET请求结果
+return {\"请求状态\":error,\"网页状态码\":-1}
+return {\"请求状态\":返回值[0],
+		\"网页状态码\":返回值[1],
+		\"响应头\":返回值[2],
+		\"内容\":返回值[3].get_string_from_utf8()
+	   }
+参数:
+  - 请求链接: String（目标URL）
+  - 请求数据: Variant（请求参数，默认空）
+  - 响应头: PackedStringArray（请求头，默认空）
+  - 请求类型: HTTPClient.Method（请求方法，默认METHOD_GET）
+返回:
+  - Dictionary（请求状态/状态码/响应头/内容）"
+text = "网页请求_GET"
 text_overrun_behavior = 1
 
 [node name="网页请求_Get到数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=544125906 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "滚动提示7"
+tooltip_text = "和网页请求_GET 一样,但是多了一个 自带 Json_到数据 直接转到godot数据"
+text = "网页请求_Get到数据"
 text_overrun_behavior = 1
 
 [node name="网页请求_Post" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=2081270820 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于震动屏幕。
-(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
-text = "屏幕震动8"
+tooltip_text = ">带请求头
+var 返回数据=await 引擎.网络.网页请求_Post(\"http://127.0.0.1:8084/api\",post数据,[\"verification-code:123\"])
+参数:
+  - 请求链接: String（目标URL）
+  - 请求数据: Variant（请求参数，默认空）
+  - 响应头: PackedStringArray（请求头，默认空）
+  - 请求类型: HTTPClient.Method（请求方法，默认METHOD_POST）
+返回:
+  - Dictionary（请求状态/状态码/响应头/内容）"
+text = "网页请求_Post"
 text_overrun_behavior = 1
 
 [node name="网页请求_Post到数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=34871058 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "滚动提示8"
+tooltip_text = "引擎.网络.网页请求_Post到数据(\"https://test.com\") → 自动解析JSON的POST结果
+与网页请求_Post相同,但是返回值自动解析"
+text = "网页请求_Post到数据"
 text_overrun_behavior = 1
 
 [node name="网页请求_简单下载文件" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=128686474 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于震动屏幕。
-(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
-text = "网页请求_下载文件"
+tooltip_text = ""
+text = "网页请求_简单下载文件"
 text_overrun_behavior = 1
 
 [node name="网页请求_下载文件回调版" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=702715662 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于震动屏幕。
-(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
-text = "屏幕震动9"
+tooltip_text = "参数:
+  - 直链地址: String（文件下载链接）
+  - 存放地址: String（本地保存路径，默认\"user://Update.zip\"）
+  - 请求回调: Callable（下载回调，默认空函数）
+返回:
+  - Dictionary（请求状态/下载状态）"
+text = "网页请求_下载文件回调版"
 text_overrun_behavior = 1
 
 [node name="热更示例" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=663564607 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "滚动提示9"
+tooltip_text = "关于热更新,首先自动加载的脚本,会强制占用,无法替换更新,请把修改自动加载的脚本,当做大更新发布.
+godot支持pck的热更示例"
+text = "热更示例"
 text_overrun_behavior = 1
 
 [node name="弱网" type="PanelContainer" parent="TabContainer" unique_id=1459751640]
@@ -1398,104 +1468,146 @@ size_flags_horizontal = 3
 [node name="弱网服务端的示例" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=468368149 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "热更示例"
+tooltip_text = "基于UDP 搭建的 账号注册,账号登入,异步聊天,排行榜等,所有传输都是字典json传输
+弱网服务端创建的示例
+全局错误
+{\"类型\":\"异常\",\"数据\":\"异常数据LP\",\"状态\":\"失败\"}#令牌错误
+{\"类型\":\"异常\",\"数据\":\"异常LX\",\"状态\":\"失败\"}#请求的类型无
+{\"类型\":\"异常\",\"数据\":\"异常js\",\"状态\":\"失败\"} #json解析失败"
+text = "弱网服务端的示例"
 text_overrun_behavior = 1
 
 [node name="弱网发送数据" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=2025212358 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "弱网服务端的示例2"
+tooltip_text = "#虽然可以自定义,但是不推荐用,弱网环境,大家都不一定在线
+弱网.发送数据(客户端, 数据) #服务端向指定的客户端发送数据
+弱网.广播数据(数据)#服务端向在线客户端广播数据
+弱网.广播数据({\"类型\":\"测试\",\"文本\":\"你好胖\"},\"utf8\")
+弱网.广播数据(\"你好胖\",\"utf8\")
+#客户端请求服务端数据
+弱网客户端.发送数据(数据) #客户端向服务端发送数据 异步
+#同步异步
+弱网客户端.发送数据(数据,func(响应数据):
+						print(\"收到的数据?:\", 响应数据)
+                )"
+text = "弱网发送数据"
 text_overrun_behavior = 1
 
 [node name="弱网客户端的示例" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=602032046 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "弱网服务端的示例2"
+tooltip_text = "弱网客户端链接服务端创建的示例"
+text = "弱网客户端的示例"
 text_overrun_behavior = 1
 
 [node name="账号注册" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=678088251 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "弱网服务端的示例2"
+tooltip_text = "#回调
+{\"数据\":\"注册失败,账号已重复\",\"状态\":\"失败\",\"类型\":\"账号注册\"}
+{\"数据\":\"注册成功\",\"状态\":\"成功\",\"类型\":\"账号注册\"}
+{\"数据\":\"账号不允许特殊符号注册\",\"状态\":\"失败\",\"类型\":\"账号注册\"}"
+text = "账号注册"
 text_overrun_behavior = 1
 
 [node name="账号登入" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=1078311164 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "弱网服务端的示例2"
+tooltip_text = "{\"令牌\":\"20KEK\",\"数据\":\"成功登入,密码验证成功\",\"状态\":\"成功\",\"类型\":\"账号登入\"}
+{\"数据\":\"登入失败,找不到用户\",\"状态\":\"失败\",\"类型\":\"账号登入\"}
+{\"数据\":\"登入失败,密码错误\",\"状态\":\"失败\",\"类型\":\"账号登入\"}
+{\"数据\":\"此账号已被封号\",\"状态\":\"失败\",\"类型\":\"账号登入\"}"
+text = "账号登入"
 text_overrun_behavior = 1
 
 [node name="获取时间戳" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=1143015400 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "弱网服务端的示例2"
+tooltip_text = "{ \"数据\": 1754532817.319, \"状态\": \"成功\", \"类型\": \"时间戳\" }"
+text = "获取时间戳"
 text_overrun_behavior = 1
 
 [node name="心跳包" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=1067213661 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "弱网服务端的示例2"
+tooltip_text = "心跳包已内置,无需手动发送,保持服务端不断开
+var 数据={\"类型\":\"PING\"}
+弱网客户端.发送数据(数据)"
+text = "心跳包"
 text_overrun_behavior = 1
 
 [node name="临时存档申请" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=372534215 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "弱网服务端的示例2"
+tooltip_text = "可用于可申请临时数据转移服务,不存档,服务器重启清空
+{\"类型\": \"临时存档申请\",\"状态\": \"成功\",\"数据\": \"20BRD\"} #拿到兑换码"
+text = "临时存档申请"
 text_overrun_behavior = 1
 
 [node name="临时存档兑换" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=750994976 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "弱网服务端的示例"
+tooltip_text = "{ \"数据\": \"s\", \"状态\": \"成功\", \"类型\": \"临时存档兑换\" }#有就拿到数据
+{ \"数据\": \"\", \"状态\": \"失败\", \"类型\": \"临时存档兑换\" } #当没有时"
+text = "临时存档兑换"
 text_overrun_behavior = 1
 
 [node name="聊天申请(广播聊天)" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=695803810 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "临时存档兑换"
+tooltip_text = "var 数据 = {\"类型\": \"聊天请求\",\"标记\": \"所有人\", \"发送者\": \"player_12345\",\"文本\": \"你好\",\"数据\": { \"道具ID\": 0}} 
+弱网客户端.发送数据(数据)
+                
+{ \"数据\": \"发送成功\", \"状态\": \"成功\", \"类型\": \"聊天请求\" }
+
+#客户端处理数据 会额外的收到数据 广播聊天
+ { \"发送者\": \"player_12345\", \"文本\": \"你好\", \"时间戳\": 1754713439.479, \"标记\": \"所有人\", \"类型\": \"广播聊天\" }"
+text = "聊天申请(广播聊天)"
 text_overrun_behavior = 1
 
 [node name="聊天获取" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=639688574 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "临时存档兑换"
+tooltip_text = "{ 
+\"数据\": [
+		{ \"发送者\": \"player_12345\", \"数据\": { \"道具ID\": 20.0 }, \"文本\": \"你好\", \"时间戳\": 1754665004.074 }
+        ], 
+ \"标记\": \"所有人\",
+\"状态\": \"成功\",
+\"类型\": \"聊天获取\" }"
+text = "聊天获取"
 text_overrun_behavior = 1
 
 [node name="排行榜写入" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=2077577999 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "聊天获取2"
+tooltip_text = "用于排行榜记录,最大储存50行
+{ \"数据\": 1.0, \"状态\": \"成功\", \"类型\": \"排行榜写入\" } #数据=排名"
+text = "排行榜写入"
 text_overrun_behavior = 1
 
 [node name="排行榜获取" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=838139239 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "聊天获取"
+tooltip_text = "{ \"个人排名\": 3.0, \"数据\": [
+{ \"分数\": 12.0, \"数据\": { \"角色名\": \"小小\" }, \"更新时间\": 1754712407.854, \"玩家ID\": \"zhanghao\" }, 
+{ \"分数\": 8.0, \"数据\": { \"角色名\": \"小小3\" }, \"更新时间\": 1754712407.949, \"玩家ID\": \"zhanghao3\" }]
+, \"状态\": \"成功\", \"类型\": \"排行榜获取\" }"
+text = "排行榜获取"
 text_overrun_behavior = 1
 
 [node name="数据储存" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=465622826 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "排行榜获取"
+tooltip_text = "永久性储存数据
+{ \"数据\": \"成功\", \"状态\": \"成功\", \"类型\": \"储存申请\" }"
+text = "数据储存"
 text_overrun_behavior = 1
 
 [node name="数据查询" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=547279227 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "排行榜获取"
+tooltip_text = "{ \"数据\": { \"等级\": \"1\", \"金币\": 2.0 }, \"状态\": \"成功\", \"类型\": \"储存查询\" }"
+text = "数据查询"
 text_overrun_behavior = 1
