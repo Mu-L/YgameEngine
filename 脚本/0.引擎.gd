@@ -8,7 +8,7 @@ extends Node
 # 用于类型声明时识别"引擎.网络"层级
 
 ##基于调试封装的东西
-var 调试=preload("res://addons/YgameEngine/脚本/1.调试.gd").new()
+var 调试:=preload("res://addons/YgameEngine/脚本/1.调试.gd").new()
 ##统一管理按钮的东西
 var 按钮=preload("res://addons/YgameEngine/脚本/按钮/2.按钮.gd").new()
 ##基于场景封装的东西
@@ -111,7 +111,7 @@ func _init() -> void:
 
 ##解析并提供字典,代码,提示
 func 解析可视化代码():
-	print("执行解析")
+	#print("执行解析")
 		
 	var 配置文件=引擎.文件.读取文件到文本("res://addons/YgameEngine/场景/代码库/code.txt")
 	var 代码片段: Dictionary = {}
@@ -160,10 +160,10 @@ func 解析可视化代码():
 		# 這裡加回打印（可看到每個片段的行數）
 		var 代码行数 = 代码部分.count("\n") + 1 if 代码部分 else 0
 		var 提示行数 = 提示部分.count("\n") + 1 if 提示部分 else 0
-		引擎.调试.打印("解析到片段：", 标题, " (代碼 ", 代码行数, " 行, 提示 ", 提示行数, " 行)")
+		#引擎.调试.打印("解析到片段：", 标题, " (代碼 ", 代码行数, " 行, 提示 ", 提示行数, " 行)")
 	return 代码片段
 func _ready():
-	print("优先指向1?")
+	#print("优先指向1?")
 	可视化代码=解析可视化代码()
 	#指向12.网络.gd（引擎网络类）
 	网络.name = "网络"
@@ -174,9 +174,17 @@ func _ready():
 	
 	绘制.name="绘制"
 	add_child(绘制)
-	
+	#用于检测自动更新
+	if 引擎.调试.取调试模式():
+		var 当前版本号 = 引擎.文件.读取文件到文本("res://addons/YgameEngine/local_version.txt")
+		var 请求内容=await 引擎.网络.网页请求_GET("https://0dcszgip.cn-nb1.rainapp.top/godot_YgameEngine/latest_version.txt")
+		if str(请求内容.网页状态码)==str(200):
+			if str(请求内容.内容).strip_edges()!=str(当前版本号).strip_edges():
+				printerr("发现YgameEngine插件更新,可关闭godot到插件目录进行更新,当前版本号:"+当前版本号+"最新版本号:"+请求内容.内容)
+
 ##以下待修复，融入
-#
+##printerr("发现YgameEngine插件更新,可关闭godot到插件目录进行更新,当前版本号:"+当前版本号+"最新版本号:"+请求内容.内容)
+	
 ##region 初始化 [addons\YgameEngine\脚本\列表.gd] 添加列表系统
 	#var 列表节点 = load("uid://ddvmv08fc64oj").new()
 	#列表节点.name="列表"

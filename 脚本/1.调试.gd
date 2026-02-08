@@ -11,6 +11,10 @@ func 打印(...打印的内容: Array) -> void:
 	# 手动拼接可变参数内容
 	var 内容 = ""
 	for i in 打印的内容.size():
+		#print("要打印?",打印的内容[i],打印的内容[i] is Array)
+		#if 打印的内容[i] is Array:
+			#打印数组(打印的内容[i],str(来源["source"])+str(来源["function"])+str(来源["line"]))
+			#continue
 		内容 += str(打印的内容[i])  # 先转成字符串，避免类型错误
 		# 除了最后一个元素，后面加空格分隔
 		if i != 打印的内容.size() - 1:
@@ -31,6 +35,7 @@ func 注释打印(注释: String, ...打印的内容: Array) -> void:
 	# 处理可变参数：拼接所有内容为字符串
 	var 内容 = ""
 	for i in 打印的内容.size():
+		
 		内容 += str(打印的内容[i])  # 转为字符串避免类型错误
 		if i != 打印的内容.size() - 1:
 			内容 += " "  # 元素间用空格分隔

@@ -94,6 +94,17 @@ tooltip_text = "否则"
 text = "基础否则"
 text_overrun_behavior = 1
 
+[node name="声明变量" parent="TabContainer/基础/ScrollContainer/HFlowContainer" unique_id=164939802 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "var 变量名 = 值  # Godot基础变量声明，支持字符串/数字/布尔等类型
+int 整数
+float 浮点型
+bool 逻辑"
+text = "声明变量"
+text_overrun_behavior = 1
+
 [node name="for循环" parent="TabContainer/基础/ScrollContainer/HFlowContainer" unique_id=2041562001 instance=ExtResource("1_mpp5d")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(170, 20)
@@ -110,15 +121,20 @@ tooltip_text = "基础的while循环,性能比for少2倍"
 text = "while循环"
 text_overrun_behavior = 1
 
-[node name="声明变量" parent="TabContainer/基础/ScrollContainer/HFlowContainer" unique_id=164939802 instance=ExtResource("1_mpp5d")]
+[node name="循环终止" parent="TabContainer/基础/ScrollContainer/HFlowContainer" unique_id=276666127 instance=ExtResource("1_mpp5d")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "var 变量名 = 值  # Godot基础变量声明，支持字符串/数字/布尔等类型
-int 整数
-float 浮点型
-bool 逻辑"
-text = "声明变量"
+tooltip_text = "直接终止整个循环，循环彻底结束"
+text = "循环终止"
+text_overrun_behavior = 1
+
+[node name="循环跳过" parent="TabContainer/基础/ScrollContainer/HFlowContainer" unique_id=1793020074 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "跳过当前这一次循环的剩余代码，直接进入下一次循环"
+text = "循环跳过"
 text_overrun_behavior = 1
 
 [node name="场景" type="PanelContainer" parent="TabContainer" unique_id=82114944]
@@ -784,20 +800,416 @@ size_flags_horizontal = 3
 unique_name_in_owner = true
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "分割10"
+tooltip_text = "引擎.字符串.Json_到字符串({\"a\": 1, \"b\": [2, 3]}) → '{\"a\":1,\"b\":[2,3]}'
+参数:
+  - 数据: Variant（可序列化数据，如字典/数组）
+返回:
+  - String（JSON字符串，失败返回空字符串）"
+text = "Json_到字符串"
 text_overrun_behavior = 1
 
 [node name="Json_到数据" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1259762097 instance=ExtResource("1_mpp5d")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "分割11"
+tooltip_text = "引擎.字符串.Json_到数据('{\"a\":1,\"b\":[2,3]}') → {\"a\": 1, \"b\": [2, 3]}
+参数:
+  - json字符串: String（符合JSON格式的字符串）
+返回:
+  - Variant（解析后的数据，失败返回null）"
+text = "Json_到数据"
+text_overrun_behavior = 1
+
+[node name="删首尾空" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=581125414 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "从该字符串的开头和结尾剥离所有不可打印的字符"
+text = "删首尾空"
 text_overrun_behavior = 1
 
 [node name="替换文本" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1498155199 instance=ExtResource("1_mpp5d")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.替换文本(\"Hello World\", \"world\", \"Godot\") → Hello Godot
+参数:
+  - 原字符串: String（待处理字符串）
+  - 哪个要换: String（被替换子串）
+  - 要换成什么: String（新子串）
+返回:
+  - String（替换后的字符串）"
+text = "替换文本"
+text_overrun_behavior = 1
+
+[node name="从指定位置获取字符串" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=78349441 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.从指定位置获取字符串(\"Hello\", 1, 3) → ell
+参数:
+  - 原字符串: String（待处理字符串）
+  - 开始位置: int（起始索引，从0开始）
+  - 长度: int（截取字符数）
+返回:
+  - String（截取的子字符串）"
+text = "从指定位置获取字符串"
+text_overrun_behavior = 1
+
+[node name="分割" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=270358600 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.分割(\"a,b,c\", \",\") → [a, b, c]
+参数:
+  - _字符串: String（待分割字符串）
+  - _分割符: String（分割标识）
+返回:
+  - Array（分割后的字符串数组）"
+text = "分割"
+text_overrun_behavior = 1
+
+[node name="获取切片" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1908499553 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.获取切片(\"a_b_c\", \"_\", 1) → b
+参数:
+  - _字符串: String（待处理字符串）
+  - _分割符: String（分割标识）
+  - _索引位置: int（目标切片索引）
+返回:
+  - String（指定索引的子字符串）"
+text = "获取切片"
+text_overrun_behavior = 1
+
+[node name="左侧填充" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1234632828 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.左侧填充(\"42\", 5, \"0\") → 00042
+参数:
+  - _字符串: String（待填充字符串）
+  - _填充后的长度: int（目标总长度）
+  - _填充占位字符串: String（填充字符）
+返回:
+  - String（填充后的字符串）"
+text = "左侧填充"
+text_overrun_behavior = 1
+
+[node name="路径_取文件名含扩展名" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=648142814 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.路径_取文件名含扩展名(\"c:/b/a.txt\") → a.txt
+参数:
+  - 文件路径: String（完整文件路径）
+返回:
+  - String（文件名，含扩展名）"
+text = "路径_取文件名含扩展名"
+text_overrun_behavior = 1
+
+[node name="路径_取文件名" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=330559068 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.路径_取文件名(\"www.baidu.com/a/z.zip\") → z.zip
+参数:
+  - 文件路径: String（完整文件路径）
+返回:
+  - String（提取的文件名，含扩展名）"
+text = "路径_取文件名"
+text_overrun_behavior = 1
+
+[node name="路径_取文件名不含扩展名" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1111367744 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.路径_取文件名不含扩展名(\"c:/b/a.txt\") → a
+参数:
+  - 文件路径: String（完整文件路径）
+返回:
+  - String（文件名，不含扩展名）"
+text = "路径_取文件名不含扩展名"
+text_overrun_behavior = 1
+
+[node name="路径_取文件扩展名" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1674924872 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.路径_取文件扩展名(\"c:/b/a.txt\") → txt
+参数:
+  - 文件路径: String（完整文件路径）
+返回:
+  - String（文件扩展名）"
+text = "路径_取文件扩展名"
+text_overrun_behavior = 1
+
+[node name="路径_取目录" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1446806936 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.路径_取目录(\"c:/b/a.txt\") → c:/b
+参数:
+  - 文件路径: String（完整文件路径）
+返回:
+  - String（文件所在目录路径）"
+text = "路径_取目录"
+text_overrun_behavior = 1
+
+[node name="到uft8字节数据" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1594670926 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.到uft8字节数据(\"你好\") → [228, 189, 160, 229, 165, 189]
+参数:
+  - _字符串: String（待转换字符串）
+返回:
+  - PackedByteArray（UTF-8字节数组）"
+text = "到uft8字节数据"
+text_overrun_behavior = 1
+
+[node name="正则匹配" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=845261184 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.正则匹配(\"asd@11\",\"\\\\w\") → asd11
+#引擎.字符串.正则匹配(\"asda\",\"^[A-Za-z0-9][A-Za-z0-9_]*$\") #空代表有特殊符号
+
+参数:
+  - 字符串: String（待匹配字符串）
+  - 模式: String（正则表达式模式）
+返回:
+  - String（匹配到的拼接字符串）"
+text = "正则匹配"
+text_overrun_behavior = 1
+
+[node name="获取不重复随机码" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1943686367 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.字符串.获取不重复随机码() → 示例：20ABC（临时随机码，重启后无效）
+服务端需求,重启后无效,用于临时数据
+返回:
+  - String（数字+大写字母的随机码）"
+text = "获取不重复随机码"
+text_overrun_behavior = 1
+
+[node name="对象" type="PanelContainer" parent="TabContainer" unique_id=1372960906]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 7
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/对象" unique_id=1186318959]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="HFlowContainer" type="HFlowContainer" parent="TabContainer/对象/ScrollContainer" unique_id=1236346562]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="创建对象" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=1236533317 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "# 创建场景对象
+引擎.对象.创建对象(\"res://scenes/Enemy.tscn\") → Enemy场景实例
+# 创建普通类对象
+引擎.对象.创建对象(\"res://scripts/Data.gd\") → Data类实例
+参数:
+  - 对象路径: String（场景/脚本文件路径）
+返回:
+  - Object（创建的对象实例）"
+text = "创建对象"
+text_overrun_behavior = 1
+
+[node name="创建并添加子对象" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=1576642590 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.创建并添加子对象($Parent, \"res://scenes/Child.tscn\") → 创建并添加子对象
+参数:
+  - 父对象: Node（父级节点）
+  - 子对象场景路径: String（子对象场景路径）
+返回:
+  - Node（创建并添加成功的子对象）"
+text = "创建并添加子对象"
+text_overrun_behavior = 1
+
+[node name="清空子对象" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=917549935 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.清空子对象($Parent) → 清空父对象下所有子对象
+参数:
+  - 目标对象: Node（要清空子对象的父对象）"
+text = "清空子对象"
+text_overrun_behavior = 1
+
+[node name="设置焦点" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=175283496 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.设置焦点($Button) → 给按钮设置输入焦点
+参数:
+  - 目标对象: Node（按钮/输入框等可获取焦点的对象）"
+text = "设置焦点"
+text_overrun_behavior = 1
+
+[node name="显示" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=762076878 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.显示($Panel) → 显示指定节点
+参数:
+  - 目标对象: Node（要显示的节点）"
+text = "显示"
+text_overrun_behavior = 1
+
+[node name="隐藏" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=1041865029 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.隐藏($Panel) → 隐藏指定节点
+参数:
+  - 目标对象: Node（要隐藏的节点）"
+text = "隐藏"
+text_overrun_behavior = 1
+
+[node name="获取子对象" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=654189040 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.获取子对象($Parent, \"Child/Grandchild\") → 指定路径的子节点
+参数:
+  - 父对象: Node（父级节点）
+  - 子对象路径: NodePath（子节点路径）
+返回:
+  - Node（指定路径的子对象）"
+text = "获取子对象"
+text_overrun_behavior = 1
+
+[node name="获取父对象" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=223297631 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.获取父对象($Child) → 子节点的父级节点
+参数:
+  - 对象: Node（子节点）
+返回:
+  - Node（父级节点）"
+text = "获取父对象"
+text_overrun_behavior = 1
+
+[node name="挂载脚本到对象" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=201646877 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.挂载脚本到对象($Node, \"res://scripts/MyScript.gd\") → 给节点挂载脚本
+参数:
+  - 目标对象: Node（要挂载脚本的节点）
+  - 脚本路径: String（脚本文件路径）"
+text = "挂载脚本到对象"
+text_overrun_behavior = 1
+
+[node name="检测碰撞体" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=429237522 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.检测碰撞体(Vector2(100,100), Vector2(50,50)) → 碰撞体列表
+参数:
+  - 包围盒位置: Vector2（碰撞检测区域位置）
+  - 包围盒尺寸: Vector2（碰撞检测区域尺寸）
+  - 过滤检测方: bool（是否过滤自身，默认false）
+返回:
+  - Array（检测到的碰撞体列表）"
+text = "检测碰撞体"
+text_overrun_behavior = 1
+
+[node name="销毁对象" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=734626160 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.销毁对象($TempNode) → 立即销毁指定节点
+参数:
+  - 目标对象: Node（要销毁的节点）"
+text = "销毁对象"
+text_overrun_behavior = 1
+
+[node name="销毁对象延迟" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=897652365 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.销毁对象延迟($TempNode, 2.0) → 2秒后销毁节点
+参数:
+  - 目标对象: Node（要销毁的节点）
+  - 时间: float（延迟秒数，默认1.0）"
+text = "销毁对象延迟"
+text_overrun_behavior = 1
+
+[node name="是否有效对象" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=1572942761 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.是否有效对象($Node) → true/false（对象是否有效）
+参数:
+  - 目标对象: Node（要检查的节点）
+返回:
+  - bool（有效返回true，无效返回false）"
+text = "是否有效对象"
+text_overrun_behavior = 1
+
+[node name="获取子对象数量" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=717233788 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.获取子对象数量($Parent) → 父对象下子节点数量
+参数:
+  - 目标对象: Node（父级节点）
+返回:
+  - int（子对象数量）"
+text = "获取子对象数量"
+text_overrun_behavior = 1
+
+[node name="获取索引" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=1397425494 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.获取索引($Child) → 子节点在父对象中的索引值
+参数:
+  - 目标对象: Node（子节点）
+返回:
+  - int（节点索引）"
+text = "获取索引"
+text_overrun_behavior = 1
+
+[node name="设置为子对象" parent="TabContainer/对象/ScrollContainer/HFlowContainer" unique_id=1576546830 instance=ExtResource("1_mpp5d")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "引擎.对象.设置为子对象($Child, $NewParent) → 变更节点的父对象
+参数:
+  - 待设置对象: Node（要变更的子节点）
+  - 目标父对象: Node（新的父级节点）"
+text = "设置为子对象"
+text_overrun_behavior = 1
+
+[node name="网络" type="PanelContainer" parent="TabContainer" unique_id=430095128]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 8
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/网络" unique_id=1716182475]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="HFlowContainer" type="HFlowContainer" parent="TabContainer/网络/ScrollContainer" unique_id=1303843825]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="字节转字符串" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1376200529 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = "## 伤害绘制(Vector2(300,300),123,\"命中\",\"正常\"，):
@@ -811,8 +1223,15 @@ tooltip_text = "## 伤害绘制(Vector2(300,300),123,\"命中\",\"正常\"，):
 text = "伤害绘制"
 text_overrun_behavior = 1
 
-[node name="从指定位置获取字符串" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=78349441 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_创建客户端示例" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1074123526 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于震动屏幕。
+(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
+text = "UDP_创建客户端"
+text_overrun_behavior = 1
+
+[node name="UDP_创建客户端" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1062891722 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = "用于震动屏幕。
@@ -820,90 +1239,263 @@ tooltip_text = "用于震动屏幕。
 text = "屏幕震动"
 text_overrun_behavior = 1
 
-[node name="分割" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=270358600 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_发送数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1111076377 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = "用于上往下的文字滚动提示"
 text = "滚动提示"
 text_overrun_behavior = 1
 
-[node name="获取切片" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1908499553 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_处理数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=781124775 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "分割2"
+tooltip_text = "用于震动屏幕。
+(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
+text = "屏幕震动2"
 text_overrun_behavior = 1
 
-[node name="左侧填充" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1234632828 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_获取可用数据包数量" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1207049715 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = "用于上往下的文字滚动提示"
-text = "分割3"
+text = "滚动提示2"
 text_overrun_behavior = 1
 
-[node name="路径_取文件名含扩展名" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=648142814 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_获取数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=963986112 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "分割9"
+tooltip_text = "用于震动屏幕。
+(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
+text = "屏幕震动3"
 text_overrun_behavior = 1
 
-[node name="路径_取文件名" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=330559068 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_创建服务端示例" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=947767359 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = "用于上往下的文字滚动提示"
-text = "分割5"
+text = "UDP_创建服务端"
 text_overrun_behavior = 1
 
-[node name="路径_取文件名不含扩展名" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1111367744 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_创建服务端" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=50742082 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = "用于上往下的文字滚动提示"
-text = "分割6"
+text = "滚动提示3"
 text_overrun_behavior = 1
 
-[node name="路径_取文件扩展名" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1674924872 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_启动服务" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1433327981 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "分割7"
+tooltip_text = "用于震动屏幕。
+(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
+text = "屏幕震动4"
 text_overrun_behavior = 1
 
-[node name="路径_取目录" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1446806936 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_停止服务" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=2120710868 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = "用于上往下的文字滚动提示"
-text = "分割8"
+text = "滚动提示4"
 text_overrun_behavior = 1
 
-[node name="到uft8字节数据" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1594670926 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_获取客户端数量" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=2070068232 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
-tooltip_text = "用于上往下的文字滚动提示"
-text = "分割4"
+tooltip_text = "用于震动屏幕。
+(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
+text = "屏幕震动5"
 text_overrun_behavior = 1
 
-[node name="正则匹配" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=845261184 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_发送给客户端" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1717015914 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = "用于上往下的文字滚动提示"
-text = "分割12"
+text = "滚动提示5"
 text_overrun_behavior = 1
 
-[node name="获取不重复随机码" parent="TabContainer/字符串/ScrollContainer/HFlowContainer" unique_id=1943686367 instance=ExtResource("1_mpp5d")]
-unique_name_in_owner = true
+[node name="UDP_广播数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=930700968 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于震动屏幕。
+(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
+text = "屏幕震动6"
+text_overrun_behavior = 1
+
+[node name="网页_中文链接格式转换" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=1135570104 instance=ExtResource("1_mpp5d")]
 custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 tooltip_text = "用于上往下的文字滚动提示"
-text = "分割10"
+text = "滚动提示6"
+text_overrun_behavior = 1
+
+[node name="网页请求_GET" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=689265091 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于震动屏幕。
+(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
+text = "屏幕震动7"
+text_overrun_behavior = 1
+
+[node name="网页请求_Get到数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=544125906 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "滚动提示7"
+text_overrun_behavior = 1
+
+[node name="网页请求_Post" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=2081270820 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于震动屏幕。
+(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
+text = "屏幕震动8"
+text_overrun_behavior = 1
+
+[node name="网页请求_Post到数据" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=34871058 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "滚动提示8"
+text_overrun_behavior = 1
+
+[node name="网页请求_简单下载文件" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=128686474 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于震动屏幕。
+(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
+text = "网页请求_下载文件"
+text_overrun_behavior = 1
+
+[node name="网页请求_下载文件回调版" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=702715662 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于震动屏幕。
+(相机: Camera2D = null, 震动持续时长: float = 0.1, 震动幅度: float = 2.0, 震动频率: float = 0.02)"
+text = "屏幕震动9"
+text_overrun_behavior = 1
+
+[node name="热更示例" parent="TabContainer/网络/ScrollContainer/HFlowContainer" unique_id=663564607 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "滚动提示9"
+text_overrun_behavior = 1
+
+[node name="弱网" type="PanelContainer" parent="TabContainer" unique_id=1459751640]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 9
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/弱网" unique_id=1384872573]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="HFlowContainer" type="HFlowContainer" parent="TabContainer/弱网/ScrollContainer" unique_id=992971046]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="弱网服务端的示例" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=468368149 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "热更示例"
+text_overrun_behavior = 1
+
+[node name="弱网发送数据" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=2025212358 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "弱网服务端的示例2"
+text_overrun_behavior = 1
+
+[node name="弱网客户端的示例" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=602032046 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "弱网服务端的示例2"
+text_overrun_behavior = 1
+
+[node name="账号注册" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=678088251 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "弱网服务端的示例2"
+text_overrun_behavior = 1
+
+[node name="账号登入" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=1078311164 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "弱网服务端的示例2"
+text_overrun_behavior = 1
+
+[node name="获取时间戳" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=1143015400 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "弱网服务端的示例2"
+text_overrun_behavior = 1
+
+[node name="心跳包" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=1067213661 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "弱网服务端的示例2"
+text_overrun_behavior = 1
+
+[node name="临时存档申请" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=372534215 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "弱网服务端的示例2"
+text_overrun_behavior = 1
+
+[node name="临时存档兑换" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=750994976 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "弱网服务端的示例"
+text_overrun_behavior = 1
+
+[node name="聊天申请(广播聊天)" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=695803810 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "临时存档兑换"
+text_overrun_behavior = 1
+
+[node name="聊天获取" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=639688574 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "临时存档兑换"
+text_overrun_behavior = 1
+
+[node name="排行榜写入" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=2077577999 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "聊天获取2"
+text_overrun_behavior = 1
+
+[node name="排行榜获取" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=838139239 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "聊天获取"
+text_overrun_behavior = 1
+
+[node name="数据储存" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=465622826 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "排行榜获取"
+text_overrun_behavior = 1
+
+[node name="数据查询" parent="TabContainer/弱网/ScrollContainer/HFlowContainer" unique_id=547279227 instance=ExtResource("1_mpp5d")]
+custom_minimum_size = Vector2(170, 20)
+layout_mode = 2
+tooltip_text = "用于上往下的文字滚动提示"
+text = "排行榜获取"
 text_overrun_behavior = 1

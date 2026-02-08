@@ -33,6 +33,9 @@ var dock: EditorDock = null
 
 func _enter_tree() -> void:
 	#print("自动触发加载")
+	##用于检测是否有更新,并用错误提示标记红线
+	
+	##
 	# 再挪到最前面（hack方式）
 	
 	## 1. 加载插件UI面板
@@ -58,8 +61,8 @@ func _enter_tree() -> void:
 	#pass
 
 func _move_autoload_to_top(autoload_name: String) -> void:
-	print(get_autoload_list())
-	print("触发",ResourceUID.path_to_uid("uid://b130wwbl6uxq1"))
+	#print(get_autoload_list())
+	#print("触发",ResourceUID.path_to_uid("uid://b130wwbl6uxq1"))
 	var 路径=get_autoload_list()
 	#先卸载全部
 	for i in 路径:
