@@ -41,7 +41,7 @@ func _create_drag_preview() -> void:
 	bg.anchor_right = 1.0
 	bg.anchor_bottom = 1.0
 	drag_preview.add_child(bg)
-	
+
 	var label = Label.new()
 	label.text = "松开插入代码"
 	label.add_theme_font_size_override("font_size", 12)
@@ -61,6 +61,7 @@ func _exit_tree() -> void:
 		drag_preview.queue_free()
 var 松开的tab数量=0
 var 点击=false
+
 func _on_gui_input(event: InputEvent) -> void:
 	# 先找当前 Script 编辑器里的 CodeEdit（复用你原来的函数）
 	var script_editor = EditorInterface.get_script_editor()  # Godot 4.x 标准写法
