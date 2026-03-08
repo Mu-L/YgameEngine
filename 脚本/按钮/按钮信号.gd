@@ -1,4 +1,4 @@
-@tool #用于提前显示挂载音效挂到IDE的东西，不然看不到
+#@tool #用于提前显示挂载音效挂到IDE的东西，不然看不到
 extends Node
 #region 用于按钮的事件逻辑，丢入按钮脚本下，然后去按钮回调统一处理
 @export var 点击音效:AudioStream=引擎.按钮.点击音效

@@ -51,6 +51,7 @@ class 基础技能:
 # 带等级系统的技能管理类
 class 等级技能:
 	var 技能数据库:=引擎.数据库.技能数据库.new().获取数据库()
+	
 	var 等级配置库:Dictionary = {}  #储存配置项
 	var 已学习技能:Dictionary = {}  # 存储技能实例
 	
@@ -60,7 +61,7 @@ class 等级技能:
 	
 	func _init() -> void:
 		# 加载等级配置
-		if 引擎.文件.是否存在("res://系统/"):
+		if 引擎.文件.是否存在("res://系统/skill_levels.json"):
 			等级配置库 = 引擎.文件.读取文件到变量("res://系统/skill_levels.json")
 		else:
 			引擎.调试.打印("技能等级配置文件不存在！")

@@ -79,15 +79,20 @@ func 销毁当前场景(是否立即销毁:bool) -> void:
 ##引擎.场景.播放音效(load("uid://vh28ybcjpqam"),0.5)
 ##[/codeblock]
 func 播放音效(音效:AudioStream,指定音量:float=-1):
-	var _音效:AudioStreamPlayer=AudioStreamPlayer.new()
-	_音效.stream=音效
-	add_child(_音效)
-	_音效.finished.connect(func():
-		_音效.queue_free()#播放销毁
-	)
-	var 实际音量 = 指定音量 if 指定音量 >= 0 else 音效音量
-	_音效.volume_db=linear_to_db(实际音量)#分贝设置
-	_音效.play()#播放
+	if 引擎.对象.是否有效对象(引擎.场景.取当前场景()):
+		var _音效:AudioStreamPlayer=AudioStreamPlayer.new()
+		_音效.stream=音效
+		print(引擎.场景.取当前场景())
+		
+		引擎.场景.取当前场景().add_child(_音效)
+		_音效.finished.connect(func():
+			_音效.queue_free()#播放销毁
+			
+		)
+		var 实际音量 = 指定音量 if 指定音量 >= 0 else 音效音量
+		_音效.volume_db=linear_to_db(实际音量)#分贝设置
+		
+		_音效.play()#播放
 	
 #endregion
 
